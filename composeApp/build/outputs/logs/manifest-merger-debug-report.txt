@@ -1,0 +1,328 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:2:1-23:12
+INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:2:1-23:12
+INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:2:1-23:12
+INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:2:1-23:12
+MERGED from [androidx.activity:activity:1.9.1] /home/tyler/.gradle/caches/transforms-4/3ac05d1a7c08dfa1b444b9f6b3f25fa7/transformed/activity-1.9.1/AndroidManifest.xml:17:1-22:12
+MERGED from [org.jetbrains.compose.components:components-resources-android:1.6.11] /home/tyler/.gradle/caches/transforms-4/3e867574eccc1651c73c40f1695015cc/transformed/library-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-ripple-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/4f39ee7e6280b5c6da6d1fdb087a66f3/transformed/material-ripple-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/f679069b19c26d1cac40662477ef44fa/transformed/material-icons-core-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/ab9bc0b20348b30f8c7911d97f2b9509/transformed/material-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-core-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/b961a867755c58c1b95d77fe27c81aed/transformed/animation-core-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/007ca260d92a6032d928a3e668afc4e4/transformed/animation-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/839901b15766547dfc0f2ca3fedf2608/transformed/foundation-layout-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/8b253273a62178220fef0d820dbc158c/transformed/foundation-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/2400088617bde6f01d4cf3d04fd73f7c/transformed/ui-tooling-data-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-unit-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/01358996a6de78289458fb4550b13086/transformed/ui-unit-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-graphics-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/57e6712e0b7dff2d49ce1faf4d0acecf/transformed/ui-graphics-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-geometry-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/4fc2dae9f07be67e6242ac935a839145/transformed/ui-geometry-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-util-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/94ac9fd71e19cf295cc59a6add5fe724/transformed/ui-util-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-text-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/fde99437a4bcf029845292441080b354/transformed/ui-text-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/cc1d5facd2bc217fde0471e7dee66032/transformed/ui-tooling-release/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/0dd861db5ab52bb09c66dcb26655fb8e/transformed/ui-tooling-preview-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/69220cfc3e8d9fcc255396ad63b217c2/transformed/ui-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity-ktx:1.9.1] /home/tyler/.gradle/caches/transforms-4/fa26e478cc295599d7ba198132aa7609/transformed/activity-ktx-1.9.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity-compose:1.9.1] /home/tyler/.gradle/caches/transforms-4/94ab5e1c83c22c7ba504490e1f934e19/transformed/activity-compose-1.9.1/AndroidManifest.xml:2:1-7:12
+MERGED from [org.jetbrains.compose.components:components-ui-tooling-preview-android:1.6.11] /home/tyler/.gradle/caches/transforms-4/6ce5301d89e4e40df14b91e6afe77016/transformed/library-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.room:room-runtime-android:2.7.0-alpha08] /home/tyler/.gradle/caches/transforms-4/b2d0bed7c2950ea3b4e9ee5e6d5959bb/transformed/room-runtime-release/AndroidManifest.xml:17:1-31:12
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.autofill:autofill:1.0.0] /home/tyler/.gradle/caches/transforms-4/df88efd86f61dadbf3999ab8eb19a168/transformed/autofill-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /home/tyler/.gradle/caches/transforms-4/aa108e5513b3cd73eefb33b128d7cd4e/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /home/tyler/.gradle/caches/transforms-4/e6f54aa1c4b6b694f3a0857f534b9746/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] /home/tyler/.gradle/caches/transforms-4/7f8e8d9b21b29aadfa51e59c0e32722c/transformed/savedstate-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.0] /home/tyler/.gradle/caches/transforms-4/a24903f803d1b26febb68b9ad4a1d096/transformed/lifecycle-livedata-core-2.8.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.0] /home/tyler/.gradle/caches/transforms-4/1e5cd66209981b1b0487cede6d9a4e1e/transformed/lifecycle-runtime-ktx-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.0] /home/tyler/.gradle/caches/transforms-4/97b0addf60cdad08e2642fcf42345cd8/transformed/lifecycle-runtime-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.0] /home/tyler/.gradle/caches/transforms-4/a4a5a68c862a67ff493daa3e488892ec/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0] /home/tyler/.gradle/caches/transforms-4/ca0316b1cf63ca78f25eaa16fc6e6f4c/transformed/lifecycle-viewmodel-ktx-2.8.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.0] /home/tyler/.gradle/caches/transforms-4/f446b639dae0bcf2fe17b5406e9c6709/transformed/lifecycle-runtime-compose-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.0] /home/tyler/.gradle/caches/transforms-4/a8b872e06ec9ed4796ce7893b98546ad/transformed/lifecycle-viewmodel-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.0] /home/tyler/.gradle/caches/transforms-4/b63bdba5445eb33278450b2990e3c6de/transformed/lifecycle-viewmodel-savedstate-2.8.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core-ktx:1.13.0] /home/tyler/.gradle/caches/transforms-4/31ec94d64fcee625a2a31b63e924fbcf/transformed/core-ktx-1.13.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/bf338cdc343dd51f1ce07bb3a04b5154/transformed/runtime-saveable-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/972834fbd7be06996309932242a8da2e/transformed/runtime-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/tyler/.gradle/caches/transforms-4/82c8e47d1f582fd27105f38fc20d2443/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/tyler/.gradle/caches/transforms-4/c07463f9719f7e08bf4c2116244d0d59/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/tyler/.gradle/caches/transforms-4/a6deb4af7a9fe98c5abaded47319c225/transformed/startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.0.0] /home/tyler/.gradle/caches/transforms-4/a6bda25a72e3852bfd1204031f1a6745/transformed/tracing-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/tyler/.gradle/caches/transforms-4/3fafe12fa21b8bb058abff1830f02fce/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.sqlite:sqlite-bundled-android:2.5.0-alpha08] /home/tyler/.gradle/caches/transforms-4/cfbf68acb817df7d099ce46fff4aae6b/transformed/sqlite-bundled-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.sqlite:sqlite-framework-android:2.5.0-alpha08] /home/tyler/.gradle/caches/transforms-4/99f5b4ca0f39a62c5a92fe3af1e0191d/transformed/sqlite-framework-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.sqlite:sqlite-android:2.5.0-alpha08] /home/tyler/.gradle/caches/transforms-4/fcbc951d38e97d38d5e221a0d4f6253b/transformed/sqlite-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/tyler/.gradle/caches/transforms-4/b61805029f92e2268c67fd9d5b0f34c8/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+	package
+		INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:2:11-69
+application
+ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:4:5-21:19
+INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:4:5-21:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/cc1d5facd2bc217fde0471e7dee66032/transformed/ui-tooling-release/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/cc1d5facd2bc217fde0471e7dee66032/transformed/ui-tooling-release/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.room:room-runtime-android:2.7.0-alpha08] /home/tyler/.gradle/caches/transforms-4/b2d0bed7c2950ea3b4e9ee5e6d5959bb/transformed/room-runtime-release/AndroidManifest.xml:23:5-29:19
+MERGED from [androidx.room:room-runtime-android:2.7.0-alpha08] /home/tyler/.gradle/caches/transforms-4/b2d0bed7c2950ea3b4e9ee5e6d5959bb/transformed/room-runtime-release/AndroidManifest.xml:23:5-29:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.0] /home/tyler/.gradle/caches/transforms-4/a4a5a68c862a67ff493daa3e488892ec/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.0] /home/tyler/.gradle/caches/transforms-4/a4a5a68c862a67ff493daa3e488892ec/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/tyler/.gradle/caches/transforms-4/a6deb4af7a9fe98c5abaded47319c225/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/tyler/.gradle/caches/transforms-4/a6deb4af7a9fe98c5abaded47319c225/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/tyler/.gradle/caches/transforms-4/3fafe12fa21b8bb058abff1830f02fce/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/tyler/.gradle/caches/transforms-4/3fafe12fa21b8bb058abff1830f02fce/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+	android:extractNativeLibs
+		INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:9:9-35
+	android:label
+		ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:7:9-41
+	android:roundIcon
+		ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:8:9-54
+	android:icon
+		ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:6:9-43
+	android:allowBackup
+		ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:5:9-35
+	android:theme
+		ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:10:9-72
+activity#com.minutesock.dawordgame.MainActivity
+ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:11:9-20:20
+	android:exported
+		ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:12:13-36
+	android:configChanges
+		ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:13:13-225
+	android:name
+		ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:14:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:15:13-19:29
+action#android.intent.action.MAIN
+ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:16:17-69
+	android:name
+		ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:16:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:18:17-77
+	android:name
+		ADDED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml:18:27-74
+uses-sdk
+INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml
+INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml
+MERGED from [androidx.activity:activity:1.9.1] /home/tyler/.gradle/caches/transforms-4/3ac05d1a7c08dfa1b444b9f6b3f25fa7/transformed/activity-1.9.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.9.1] /home/tyler/.gradle/caches/transforms-4/3ac05d1a7c08dfa1b444b9f6b3f25fa7/transformed/activity-1.9.1/AndroidManifest.xml:20:5-44
+MERGED from [org.jetbrains.compose.components:components-resources-android:1.6.11] /home/tyler/.gradle/caches/transforms-4/3e867574eccc1651c73c40f1695015cc/transformed/library-release/AndroidManifest.xml:5:5-44
+MERGED from [org.jetbrains.compose.components:components-resources-android:1.6.11] /home/tyler/.gradle/caches/transforms-4/3e867574eccc1651c73c40f1695015cc/transformed/library-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/4f39ee7e6280b5c6da6d1fdb087a66f3/transformed/material-ripple-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/4f39ee7e6280b5c6da6d1fdb087a66f3/transformed/material-ripple-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/f679069b19c26d1cac40662477ef44fa/transformed/material-icons-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/f679069b19c26d1cac40662477ef44fa/transformed/material-icons-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/ab9bc0b20348b30f8c7911d97f2b9509/transformed/material-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/ab9bc0b20348b30f8c7911d97f2b9509/transformed/material-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/b961a867755c58c1b95d77fe27c81aed/transformed/animation-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/b961a867755c58c1b95d77fe27c81aed/transformed/animation-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/007ca260d92a6032d928a3e668afc4e4/transformed/animation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/007ca260d92a6032d928a3e668afc4e4/transformed/animation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/839901b15766547dfc0f2ca3fedf2608/transformed/foundation-layout-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/839901b15766547dfc0f2ca3fedf2608/transformed/foundation-layout-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/8b253273a62178220fef0d820dbc158c/transformed/foundation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/8b253273a62178220fef0d820dbc158c/transformed/foundation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/2400088617bde6f01d4cf3d04fd73f7c/transformed/ui-tooling-data-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/2400088617bde6f01d4cf3d04fd73f7c/transformed/ui-tooling-data-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/01358996a6de78289458fb4550b13086/transformed/ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/01358996a6de78289458fb4550b13086/transformed/ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/57e6712e0b7dff2d49ce1faf4d0acecf/transformed/ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/57e6712e0b7dff2d49ce1faf4d0acecf/transformed/ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/4fc2dae9f07be67e6242ac935a839145/transformed/ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/4fc2dae9f07be67e6242ac935a839145/transformed/ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/94ac9fd71e19cf295cc59a6add5fe724/transformed/ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/94ac9fd71e19cf295cc59a6add5fe724/transformed/ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/fde99437a4bcf029845292441080b354/transformed/ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/fde99437a4bcf029845292441080b354/transformed/ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/cc1d5facd2bc217fde0471e7dee66032/transformed/ui-tooling-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/cc1d5facd2bc217fde0471e7dee66032/transformed/ui-tooling-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/0dd861db5ab52bb09c66dcb26655fb8e/transformed/ui-tooling-preview-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/0dd861db5ab52bb09c66dcb26655fb8e/transformed/ui-tooling-preview-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/69220cfc3e8d9fcc255396ad63b217c2/transformed/ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/69220cfc3e8d9fcc255396ad63b217c2/transformed/ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.9.1] /home/tyler/.gradle/caches/transforms-4/fa26e478cc295599d7ba198132aa7609/transformed/activity-ktx-1.9.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.9.1] /home/tyler/.gradle/caches/transforms-4/fa26e478cc295599d7ba198132aa7609/transformed/activity-ktx-1.9.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.9.1] /home/tyler/.gradle/caches/transforms-4/94ab5e1c83c22c7ba504490e1f934e19/transformed/activity-compose-1.9.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.9.1] /home/tyler/.gradle/caches/transforms-4/94ab5e1c83c22c7ba504490e1f934e19/transformed/activity-compose-1.9.1/AndroidManifest.xml:5:5-44
+MERGED from [org.jetbrains.compose.components:components-ui-tooling-preview-android:1.6.11] /home/tyler/.gradle/caches/transforms-4/6ce5301d89e4e40df14b91e6afe77016/transformed/library-release/AndroidManifest.xml:5:5-44
+MERGED from [org.jetbrains.compose.components:components-ui-tooling-preview-android:1.6.11] /home/tyler/.gradle/caches/transforms-4/6ce5301d89e4e40df14b91e6afe77016/transformed/library-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.room:room-runtime-android:2.7.0-alpha08] /home/tyler/.gradle/caches/transforms-4/b2d0bed7c2950ea3b4e9ee5e6d5959bb/transformed/room-runtime-release/AndroidManifest.xml:21:5-44
+MERGED from [androidx.room:room-runtime-android:2.7.0-alpha08] /home/tyler/.gradle/caches/transforms-4/b2d0bed7c2950ea3b4e9ee5e6d5959bb/transformed/room-runtime-release/AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.autofill:autofill:1.0.0] /home/tyler/.gradle/caches/transforms-4/df88efd86f61dadbf3999ab8eb19a168/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] /home/tyler/.gradle/caches/transforms-4/df88efd86f61dadbf3999ab8eb19a168/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /home/tyler/.gradle/caches/transforms-4/aa108e5513b3cd73eefb33b128d7cd4e/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /home/tyler/.gradle/caches/transforms-4/aa108e5513b3cd73eefb33b128d7cd4e/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /home/tyler/.gradle/caches/transforms-4/e6f54aa1c4b6b694f3a0857f534b9746/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /home/tyler/.gradle/caches/transforms-4/e6f54aa1c4b6b694f3a0857f534b9746/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /home/tyler/.gradle/caches/transforms-4/7f8e8d9b21b29aadfa51e59c0e32722c/transformed/savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /home/tyler/.gradle/caches/transforms-4/7f8e8d9b21b29aadfa51e59c0e32722c/transformed/savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.0] /home/tyler/.gradle/caches/transforms-4/a24903f803d1b26febb68b9ad4a1d096/transformed/lifecycle-livedata-core-2.8.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.0] /home/tyler/.gradle/caches/transforms-4/a24903f803d1b26febb68b9ad4a1d096/transformed/lifecycle-livedata-core-2.8.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.0] /home/tyler/.gradle/caches/transforms-4/1e5cd66209981b1b0487cede6d9a4e1e/transformed/lifecycle-runtime-ktx-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.0] /home/tyler/.gradle/caches/transforms-4/1e5cd66209981b1b0487cede6d9a4e1e/transformed/lifecycle-runtime-ktx-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.0] /home/tyler/.gradle/caches/transforms-4/97b0addf60cdad08e2642fcf42345cd8/transformed/lifecycle-runtime-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.0] /home/tyler/.gradle/caches/transforms-4/97b0addf60cdad08e2642fcf42345cd8/transformed/lifecycle-runtime-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.0] /home/tyler/.gradle/caches/transforms-4/a4a5a68c862a67ff493daa3e488892ec/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.0] /home/tyler/.gradle/caches/transforms-4/a4a5a68c862a67ff493daa3e488892ec/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0] /home/tyler/.gradle/caches/transforms-4/ca0316b1cf63ca78f25eaa16fc6e6f4c/transformed/lifecycle-viewmodel-ktx-2.8.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0] /home/tyler/.gradle/caches/transforms-4/ca0316b1cf63ca78f25eaa16fc6e6f4c/transformed/lifecycle-viewmodel-ktx-2.8.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.0] /home/tyler/.gradle/caches/transforms-4/f446b639dae0bcf2fe17b5406e9c6709/transformed/lifecycle-runtime-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.0] /home/tyler/.gradle/caches/transforms-4/f446b639dae0bcf2fe17b5406e9c6709/transformed/lifecycle-runtime-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.0] /home/tyler/.gradle/caches/transforms-4/a8b872e06ec9ed4796ce7893b98546ad/transformed/lifecycle-viewmodel-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.0] /home/tyler/.gradle/caches/transforms-4/a8b872e06ec9ed4796ce7893b98546ad/transformed/lifecycle-viewmodel-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.0] /home/tyler/.gradle/caches/transforms-4/b63bdba5445eb33278450b2990e3c6de/transformed/lifecycle-viewmodel-savedstate-2.8.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.0] /home/tyler/.gradle/caches/transforms-4/b63bdba5445eb33278450b2990e3c6de/transformed/lifecycle-viewmodel-savedstate-2.8.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.13.0] /home/tyler/.gradle/caches/transforms-4/31ec94d64fcee625a2a31b63e924fbcf/transformed/core-ktx-1.13.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.13.0] /home/tyler/.gradle/caches/transforms-4/31ec94d64fcee625a2a31b63e924fbcf/transformed/core-ktx-1.13.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/bf338cdc343dd51f1ce07bb3a04b5154/transformed/runtime-saveable-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/bf338cdc343dd51f1ce07bb3a04b5154/transformed/runtime-saveable-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/972834fbd7be06996309932242a8da2e/transformed/runtime-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/972834fbd7be06996309932242a8da2e/transformed/runtime-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/tyler/.gradle/caches/transforms-4/82c8e47d1f582fd27105f38fc20d2443/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/tyler/.gradle/caches/transforms-4/82c8e47d1f582fd27105f38fc20d2443/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/tyler/.gradle/caches/transforms-4/c07463f9719f7e08bf4c2116244d0d59/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/tyler/.gradle/caches/transforms-4/c07463f9719f7e08bf4c2116244d0d59/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/tyler/.gradle/caches/transforms-4/a6deb4af7a9fe98c5abaded47319c225/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/tyler/.gradle/caches/transforms-4/a6deb4af7a9fe98c5abaded47319c225/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.0.0] /home/tyler/.gradle/caches/transforms-4/a6bda25a72e3852bfd1204031f1a6745/transformed/tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] /home/tyler/.gradle/caches/transforms-4/a6bda25a72e3852bfd1204031f1a6745/transformed/tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/tyler/.gradle/caches/transforms-4/3fafe12fa21b8bb058abff1830f02fce/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/tyler/.gradle/caches/transforms-4/3fafe12fa21b8bb058abff1830f02fce/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.sqlite:sqlite-bundled-android:2.5.0-alpha08] /home/tyler/.gradle/caches/transforms-4/cfbf68acb817df7d099ce46fff4aae6b/transformed/sqlite-bundled-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.sqlite:sqlite-bundled-android:2.5.0-alpha08] /home/tyler/.gradle/caches/transforms-4/cfbf68acb817df7d099ce46fff4aae6b/transformed/sqlite-bundled-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.sqlite:sqlite-framework-android:2.5.0-alpha08] /home/tyler/.gradle/caches/transforms-4/99f5b4ca0f39a62c5a92fe3af1e0191d/transformed/sqlite-framework-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite-framework-android:2.5.0-alpha08] /home/tyler/.gradle/caches/transforms-4/99f5b4ca0f39a62c5a92fe3af1e0191d/transformed/sqlite-framework-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite-android:2.5.0-alpha08] /home/tyler/.gradle/caches/transforms-4/fcbc951d38e97d38d5e221a0d4f6253b/transformed/sqlite-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite-android:2.5.0-alpha08] /home/tyler/.gradle/caches/transforms-4/fcbc951d38e97d38d5e221a0d4f6253b/transformed/sqlite-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/tyler/.gradle/caches/transforms-4/b61805029f92e2268c67fd9d5b0f34c8/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/tyler/.gradle/caches/transforms-4/b61805029f92e2268c67fd9d5b0f34c8/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+	android:targetSdkVersion
+		INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/tyler/StudioProjects/WhatInDaWord/composeApp/src/androidMain/AndroidManifest.xml
+activity#androidx.compose.ui.tooling.PreviewActivity
+ADDED from [androidx.compose.ui:ui-tooling-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/cc1d5facd2bc217fde0471e7dee66032/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/cc1d5facd2bc217fde0471e7dee66032/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.6.7] /home/tyler/.gradle/caches/transforms-4/cc1d5facd2bc217fde0471e7dee66032/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
+service#androidx.room.MultiInstanceInvalidationService
+ADDED from [androidx.room:room-runtime-android:2.7.0-alpha08] /home/tyler/.gradle/caches/transforms-4/b2d0bed7c2950ea3b4e9ee5e6d5959bb/transformed/room-runtime-release/AndroidManifest.xml:24:9-28:63
+	android:exported
+		ADDED from [androidx.room:room-runtime-android:2.7.0-alpha08] /home/tyler/.gradle/caches/transforms-4/b2d0bed7c2950ea3b4e9ee5e6d5959bb/transformed/room-runtime-release/AndroidManifest.xml:27:13-37
+	tools:ignore
+		ADDED from [androidx.room:room-runtime-android:2.7.0-alpha08] /home/tyler/.gradle/caches/transforms-4/b2d0bed7c2950ea3b4e9ee5e6d5959bb/transformed/room-runtime-release/AndroidManifest.xml:28:13-60
+	android:directBootAware
+		ADDED from [androidx.room:room-runtime-android:2.7.0-alpha08] /home/tyler/.gradle/caches/transforms-4/b2d0bed7c2950ea3b4e9ee5e6d5959bb/transformed/room-runtime-release/AndroidManifest.xml:26:13-43
+	android:name
+		ADDED from [androidx.room:room-runtime-android:2.7.0-alpha08] /home/tyler/.gradle/caches/transforms-4/b2d0bed7c2950ea3b4e9ee5e6d5959bb/transformed/room-runtime-release/AndroidManifest.xml:25:13-74
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.0] /home/tyler/.gradle/caches/transforms-4/a4a5a68c862a67ff493daa3e488892ec/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.0] /home/tyler/.gradle/caches/transforms-4/a4a5a68c862a67ff493daa3e488892ec/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/tyler/.gradle/caches/transforms-4/a6deb4af7a9fe98c5abaded47319c225/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/tyler/.gradle/caches/transforms-4/a6deb4af7a9fe98c5abaded47319c225/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/tyler/.gradle/caches/transforms-4/523ff622198f3d2d095e9b52b73e430a/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:23:9-81
+permission#com.minutesock.dawordgame.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:26:22-94
+uses-permission#com.minutesock.dawordgame.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.13.0] /home/tyler/.gradle/caches/transforms-4/3f452c85889aad39e4c4076619a06264/transformed/core-1.13.0/AndroidManifest.xml:26:22-94
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.8.0] /home/tyler/.gradle/caches/transforms-4/a4a5a68c862a67ff493daa3e488892ec/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.8.0] /home/tyler/.gradle/caches/transforms-4/a4a5a68c862a67ff493daa3e488892ec/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.8.0] /home/tyler/.gradle/caches/transforms-4/a4a5a68c862a67ff493daa3e488892ec/transformed/lifecycle-process-2.8.0/AndroidManifest.xml:30:17-78
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/tyler/.gradle/caches/transforms-4/4c0a7fd73099999d7ae29e23d62d481f/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
