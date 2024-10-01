@@ -10,8 +10,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.minutesock.dawordgame.database.AppDatabase
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 
 import whatindaword.composeapp.generated.resources.Res
 import whatindaword.composeapp.generated.resources.compose_multiplatform
@@ -19,6 +21,8 @@ import whatindaword.composeapp.generated.resources.compose_multiplatform
 @Composable
 @Preview
 fun App() {
+    val db = koinInject<AppDatabase>()
+
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
