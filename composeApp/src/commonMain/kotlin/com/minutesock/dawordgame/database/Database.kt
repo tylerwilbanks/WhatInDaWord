@@ -2,11 +2,13 @@ package com.minutesock.dawordgame.database
 
 import androidx.room.ConstructedBy
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.minutesock.dawordgame.database.model.ValidWord
 import com.minutesock.dawordgame.database.model.ValidWordDao
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 
@@ -22,11 +24,16 @@ expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
 }
 
 fun getRoomDatabase(
-    builder: RoomDatabase.Builder<AppDatabase>
+    builder: RoomDatabase.Builder<AppDatabase>,
+    dispatcher: CoroutineDispatcher
 ): AppDatabase {
     return builder
         .fallbackToDestructiveMigrationOnDowngrade(true)
         .setDriver(BundledSQLiteDriver())
-        .setQueryCoroutineContext(Dispatchers.IO)
+        .setQueryCoroutineContext(dispatcher)
         .build()
+}
+
+fun getInMemoryDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+    return Room.inMemoryDatabaseBuilder()
 }
