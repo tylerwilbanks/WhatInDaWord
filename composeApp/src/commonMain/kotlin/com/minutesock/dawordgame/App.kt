@@ -14,11 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.minutesock.dawordgame.database.AppDatabase
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.minutesock.dawordgame.feature.game.GameViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import whatindaword.composeapp.generated.resources.Res
 import whatindaword.composeapp.generated.resources.compose_multiplatform
@@ -28,8 +27,6 @@ import whatindaword.composeapp.generated.resources.compose_multiplatform
 fun App(
     gameViewModel: GameViewModel = koinViewModel()
 ) {
-    val db = koinInject<AppDatabase>()
-    println("${db.getValidWordDao()}")
 
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }

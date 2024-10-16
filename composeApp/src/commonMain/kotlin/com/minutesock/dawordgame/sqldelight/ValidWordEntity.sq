@@ -1,0 +1,24 @@
+CREATE TABLE ValidWordEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    word TEXT NOT NULL,
+    language TEXT NOT NULL,
+    UNIQUE(word, language)
+);
+
+upsertValidWordEntity:
+INSERT OR REPLACE INTO ValidWordEntity(
+    word, language
+) VALUES (:word, :language);
+
+selectValidWordEntities:
+SELECT *
+FROM ValidWordEntity
+WHERE language = ?;
+
+selectValidWordEntity:
+SELECT *
+FROM ValidWordEntity
+WHERE word = ? AND language = ?;
+
+clearValidWordEntities:
+DELETE FROM ValidWordEntity;

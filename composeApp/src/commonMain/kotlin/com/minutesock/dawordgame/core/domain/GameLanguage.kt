@@ -1,4 +1,4 @@
-package com.minutesock.dawordgame.core
+package com.minutesock.dawordgame.core.domain
 
 enum class GameLanguage {
     English,
@@ -42,6 +42,12 @@ enum class GameLanguage {
             English -> "word_selection.json"
             German -> TODO()
             Spanish -> TODO()
+        }
+    }
+
+    companion object {
+        fun fromDb(dbName: String): GameLanguage {
+           return GameLanguage.entries.first { it.dbName == dbName }
         }
     }
 }
