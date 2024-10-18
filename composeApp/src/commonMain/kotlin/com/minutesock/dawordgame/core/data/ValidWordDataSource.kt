@@ -9,6 +9,7 @@ interface ValidWordDataSource {
     suspend fun upsertValidWords(validWords: List<ValidWord>)
     suspend fun selectAllValidWords(language: GameLanguage): List<ValidWord>
     suspend fun selectValidWord(word: String, language: GameLanguage): ValidWord
+    suspend fun getValidWordCount(): Long
 }
 
 class SqlDelightValidWordDataSource(
@@ -47,5 +48,8 @@ class SqlDelightValidWordDataSource(
                 .toValidWord()
         }
     }
+
+    override suspend fun getValidWordCount() = validWordQueries.getValidWordEntityCount().executeAsOne()
+
 
 }

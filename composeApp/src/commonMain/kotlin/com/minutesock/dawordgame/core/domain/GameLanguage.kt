@@ -13,7 +13,7 @@ enum class GameLanguage {
         }
     }
 
-    val expectedValidWordCount: Int get() {
+    val expectedValidWordCount: Long get() {
         return when (this) {
             English -> 12_484
             German -> 0
