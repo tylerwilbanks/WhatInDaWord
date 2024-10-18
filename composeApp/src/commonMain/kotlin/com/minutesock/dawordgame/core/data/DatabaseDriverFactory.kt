@@ -14,3 +14,6 @@ expect class TestDatabaseDriverFactory() : DatabaseDriverFactory {
     override fun createDriver(): SqlDriver
 }
 
+fun SqlDriver.performMigrations() {
+    // todo-tyler handle migrations
+}

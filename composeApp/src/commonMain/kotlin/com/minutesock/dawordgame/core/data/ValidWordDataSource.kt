@@ -4,11 +4,11 @@ import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.ValidWord
 
 interface ValidWordDataSource {
-    suspend fun clearValidWordTable()
-    suspend fun upsertValidWords(validWords: List<ValidWord>)
-    suspend fun selectAllValidWords(language: GameLanguage): List<ValidWord>
-    suspend fun selectValidWord(word: String, language: GameLanguage): ValidWord
-    suspend fun getValidWordCount(): Long
+    suspend fun clearTable()
+    suspend fun upsert(validWords: List<ValidWord>)
+    suspend fun selectAll(language: GameLanguage): List<ValidWord>
+    suspend fun select(word: String, language: GameLanguage): ValidWord
+    suspend fun getCount(): Long
 }
 
 class SqlDelightValidWordDataSource(
@@ -16,13 +16,13 @@ class SqlDelightValidWordDataSource(
 ) : ValidWordDataSource {
     private val validWordQueries = dbClient.validWordEntityQueries
 
-    override suspend fun clearValidWordTable() {
+    override suspend fun clearTable() {
         dbClient.suspendingTransaction {
             validWordQueries.clearValidWordEntities()
         }
     }
 
-    override suspend fun upsertValidWords(validWords: List<ValidWord>) {
+    override suspend fun upsert(validWords: List<ValidWord>) {
         dbClient.suspendingTransaction {
             validWords.forEach {
                 validWordQueries.upsertValidWordEntity(it.word, it.language.dbName)
@@ -30,7 +30,7 @@ class SqlDelightValidWordDataSource(
         }
     }
 
-    override suspend fun selectAllValidWords(language: GameLanguage): List<ValidWord> {
+    override suspend fun selectAll(language: GameLanguage): List<ValidWord> {
         return dbClient.suspendingTransaction {
             validWordQueries
                 .selectValidWordEntities(language = language.dbName)
@@ -39,7 +39,7 @@ class SqlDelightValidWordDataSource(
         }
     }
 
-    override suspend fun selectValidWord(word: String, language: GameLanguage): ValidWord {
+    override suspend fun select(word: String, language: GameLanguage): ValidWord {
         return dbClient.suspendingTransaction {
             validWordQueries
                 .selectValidWordEntity(word = word, language = language.dbName)
@@ -48,7 +48,7 @@ class SqlDelightValidWordDataSource(
         }
     }
 
-    override suspend fun getValidWordCount() =
+    override suspend fun getCount() =
         dbClient.suspendingTransaction {
             validWordQueries.getValidWordEntityCount().executeAsOne()
         }

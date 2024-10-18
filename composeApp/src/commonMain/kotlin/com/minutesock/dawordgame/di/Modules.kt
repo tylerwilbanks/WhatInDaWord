@@ -8,7 +8,7 @@ import com.minutesock.dawordgame.core.data.SqlDelightWordSelectionDataSource
 import com.minutesock.dawordgame.core.data.TestDatabaseDriverFactory
 import com.minutesock.dawordgame.core.data.ValidWordDataSource
 import com.minutesock.dawordgame.core.data.WordSelectionDataSource
-import com.minutesock.dawordgame.feature.game.GameViewModel
+import com.minutesock.dawordgame.feature.game.presentation.GameViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO

@@ -22,14 +22,14 @@ class GameSetupHelper(
     suspend fun upsertValidWordsIfNeeded(gameLanguage: GameLanguage) {
         withContext(defaultDispatcher) {
             val expectedValidWordCount = gameLanguage.expectedValidWordCount
-            val storedValidWordCount = validWordDataSource.getValidWordCount()
+            val storedValidWordCount = validWordDataSource.getCount()
             if (storedValidWordCount != expectedValidWordCount) {
-                validWordDataSource.clearValidWordTable()
+                validWordDataSource.clearTable()
                 val validWords = Json
                     .decodeFromString<ValidWordsDto>(readFile(gameLanguage.validWordFileName))
                     .words
                     .map { ValidWord(word = it, language = gameLanguage) }
-                validWordDataSource.upsertValidWords(validWords)
+                validWordDataSource.upsert(validWords)
             }
         }
     }
@@ -37,15 +37,15 @@ class GameSetupHelper(
     suspend fun upsertWordSelectionIfNeeded(gameLanguage: GameLanguage) {
         withContext(defaultDispatcher) {
             val expectedWordSelectionCount = gameLanguage.expectedWordSelectionCount
-            val storedWordSelectionCount = wordSelectionDataSource.getWordSelectionCount()
+            val storedWordSelectionCount = wordSelectionDataSource.getCount()
             if (storedWordSelectionCount != expectedWordSelectionCount) {
-                wordSelectionDataSource.clearWordSelectionTable()
+                wordSelectionDataSource.clearTable()
                 val wordSelections = Json
                     .decodeFromString<WordSelectionDto>(readFile(gameLanguage.wordSelectionFileName))
                     .words
                     .map { WordSelection(word = it, language = gameLanguage) }
                     .toTypedArray()
-                wordSelectionDataSource.upsertWordSelections(*wordSelections)
+                wordSelectionDataSource.upsert(*wordSelections)
             }
         }
     }

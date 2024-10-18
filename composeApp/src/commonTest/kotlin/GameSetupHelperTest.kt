@@ -1,11 +1,11 @@
 import com.minutesock.dawordgame.core.data.ValidWordDataSource
 import com.minutesock.dawordgame.core.data.WordSelectionDataSource
 import com.minutesock.dawordgame.core.domain.GameLanguage
+import com.minutesock.dawordgame.di.initKoin
 import com.minutesock.dawordgame.di.testDbModule
 import com.minutesock.dawordgame.feature.game.GameSetupHelper
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import kotlin.test.AfterTest
 import kotlin.test.Test
@@ -14,7 +14,7 @@ import kotlin.test.assertEquals
 
 class GameSetupHelperTest {
     private val testDispatcher = StandardTestDispatcher()
-    private val koin = startKoin {
+    private val koin = initKoin {
         modules(testDbModule(testDispatcher))
     }.koin
 
@@ -36,20 +36,20 @@ class GameSetupHelperTest {
     @Test
     fun english_validWordsAreInsertedIntoDb() = runTest(testDispatcher) {
         val gameLanguage = GameLanguage.English
-        assertEquals(0, validWordDataSource.getValidWordCount())
+        assertEquals(0, validWordDataSource.getCount())
         gameSetupHelper.upsertValidWordsIfNeeded(gameLanguage)
-        assertEquals(gameLanguage.expectedValidWordCount, validWordDataSource.getValidWordCount())
+        assertEquals(gameLanguage.expectedValidWordCount, validWordDataSource.getCount())
     }
 
 
     @Test
     fun english_wordSelectionsAreInsertedIntoDb() = runTest(testDispatcher) {
         val gameLanguage = GameLanguage.English
-        assertEquals(0, wordSelectionDataSource.getWordSelectionCount())
+        assertEquals(0, wordSelectionDataSource.getCount())
         gameSetupHelper.upsertWordSelectionIfNeeded(gameLanguage)
         assertEquals(
             gameLanguage.expectedWordSelectionCount,
-            wordSelectionDataSource.getWordSelectionCount()
+            wordSelectionDataSource.getCount()
         )
     }
 }

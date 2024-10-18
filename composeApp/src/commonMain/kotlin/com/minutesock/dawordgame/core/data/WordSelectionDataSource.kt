@@ -4,11 +4,11 @@ import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.WordSelection
 
 interface WordSelectionDataSource {
-    suspend fun upsertWordSelections(vararg wordSelections: WordSelection)
-    suspend fun selectWordSelection(wordSelection: WordSelection): WordSelection
-    suspend fun selectWordSelectionEntities(gameLanguage: GameLanguage): List<WordSelection>
-    suspend fun getWordSelectionCount(): Long
-    suspend fun clearWordSelectionTable()
+    suspend fun upsert(vararg wordSelections: WordSelection)
+    suspend fun select(wordSelection: WordSelection): WordSelection
+    suspend fun selectAll(gameLanguage: GameLanguage): List<WordSelection>
+    suspend fun getCount(): Long
+    suspend fun clearTable()
 }
 
 class SqlDelightWordSelectionDataSource(
@@ -16,7 +16,7 @@ class SqlDelightWordSelectionDataSource(
 ) : WordSelectionDataSource {
     private val queries = dbClient.wordSelectionEntityQueries
 
-    override suspend fun upsertWordSelections(vararg wordSelections: WordSelection) {
+    override suspend fun upsert(vararg wordSelections: WordSelection) {
         dbClient.suspendingTransaction {
             wordSelections.forEach {
                 queries.upsertWordSelectionEntity(it.word, it.language.dbName)
@@ -24,7 +24,7 @@ class SqlDelightWordSelectionDataSource(
         }
     }
 
-    override suspend fun selectWordSelection(wordSelection: WordSelection): WordSelection {
+    override suspend fun select(wordSelection: WordSelection): WordSelection {
         return dbClient.suspendingTransaction {
             queries
                 .selectWordSelectionEntity(wordSelection.word, wordSelection.language.dbName)
@@ -33,7 +33,7 @@ class SqlDelightWordSelectionDataSource(
         }
     }
 
-    override suspend fun selectWordSelectionEntities(gameLanguage: GameLanguage): List<WordSelection> {
+    override suspend fun selectAll(gameLanguage: GameLanguage): List<WordSelection> {
         return dbClient.suspendingTransaction {
             queries
                 .selectWordSelectionEntities(language = gameLanguage.dbName)
@@ -42,12 +42,12 @@ class SqlDelightWordSelectionDataSource(
         }
     }
 
-    override suspend fun getWordSelectionCount() =
+    override suspend fun getCount() =
         dbClient.suspendingTransaction {
             queries.getWordSelectionEntityCount().executeAsOne()
         }
 
-    override suspend fun clearWordSelectionTable() {
+    override suspend fun clearTable() {
         dbClient.suspendingTransaction {
             queries.clearWordSelectionEntities()
         }
