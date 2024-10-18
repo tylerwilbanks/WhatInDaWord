@@ -21,7 +21,8 @@ enum class GameLanguage {
         }
     }
 
-    val expectedWordSelectionCount: Int get() {
+    val expectedWordSelectionCount: Long
+        get() {
         return when (this) {
             English -> 2_315
             German -> 0

@@ -2,10 +2,9 @@ package com.minutesock.dawordgame.core.data
 
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.ValidWord
-import com.minutesock.dawordgame.sqldelight.ValidWordEntity
 
 interface ValidWordDataSource {
-    suspend fun clearValidWordEntities()
+    suspend fun clearValidWordTable()
     suspend fun upsertValidWords(validWords: List<ValidWord>)
     suspend fun selectAllValidWords(language: GameLanguage): List<ValidWord>
     suspend fun selectValidWord(word: String, language: GameLanguage): ValidWord
@@ -17,7 +16,7 @@ class SqlDelightValidWordDataSource(
 ) : ValidWordDataSource {
     private val validWordQueries = dbClient.validWordEntityQueries
 
-    override suspend fun clearValidWordEntities() {
+    override suspend fun clearValidWordTable() {
         dbClient.suspendingTransaction {
             validWordQueries.clearValidWordEntities()
         }
@@ -49,7 +48,8 @@ class SqlDelightValidWordDataSource(
         }
     }
 
-    override suspend fun getValidWordCount() = validWordQueries.getValidWordEntityCount().executeAsOne()
-
-
+    override suspend fun getValidWordCount() =
+        dbClient.suspendingTransaction {
+            validWordQueries.getValidWordEntityCount().executeAsOne()
+        }
 }

@@ -1,0 +1,25 @@
+CREATE TABLE WordSelectionEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    word TEXT NOT NULL,
+    language TEXT NOT NULL,
+    UNIQUE (word, language)
+);
+
+upsertWordSelectionEntity:
+INSERT OR REPLACE INTO WordSelectionEntity(
+    word, language
+) VALUES (:word, :language);
+
+selectWordSelectionEntity:
+SELECT * FROM WordSelectionEntity
+WHERE word = ? AND language = ?;
+
+selectWordSelectionEntities:
+SELECT * FROM WordSelectionEntity
+WHERE language = ?;
+
+getWordSelectionEntityCount:
+SELECT COUNT(*) FROM WordSelectionEntity;
+
+clearWordSelectionEntities:
+DELETE FROM WordSelectionEntity;

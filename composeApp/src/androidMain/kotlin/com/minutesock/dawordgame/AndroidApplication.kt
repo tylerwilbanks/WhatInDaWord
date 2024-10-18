@@ -8,6 +8,7 @@ import org.koin.android.ext.koin.androidContext
 class AndroidApplication: Application() {
     override fun onCreate() {
         super.onCreate()
+        AndroidContextProvider.init(this)
         initKoin {
             androidContext(this@AndroidApplication)
             modules(androidModule)
