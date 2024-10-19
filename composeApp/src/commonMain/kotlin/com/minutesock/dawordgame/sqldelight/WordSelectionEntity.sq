@@ -19,7 +19,8 @@ SELECT * FROM WordSelectionEntity
 WHERE language = ?;
 
 getWordSelectionEntityCount:
-SELECT COUNT(*) FROM WordSelectionEntity;
+SELECT COUNT(*) FROM WordSelectionEntity
+WHERE language = ?;
 
 clearWordSelectionEntities:
 DELETE FROM WordSelectionEntity;

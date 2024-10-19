@@ -50,5 +50,10 @@ enum class GameLanguage {
         fun fromDb(dbName: String): GameLanguage {
            return GameLanguage.entries.first { it.dbName == dbName }
         }
+
+        fun fromSystem(languageName: String): GameLanguage {
+            return GameLanguage.entries.firstOrNull { it.dbName.lowercase() == languageName.lowercase() }
+                ?: English
+        }
     }
 }

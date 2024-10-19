@@ -21,7 +21,8 @@ FROM ValidWordEntity
 WHERE word = ? AND language = ?;
 
 getValidWordEntityCount:
-SELECT COUNT(*) FROM ValidWordEntity;
+SELECT COUNT(*) FROM ValidWordEntity
+WHERE language = ?;
 
 clearValidWordEntities:
 DELETE FROM ValidWordEntity;

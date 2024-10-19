@@ -7,7 +7,7 @@ interface WordSelectionDataSource {
     suspend fun upsert(vararg wordSelections: WordSelection)
     suspend fun select(wordSelection: WordSelection): WordSelection
     suspend fun selectAll(gameLanguage: GameLanguage): List<WordSelection>
-    suspend fun getCount(): Long
+    suspend fun getCount(gameLanguage: GameLanguage): Long
     suspend fun clearTable()
 }
 
@@ -42,9 +42,9 @@ class SqlDelightWordSelectionDataSource(
         }
     }
 
-    override suspend fun getCount() =
+    override suspend fun getCount(gameLanguage: GameLanguage) =
         dbClient.suspendingTransaction {
-            queries.getWordSelectionEntityCount().executeAsOne()
+            queries.getWordSelectionEntityCount(language = gameLanguage.dbName).executeAsOne()
         }
 
     override suspend fun clearTable() {

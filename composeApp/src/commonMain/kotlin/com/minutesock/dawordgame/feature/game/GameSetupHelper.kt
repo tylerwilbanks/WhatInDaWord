@@ -22,7 +22,7 @@ class GameSetupHelper(
     suspend fun upsertValidWordsIfNeeded(gameLanguage: GameLanguage) {
         withContext(defaultDispatcher) {
             val expectedValidWordCount = gameLanguage.expectedValidWordCount
-            val storedValidWordCount = validWordDataSource.getCount()
+            val storedValidWordCount = validWordDataSource.getCount(gameLanguage)
             if (storedValidWordCount != expectedValidWordCount) {
                 validWordDataSource.clearTable()
                 val validWords = Json
@@ -37,7 +37,7 @@ class GameSetupHelper(
     suspend fun upsertWordSelectionIfNeeded(gameLanguage: GameLanguage) {
         withContext(defaultDispatcher) {
             val expectedWordSelectionCount = gameLanguage.expectedWordSelectionCount
-            val storedWordSelectionCount = wordSelectionDataSource.getCount()
+            val storedWordSelectionCount = wordSelectionDataSource.getCount(gameLanguage)
             if (storedWordSelectionCount != expectedWordSelectionCount) {
                 wordSelectionDataSource.clearTable()
                 val wordSelections = Json

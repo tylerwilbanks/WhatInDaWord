@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.minutesock.dawordgame.feature.game.data.GameRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class GameViewModel(
@@ -18,13 +17,6 @@ class GameViewModel(
     init {
         viewModelScope.launch {
             gameRepository.setupWords(gameLanguage = state.value.gameLanguage)
-            val (v, w) = gameRepository.testingCount()
-            _state.update {
-                it.copy(
-                    validWordCount = v,
-                    wordSelectionCount = w
-                )
-            }
         }
     }
 }

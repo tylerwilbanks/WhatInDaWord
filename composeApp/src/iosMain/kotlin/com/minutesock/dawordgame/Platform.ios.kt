@@ -1,5 +1,6 @@
 package com.minutesock.dawordgame
 
+import com.minutesock.dawordgame.core.domain.GameLanguage
 import platform.UIKit.UIDevice
 
 class IOSPlatform: Platform {
@@ -7,3 +8,7 @@ class IOSPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform = IOSPlatform()
+
+actual fun getSystemLanguage(): GameLanguage {
+    return GameLanguage.fromSystem(Locale.current.languageCode)
+}

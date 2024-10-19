@@ -36,20 +36,23 @@ class GameSetupHelperTest {
     @Test
     fun english_validWordsAreInsertedIntoDb() = runTest(testDispatcher) {
         val gameLanguage = GameLanguage.English
-        assertEquals(0, validWordDataSource.getCount())
+        assertEquals(0, validWordDataSource.getCount(gameLanguage))
         gameSetupHelper.upsertValidWordsIfNeeded(gameLanguage)
-        assertEquals(gameLanguage.expectedValidWordCount, validWordDataSource.getCount())
+        assertEquals(
+            gameLanguage.expectedValidWordCount,
+            validWordDataSource.getCount(gameLanguage)
+        )
     }
 
 
     @Test
     fun english_wordSelectionsAreInsertedIntoDb() = runTest(testDispatcher) {
         val gameLanguage = GameLanguage.English
-        assertEquals(0, wordSelectionDataSource.getCount())
+        assertEquals(0, wordSelectionDataSource.getCount(gameLanguage))
         gameSetupHelper.upsertWordSelectionIfNeeded(gameLanguage)
         assertEquals(
             gameLanguage.expectedWordSelectionCount,
-            wordSelectionDataSource.getCount()
+            wordSelectionDataSource.getCount(gameLanguage)
         )
     }
 }
