@@ -8,7 +8,7 @@ data class GuessLetter(
     private val _character: Char = AVAILABLE_CHAR,
     val letterState: LetterState = LetterState.Unknown
 ) {
-    val displayCharacter get() = _character.uppercaseChar()
+    val displayCharacter get() = _character.toString().uppercase()
     val character get() = _character.lowercaseChar()
     val availableForInput get() = _character == AVAILABLE_CHAR
     val answered get() = _character != AVAILABLE_CHAR

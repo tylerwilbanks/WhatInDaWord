@@ -2,6 +2,8 @@ package com.minutesock.dawordgame.feature.game.presentation
 
 import com.minutesock.dawordgame.core.util.Option
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
 data class GuessWord(
@@ -31,13 +33,13 @@ fun GuessWord.addGuessLetter(guessLetter: GuessLetter): Option<GuessWord?> {
         if (index == -1) {
             val customError = GuessWordError.NoLettersAvailableForInput
             return Option.Error(
-                uiText = customError.message,
+                textRes = customError.message,
                 errorCode = customError.ordinal
             )
         }
         newGuessLetterList[index] = newGuessLetterList[index].copy(
             _character = guessLetter.character,
-            state = guessLetter.state
+            letterState = guessLetter.letterState
         )
     }
     return Option.Success(
@@ -54,7 +56,7 @@ fun GuessWord.eraseLetter(): Option<GuessWord?> {
         if (index == -1) {
             val customError = GuessWordError.NoLettersToRemove
             return Option.Error(
-                uiText = customError.message,
+                textRes = customError.message,
                 errorCode = customError.ordinal
             )
         }
@@ -90,7 +92,7 @@ fun GuessWord.lockInGuess(correctWord: String, isFinalGuess: Boolean): GuessWord
         newGuessLetters.add(
             GuessLetter(
                 _character = guessLetter.character,
-                state = newState
+                letterState = newState
             )
         )
     }
@@ -99,13 +101,13 @@ fun GuessWord.lockInGuess(correctWord: String, isFinalGuess: Boolean): GuessWord
     this.letters.forEachIndexed { index, userGuessLetter ->
         val correctDuplicateLetterCount = correctChars.count { it == userGuessLetter.character }
         val currentPresentAndCorrectLetterCount = newGuessLetters.count {
-            it.character == this.letters[index].character && it.state == LetterState.Correct ||
-                    it.character == this.letters[index].character && it.state == LetterState.Present
+            it.character == this.letters[index].character && it.letterState == LetterState.Correct ||
+                    it.character == this.letters[index].character && it.letterState == LetterState.Present
         }
 
-        if (newGuessLetters[index].state == LetterState.Present && currentPresentAndCorrectLetterCount > correctDuplicateLetterCount) {
+        if (newGuessLetters[index].letterState == LetterState.Present && currentPresentAndCorrectLetterCount > correctDuplicateLetterCount) {
             newGuessLetters[index] = newGuessLetters[index].copy(
-                state = LetterState.Absent
+                letterState = LetterState.Absent
             )
         }
 

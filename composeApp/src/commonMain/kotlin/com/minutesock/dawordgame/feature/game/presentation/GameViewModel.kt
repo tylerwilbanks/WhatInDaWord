@@ -33,4 +33,18 @@ class GameViewModel(
             }
         }
     }
+
+    fun onEvent(event: WordGameEvent) {
+        viewModelScope.launch {
+            when (event) {
+                WordGameEvent.OnAnsweredWordRowAnimationFinished -> TODO()
+                is WordGameEvent.OnCharacterPress -> TODO()
+                WordGameEvent.OnCompleteAnimationFinished -> TODO()
+                WordGameEvent.OnDeletePress -> TODO()
+                WordGameEvent.OnEnterPress -> TODO()
+                WordGameEvent.OnErrorAnimationFinished -> TODO()
+                WordGameEvent.OnStatsPress -> TODO()
+            }
+        }
+    }
 }

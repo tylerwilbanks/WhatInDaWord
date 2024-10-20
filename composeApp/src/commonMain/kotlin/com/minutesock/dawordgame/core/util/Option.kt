@@ -1,30 +1,27 @@
 package com.minutesock.dawordgame.core.util
 
-import org.jetbrains.compose.resources.StringResource
+import com.minutesock.dawordgame.core.uiutil.TextRes
 
 sealed class Option<T>(
     val data: T? = null,
     val message: String? = null,
-    val stringResource: StringResource? = null,
+    val textRes: TextRes? = null,
     val errorCode: Int? = null
 ) {
-
     class Loading<T>(data: T? = null) : Option<T>(data = data)
-
     class Success<T>(data: T?) : Option<T>(data = data)
-
     class Error<T>(
-        stringResource: StringResource? = null,
+        textRes: TextRes? = null,
         message: String? = null,
         data: T? = null,
         errorCode: Int? = null
     ) :
         Option<T>(
             data = data,
-            stringResource = stringResource,
+            textRes = textRes,
             message = message,
             errorCode = errorCode
         )
 
-    val hasMessageToDisplay get() = stringResource != null
+    val hasMessageToDisplay get() = textRes != null
 }
