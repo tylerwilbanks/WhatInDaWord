@@ -1,4 +1,4 @@
-package com.minutesock.dawordgame.game
+package com.minutesock.dawordgame.core.domain
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

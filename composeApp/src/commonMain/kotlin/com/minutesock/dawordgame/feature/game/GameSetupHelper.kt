@@ -4,9 +4,9 @@ import com.minutesock.dawordgame.core.data.ValidWordDataSource
 import com.minutesock.dawordgame.core.data.WordSelectionDataSource
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.ValidWord
+import com.minutesock.dawordgame.core.domain.ValidWordsDto
 import com.minutesock.dawordgame.core.domain.WordSelection
-import com.minutesock.dawordgame.game.ValidWordsDto
-import com.minutesock.dawordgame.game.WordSelectionDto
+import com.minutesock.dawordgame.core.domain.WordSelectionDto
 import com.minutesock.dawordgame.readFile
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

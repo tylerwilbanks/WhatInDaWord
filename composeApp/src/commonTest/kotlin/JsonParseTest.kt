@@ -1,5 +1,5 @@
-import com.minutesock.dawordgame.game.ValidWordsDto
-import com.minutesock.dawordgame.game.WordSelectionDto
+import com.minutesock.dawordgame.core.domain.ValidWordsDto
+import com.minutesock.dawordgame.core.domain.WordSelectionDto
 import com.minutesock.dawordgame.readFile
 import kotlinx.serialization.json.Json
 import kotlin.test.Test
