@@ -1,0 +1,15 @@
+CREATE TABLE GuessLetterEntity(
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    guess_word_id INTEGER NOT NULL,
+    character TEXT NOT NULL CHECK(length(character) = 1),
+    state INTEGER NOT NULL,
+    FOREIGN KEY (guess_word_id) REFERENCES GuessWordEntity(id)
+);
+
+upsertGuessLetterEntity:
+INSERT OR REPLACE INTO GuessLetterEntity(
+    id, guess_word_id, character, state
+) VALUES (:id, :guess_word_id, :character, :state);
+
+clearGuessLetterEntities:
+DELETE FROM GuessLetterEntity;

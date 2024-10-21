@@ -1,7 +1,7 @@
 CREATE TABLE GuessWordEntity(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     session_id INTEGER NOT NULL,
-    state TEXT NOT NULL,
+    state INTEGER NOT NULL,
     complete_time TEXT,
     FOREIGN KEY (session_id) REFERENCES WordSessionEntity(id)
 );
