@@ -1,0 +1,17 @@
+CREATE TABLE WordSessionEntity(
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    start_time TEXT,
+    mystery_word TEXT NOT NULL,
+    language TEXT NOT NULL,
+    max_attempts INTEGER NOT NULL,
+    game_mode TEXT NOT NULL,
+    state TEXT NOT NULL
+);
+
+upsertWordSessionEntity:
+INSERT OR REPLACE INTO WordSessionEntity(
+    id, start_time, mystery_word, language, max_attempts, game_mode, state
+) VALUES (:id, :start_time, :mystery_word, :language, :max_attempts, :game_mode, :state);
+
+clearWordSessionEntities:
+DELETE FROM WordSessionEntity;

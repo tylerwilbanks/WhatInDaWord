@@ -14,9 +14,9 @@ data class GameViewModelState(
         language = GameLanguage.English
     ),
     val gameMode: GameMode = GameMode.Daily,
-    val guessWords: ImmutableList<GuessWord> = persistentListOf(),
+    val guessWordItems: ImmutableList<GuessWordItem> = persistentListOf(),
     val wordRowAnimating: Boolean = false,
-    val falseKeyboardKeys: FalseKeyboardKeys = FalseKeyboardKeys()
+    val falseKeyboardKeys: FalseKeyboardKeys = FalseKeyboardKeys(),
 )
 
 enum class GameMode {

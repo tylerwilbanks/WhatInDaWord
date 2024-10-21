@@ -19,8 +19,8 @@ import com.minutesock.dawordgame.core.theme.AppTheme
 import com.minutesock.dawordgame.core.uiutil.rememberShakeController
 import com.minutesock.dawordgame.core.uiutil.shake
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModelState
-import com.minutesock.dawordgame.feature.game.presentation.GuessLetter
-import com.minutesock.dawordgame.feature.game.presentation.GuessWord
+import com.minutesock.dawordgame.feature.game.presentation.GuessLetterItem
+import com.minutesock.dawordgame.feature.game.presentation.GuessWordItem
 import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 import com.minutesock.dawordgame.feature.game.presentation.ui.component.FalseKeyboard
 import com.minutesock.dawordgame.feature.game.presentation.ui.component.WordRow
@@ -54,10 +54,10 @@ fun PlayGameScreen(
             )
         }
 
-        state.guessWords.forEach {
+        state.guessWordItems.forEach {
             WordRow(
-                guessWord = it,
-                guessLetters = it.letters,
+                guessWordItem = it,
+                guessLetterItems = it.letters,
                 message = "", // state.dailyWordStateMessage?.uiText?.asString(),
                 wordRowAnimating = state.wordRowAnimating,
                 onEvent = onEvent
@@ -83,14 +83,14 @@ private fun PlayGameScreenPreview() {
             PlayGameScreen(
                 state = GameViewModelState(
                     gameLanguage = GameLanguage.English,
-                    guessWords = persistentListOf(
-                        GuessWord(
+                    guessWordItems = persistentListOf(
+                        GuessWordItem(
                             letters = persistentListOf(
-                                GuessLetter('c'),
-                                GuessLetter('h'),
-                                GuessLetter('u'),
-                                GuessLetter('m'),
-                                GuessLetter('b')
+                                GuessLetterItem('c'),
+                                GuessLetterItem('h'),
+                                GuessLetterItem('u'),
+                                GuessLetterItem('m'),
+                                GuessLetterItem('b')
                             )
                         )
                     )

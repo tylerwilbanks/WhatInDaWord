@@ -1,33 +1,25 @@
 package com.minutesock.dawordgame.feature.game.presentation
 
+import com.minutesock.dawordgame.core.domain.GuessWordState
+import com.minutesock.dawordgame.core.domain.LetterState
 import com.minutesock.dawordgame.core.util.Option
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
-data class GuessWord(
-    val letters: ImmutableList<GuessLetter>,
+data class GuessWordItem(
+    val letters: ImmutableList<GuessLetterItem>,
     val state: GuessWordState = GuessWordState.Unused,
     val errorState: GuessWordError = GuessWordError.None,
     val completeTime: Instant? = null,
 ) {
     val word: String get() = letters.joinToString("") { it.displayCharacter }.lowercase()
     val displayWord: String get() = letters.joinToString("") { it.displayCharacter }.uppercase()
-
     val isIncomplete: Boolean get() = letters.any { it.availableForInput }
 }
 
-enum class GuessWordState {
-    Unused,
-    Editing,
-    Complete,
-    Correct,
-    Failure
-}
-
-
-fun GuessWord.addGuessLetter(guessLetter: GuessLetter): Option<GuessWord?> {
+fun GuessWordItem.addGuessLetter(guessLetterItem: GuessLetterItem): Option<GuessWordItem?> {
     val newGuessLetterList = this.letters.toMutableList()
     newGuessLetterList.indexOfFirst { it.availableForInput }.let { index ->
         if (index == -1) {
@@ -38,8 +30,8 @@ fun GuessWord.addGuessLetter(guessLetter: GuessLetter): Option<GuessWord?> {
             )
         }
         newGuessLetterList[index] = newGuessLetterList[index].copy(
-            _character = guessLetter.character,
-            letterState = guessLetter.letterState
+            _character = guessLetterItem.character,
+            letterState = guessLetterItem.letterState
         )
     }
     return Option.Success(
@@ -50,7 +42,7 @@ fun GuessWord.addGuessLetter(guessLetter: GuessLetter): Option<GuessWord?> {
     )
 }
 
-fun GuessWord.eraseLetter(): Option<GuessWord?> {
+fun GuessWordItem.eraseLetter(): Option<GuessWordItem?> {
     val newGuessLetterList = this.letters.toMutableList()
     newGuessLetterList.indexOfLast { it.answered }.let { index ->
         if (index == -1) {
@@ -72,26 +64,26 @@ fun GuessWord.eraseLetter(): Option<GuessWord?> {
     )
 }
 
-fun GuessWord.updateState(newState: GuessWordState): GuessWord {
+fun GuessWordItem.updateState(newState: GuessWordState): GuessWordItem {
     return this.copy(
         letters = this.letters,
         state = newState
     )
 }
 
-fun GuessWord.lockInGuess(correctWord: String, isFinalGuess: Boolean): GuessWord {
-    val newGuessLetters = mutableListOf<GuessLetter>()
+fun GuessWordItem.lockInGuess(correctWord: String, isFinalGuess: Boolean): GuessWordItem {
+    val newGuessLetterItems = mutableListOf<GuessLetterItem>()
     val correctChars: List<Char> = correctWord.map { it.lowercaseChar() }
 
-    this.letters.forEachIndexed { index: Int, guessLetter: GuessLetter ->
+    this.letters.forEachIndexed { index: Int, guessLetterItem: GuessLetterItem ->
         val newState = when {
-            guessLetter.character == correctChars[index] -> LetterState.Correct
-            correctChars.contains(guessLetter.character) -> LetterState.Present
+            guessLetterItem.character == correctChars[index] -> LetterState.Correct
+            correctChars.contains(guessLetterItem.character) -> LetterState.Present
             else -> LetterState.Absent
         }
-        newGuessLetters.add(
-            GuessLetter(
-                _character = guessLetter.character,
+        newGuessLetterItems.add(
+            GuessLetterItem(
+                _character = guessLetterItem.character,
                 letterState = newState
             )
         )
@@ -100,13 +92,13 @@ fun GuessWord.lockInGuess(correctWord: String, isFinalGuess: Boolean): GuessWord
     //clean up any extra present letters
     this.letters.forEachIndexed { index, userGuessLetter ->
         val correctDuplicateLetterCount = correctChars.count { it == userGuessLetter.character }
-        val currentPresentAndCorrectLetterCount = newGuessLetters.count {
+        val currentPresentAndCorrectLetterCount = newGuessLetterItems.count {
             it.character == this.letters[index].character && it.letterState == LetterState.Correct ||
                     it.character == this.letters[index].character && it.letterState == LetterState.Present
         }
 
-        if (newGuessLetters[index].letterState == LetterState.Present && currentPresentAndCorrectLetterCount > correctDuplicateLetterCount) {
-            newGuessLetters[index] = newGuessLetters[index].copy(
+        if (newGuessLetterItems[index].letterState == LetterState.Present && currentPresentAndCorrectLetterCount > correctDuplicateLetterCount) {
+            newGuessLetterItems[index] = newGuessLetterItems[index].copy(
                 letterState = LetterState.Absent
             )
         }
@@ -114,13 +106,13 @@ fun GuessWord.lockInGuess(correctWord: String, isFinalGuess: Boolean): GuessWord
     }
 
     return this.copy(
-        letters = newGuessLetters.toImmutableList(),
+        letters = newGuessLetterItems.toImmutableList(),
         state = updateStateAfterGuess(correctWord, isFinalGuess),
         completeTime = Clock.System.now()
     )
 }
 
-private fun GuessWord.updateStateAfterGuess(
+private fun GuessWordItem.updateStateAfterGuess(
     correctWord: String,
     isFinalGuess: Boolean
 ): GuessWordState {

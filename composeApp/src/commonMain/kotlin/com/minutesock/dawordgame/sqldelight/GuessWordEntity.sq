@@ -1,0 +1,15 @@
+CREATE TABLE GuessWordEntity(
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    session_id INTEGER NOT NULL,
+    state TEXT NOT NULL,
+    complete_time TEXT,
+    FOREIGN KEY (session_id) REFERENCES WordSessionEntity(id)
+);
+
+upsertGuessWordEntity:
+INSERT OR REPLACE INTO GuessWordEntity(
+    id, session_id, state, complete_time
+) VALUES (:id, :session_id, :state, :complete_time);
+
+clearGuessWordEntities:
+DELETE FROM GuessWordEntity;

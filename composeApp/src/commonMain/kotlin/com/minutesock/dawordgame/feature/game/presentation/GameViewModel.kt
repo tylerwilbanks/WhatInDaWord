@@ -16,7 +16,7 @@ class GameViewModel(
     private val _state = MutableStateFlow(GameViewModelState())
     val state = _state.asStateFlow()
 
-    fun setupGame(gameMode: GameMode) {
+    fun setupGame(gameMode: GameMode, wordLength: Int = 5, attempts: Int = 6) {
         viewModelScope.launch {
             val gameLanguage = getSystemLanguage()
             gameRepository.setupWords(gameLanguage)
@@ -28,7 +28,7 @@ class GameViewModel(
                 it.copy(
                     gameLanguage = gameLanguage,
                     mysteryWord = selectedWord,
-                    gameMode = gameMode
+                    gameMode = gameMode,
                 )
             }
         }

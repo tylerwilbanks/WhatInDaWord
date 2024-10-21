@@ -1,6 +1,7 @@
 package com.minutesock.dawordgame.feature.game.presentation
 
 import androidx.compose.ui.graphics.Color
+import com.minutesock.dawordgame.core.domain.LetterState
 import com.minutesock.dawordgame.core.theme.guessLetterGreen
 import com.minutesock.dawordgame.core.theme.guessLetterYellow
 

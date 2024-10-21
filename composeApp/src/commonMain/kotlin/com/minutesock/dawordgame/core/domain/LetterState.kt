@@ -1,4 +1,4 @@
-package com.minutesock.dawordgame.feature.game.presentation
+package com.minutesock.dawordgame.core.domain
 
 enum class LetterState {
     Unknown,
