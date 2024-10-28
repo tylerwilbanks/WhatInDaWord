@@ -1,15 +1,115 @@
 package com.minutesock.dawordgame.core.domain
 
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
 
 data class WordSession(
-    val id: Long = 0,
-    val guesses: List<GuessWord>,
     val startTime: Instant,
+    val date: LocalDate,
+    val mysteryWord: String,
+    val language: GameLanguage,
+    val maxAttempts: Int,
+    val gameMode: GameMode,
+    val state: WordSessionState,
+    val id: Long = 0,
+    val guesses: List<GuessWord> = emptyList(),
+) {
     val endTime: Instant
-)
+        get() = TODO("Not implemented yet.")
+
+//    val wordLength = correctWord.length
+//
+//    val completeTime = guesses.findLast { it.completeTime != null }?.completeTime
+//
+//    val formattedTime = completeTime?.toLocalDateTime(TimeZone.currentSystemDefault())?.date
+//
+//    val successTime =
+//        guesses.lastOrNull { it.completeTime != null && it.state == GuessWordState.Correct }?.completeTime
+//
+//    val emojiRepresentation: String
+//        get() {
+//            val finalIndex =
+//                guesses.indexOfFirst { it.state == GuessWordState.Correct || it.state == GuessWordState.Failure }
+//            var text = ""
+//            guesses.forEachIndexed { index, guessWord ->
+//                if (index > finalIndex) {
+//                    return@forEachIndexed
+//                }
+//                guessWord.letters.forEach {
+//                    text += it.state.emoji
+//                }
+//                text += "\n"
+//            }
+//            return text.trimEnd('\n')
+//        }
+//
+//    val shareText: String
+//        get() {
+//            val finalIndex =
+//                guesses.indexOfFirst { it.state == GuessWordState.Correct || it.state == GuessWordState.Failure }
+//            val resultLetter =
+//                if (finalIndex + 1 >= guesses.size && gameState == WordGameState.Failure) "X" else "${finalIndex + 1}"
+//
+//            return "$resultLetter/${guesses.size}\n" +
+//                    "$formattedElapsedTime\n" +
+//                    emojiRepresentation
+//        }
+//
+//    val elapsedTime: Duration
+//        get() {
+//            val firstGuess =
+//                guesses[0].state == GuessWordState.Correct || guesses[0].state == GuessWordState.Failure
+//            val incomplete =
+//                gameState == WordGameState.NotStarted || gameState == WordGameState.InProgress
+//            if (firstGuess || incomplete) {
+//                return Duration.ZERO
+//            }
+//            val startTime = guesses.find { it.completeTime != null }?.completeTime
+//            val endTime = guesses.findLast { it.completeTime != null }?.completeTime
+//            if (startTime != null && endTime != null) {
+//                return endTime.minus(startTime)
+//            }
+//            return Duration.INFINITE
+//        }
+//
+//    fun getFormattedIndividualElapsedTime(currentIndex: Int): String {
+//        if (currentIndex == 0) {
+//            return "0m 0s"
+//        }
+//
+//        val startTime = guesses[0].completeTime
+//        val currentTime = guesses[currentIndex].completeTime
+//
+//        if (startTime != null && currentTime != null) {
+//            return currentTime.minus(startTime)
+//                .toComponents { minutes, seconds, nanoseconds ->
+//                    "${minutes}m ${seconds}s"
+//                }.toString()
+//        }
+//        return ""
+//    }
+//
+//    val formattedElapsedTime: String
+//        get() = elapsedTime.toComponents { minutes, seconds, nanoseconds ->
+//            "${minutes}m ${seconds}s"
+//        }.toString()
+}
+
+enum class WordSessionState {
+    NotStarted,
+    InProgress,
+    Success,
+    Failure;
+
+    val isGameOver
+        get() = when (this) {
+            Success, Failure -> true
+            else -> false
+        }
+}
 
 data class GuessWord(
+    val id: Long = 0,
     val letters: List<GuessLetter>,
     val state: GuessWordState,
     val completeTime: Instant
@@ -24,6 +124,7 @@ enum class GuessWordState {
 }
 
 data class GuessLetter(
+    val id: Long = 0,
     val character: Char,
-    val state: LetterState
+    val state: GuessLetterState
 )

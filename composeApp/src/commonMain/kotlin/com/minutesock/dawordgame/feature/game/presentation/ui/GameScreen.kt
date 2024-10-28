@@ -8,9 +8,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.di.KoinProvider
 import com.minutesock.dawordgame.feature.game.data.GameRepository
-import com.minutesock.dawordgame.feature.game.presentation.GameMode
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO

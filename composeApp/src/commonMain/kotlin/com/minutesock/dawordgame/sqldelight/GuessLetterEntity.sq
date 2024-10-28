@@ -3,13 +3,18 @@ CREATE TABLE GuessLetterEntity(
     guess_word_id INTEGER NOT NULL,
     character TEXT NOT NULL CHECK(length(character) = 1),
     state INTEGER NOT NULL,
-    FOREIGN KEY (guess_word_id) REFERENCES GuessWordEntity(id)
+    FOREIGN KEY (guess_word_id) REFERENCES GuessWordEntity(id) ON DELETE CASCADE
 );
 
 upsertGuessLetterEntity:
 INSERT OR REPLACE INTO GuessLetterEntity(
     id, guess_word_id, character, state
 ) VALUES (:id, :guess_word_id, :character, :state);
+
+selectGuessLettersForGuessWord:
+SELECT *
+FROM GuessLetterEntity
+WHERE guess_word_id = ?;
 
 clearGuessLetterEntities:
 DELETE FROM GuessLetterEntity;

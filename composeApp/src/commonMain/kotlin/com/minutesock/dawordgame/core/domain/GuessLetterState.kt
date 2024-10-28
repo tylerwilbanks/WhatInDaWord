@@ -1,6 +1,6 @@
 package com.minutesock.dawordgame.core.domain
 
-enum class LetterState {
+enum class GuessLetterState {
     Unknown,
     Absent,
     Present,

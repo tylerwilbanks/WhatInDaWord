@@ -3,7 +3,7 @@ CREATE TABLE GuessWordEntity(
     session_id INTEGER NOT NULL,
     state INTEGER NOT NULL,
     complete_time TEXT,
-    FOREIGN KEY (session_id) REFERENCES WordSessionEntity(id)
+    FOREIGN KEY (session_id) REFERENCES WordSessionEntity(id) ON DELETE CASCADE
 );
 
 upsertGuessWordEntity:

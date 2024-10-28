@@ -1,17 +1,47 @@
 CREATE TABLE WordSessionEntity(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    date TEXT,
     start_time TEXT,
     mystery_word TEXT NOT NULL,
     language TEXT NOT NULL,
     max_attempts INTEGER NOT NULL,
     game_mode TEXT NOT NULL,
-    state TEXT NOT NULL
+    state INTEGER NOT NULL
 );
 
 upsertWordSessionEntity:
 INSERT OR REPLACE INTO WordSessionEntity(
-    id, start_time, mystery_word, language, max_attempts, game_mode, state
-) VALUES (:id, :start_time, :mystery_word, :language, :max_attempts, :game_mode, :state);
+    id, date, start_time, mystery_word, language, max_attempts, game_mode, state
+) VALUES (:id, :date, :start_time, :mystery_word, :language, :max_attempts, :game_mode, :state);
+
+selectWordSessionEntitiesByDate:
+SELECT
+    ws.*,
+    gw.id AS guess_word_id,
+    gw.complete_time AS guess_word_complete_time,
+    gw.session_id AS guess_word_session_id,
+    gw.state AS guess_word_state,
+    gl.id AS guess_letter_id,
+    gl.character AS guess_letter_character,
+    gl.state AS guess_letter_state
+FROM WordSessionEntity ws
+LEFT JOIN GuessWordEntity gw ON ws.id = gw.session_id
+LEFT JOIN GuessLetterEntity gl ON gw.id = gl.guess_word_id
+WHERE date = ? AND language = ? AND game_mode = ?;
+
+selectWordSessionEntity:
+SELECT
+    ws.*,
+    gw.id AS guess_word_id,
+    gw.state AS guess_word_state,
+    gw.complete_time AS guess_word_complete_time,
+    gl.id AS guess_letter_id,
+    gl.character AS guess_letter_character,
+    gl.state AS guess_letter_state
+FROM WordSessionEntity ws
+LEFT JOIN GuessWordEntity gw ON ws.id = gw.session_id
+LEFT JOIN GuessLetterEntity gl ON gw.id = gl.guess_word_id
+WHERE ws.id = ? LIMIT 1;
 
 clearWordSessionEntities:
 DELETE FROM WordSessionEntity;

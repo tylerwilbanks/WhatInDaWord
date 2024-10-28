@@ -1,7 +1,7 @@
 package com.minutesock.dawordgame.feature.game.presentation
 
+import com.minutesock.dawordgame.core.domain.GuessLetterState
 import com.minutesock.dawordgame.core.domain.GuessWordState
-import com.minutesock.dawordgame.core.domain.LetterState
 import com.minutesock.dawordgame.core.util.Option
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -31,7 +31,7 @@ fun GuessWordItem.addGuessLetter(guessLetterItem: GuessLetterItem): Option<Guess
         }
         newGuessLetterList[index] = newGuessLetterList[index].copy(
             _character = guessLetterItem.character,
-            letterState = guessLetterItem.letterState
+            guessLetterState = guessLetterItem.guessLetterState
         )
     }
     return Option.Success(
@@ -77,14 +77,14 @@ fun GuessWordItem.lockInGuess(correctWord: String, isFinalGuess: Boolean): Guess
 
     this.letters.forEachIndexed { index: Int, guessLetterItem: GuessLetterItem ->
         val newState = when {
-            guessLetterItem.character == correctChars[index] -> LetterState.Correct
-            correctChars.contains(guessLetterItem.character) -> LetterState.Present
-            else -> LetterState.Absent
+            guessLetterItem.character == correctChars[index] -> GuessLetterState.Correct
+            correctChars.contains(guessLetterItem.character) -> GuessLetterState.Present
+            else -> GuessLetterState.Absent
         }
         newGuessLetterItems.add(
             GuessLetterItem(
                 _character = guessLetterItem.character,
-                letterState = newState
+                guessLetterState = newState
             )
         )
     }
@@ -93,13 +93,13 @@ fun GuessWordItem.lockInGuess(correctWord: String, isFinalGuess: Boolean): Guess
     this.letters.forEachIndexed { index, userGuessLetter ->
         val correctDuplicateLetterCount = correctChars.count { it == userGuessLetter.character }
         val currentPresentAndCorrectLetterCount = newGuessLetterItems.count {
-            it.character == this.letters[index].character && it.letterState == LetterState.Correct ||
-                    it.character == this.letters[index].character && it.letterState == LetterState.Present
+            it.character == this.letters[index].character && it.guessLetterState == GuessLetterState.Correct ||
+                    it.character == this.letters[index].character && it.guessLetterState == GuessLetterState.Present
         }
 
-        if (newGuessLetterItems[index].letterState == LetterState.Present && currentPresentAndCorrectLetterCount > correctDuplicateLetterCount) {
+        if (newGuessLetterItems[index].guessLetterState == GuessLetterState.Present && currentPresentAndCorrectLetterCount > correctDuplicateLetterCount) {
             newGuessLetterItems[index] = newGuessLetterItems[index].copy(
-                letterState = LetterState.Absent
+                guessLetterState = GuessLetterState.Absent
             )
         }
 
