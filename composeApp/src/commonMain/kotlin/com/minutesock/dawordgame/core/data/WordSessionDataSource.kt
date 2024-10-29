@@ -21,18 +21,18 @@ interface WordSessionDataSource {
     ): List<WordSession>
 
     suspend fun selectWordSessionEntity(id: Long): WordSession?
+    suspend fun selectHighestId(): Long
     suspend fun clearTable()
 }
 
 class SqlDelightWordSessionDataSource(
     private val dbClient: SqlDelightDbClient
 ) : WordSessionDataSource {
-    private val wordSessionEntityQueries = dbClient.wordSessionEntityQueries
-    private val guessLetterEntityQueries = dbClient.guessLetterEntityQueries
+    private val queries = dbClient.wordSessionEntityQueries
 
     override suspend fun upsertWordSession(wordSession: WordSession) {
         dbClient.suspendingTransaction {
-            wordSessionEntityQueries.upsertWordSessionEntity(
+            queries.upsertWordSessionEntity(
                 id = wordSession.id,
                 start_time = wordSession.startTime.toString(),
                 date = wordSession.date.toString(),
@@ -51,7 +51,7 @@ class SqlDelightWordSessionDataSource(
         gameMode: GameMode
     ): List<WordSession> {
         return dbClient.suspendingTransaction {
-            wordSessionEntityQueries.selectWordSessionEntitiesByDate(
+            queries.selectWordSessionEntitiesByDate(
                 date = date.toString(),
                 language = language.dbName,
                 game_mode = gameMode.dbName
@@ -101,9 +101,15 @@ class SqlDelightWordSessionDataSource(
         TODO("Not yet implemented")
     }
 
+    override suspend fun selectHighestId(): Long {
+        return dbClient.suspendingTransaction {
+            queries.selectHighestId().executeAsOneOrNull()?.max_id ?: 0L
+        }
+    }
+
     override suspend fun clearTable() {
         dbClient.suspendingTransaction {
-            wordSessionEntityQueries.clearWordSessionEntities()
+            queries.clearWordSessionEntities()
         }
     }
 }

@@ -11,5 +11,9 @@ INSERT OR REPLACE INTO GuessWordEntity(
     id, session_id, state, complete_time
 ) VALUES (:id, :session_id, :state, :complete_time);
 
+selectHighestId:
+SELECT MAX(id) AS max_id
+FROM GuessWordEntity;
+
 clearGuessWordEntities:
 DELETE FROM GuessWordEntity;

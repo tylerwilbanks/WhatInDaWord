@@ -4,7 +4,6 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 
 data class WordSession(
-    val startTime: Instant,
     val date: LocalDate,
     val mysteryWord: String,
     val language: GameLanguage,
@@ -13,6 +12,7 @@ data class WordSession(
     val state: WordSessionState,
     val id: Long = 0,
     val guesses: List<GuessWord> = emptyList(),
+    val startTime: Instant? = null,
 ) {
     val endTime: Instant
         get() = TODO("Not implemented yet.")
@@ -109,10 +109,11 @@ enum class WordSessionState {
 }
 
 data class GuessWord(
-    val id: Long = 0,
     val letters: List<GuessLetter>,
     val state: GuessWordState,
-    val completeTime: Instant
+    val completeTime: Instant? = null,
+    val id: Long = 0,
+    val sessionId: Long = 0
 )
 
 enum class GuessWordState {
@@ -124,7 +125,12 @@ enum class GuessWordState {
 }
 
 data class GuessLetter(
-    val id: Long = 0,
     val character: Char,
-    val state: GuessLetterState
-)
+    val state: GuessLetterState,
+    val id: Long = 0,
+    val guessWordId: Long = 0,
+) {
+    companion object {
+        const val AVAILABLE_CHAR = ' '
+    }
+}

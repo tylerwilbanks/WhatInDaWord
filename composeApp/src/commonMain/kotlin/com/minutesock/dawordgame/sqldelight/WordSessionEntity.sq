@@ -43,5 +43,9 @@ LEFT JOIN GuessWordEntity gw ON ws.id = gw.session_id
 LEFT JOIN GuessLetterEntity gl ON gw.id = gl.guess_word_id
 WHERE ws.id = ? LIMIT 1;
 
+selectHighestId:
+SELECT MAX(id) AS max_id
+FROM WordSessionEntity;
+
 clearWordSessionEntities:
 DELETE FROM WordSessionEntity;

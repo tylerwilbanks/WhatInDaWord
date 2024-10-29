@@ -11,10 +11,5 @@ INSERT OR REPLACE INTO GuessLetterEntity(
     id, guess_word_id, character, state
 ) VALUES (:id, :guess_word_id, :character, :state);
 
-selectGuessLettersForGuessWord:
-SELECT *
-FROM GuessLetterEntity
-WHERE guess_word_id = ?;
-
 clearGuessLetterEntities:
 DELETE FROM GuessLetterEntity;

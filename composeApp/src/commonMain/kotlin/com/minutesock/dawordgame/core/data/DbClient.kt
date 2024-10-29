@@ -2,6 +2,7 @@ package com.minutesock.dawordgame.core.data
 
 import com.minutesock.dawordgame.sqldelight.AppDatabase
 import com.minutesock.dawordgame.sqldelight.GuessLetterEntityQueries
+import com.minutesock.dawordgame.sqldelight.GuessWordEntityQueries
 import com.minutesock.dawordgame.sqldelight.ValidWordEntityQueries
 import com.minutesock.dawordgame.sqldelight.WordSelectionEntityQueries
 import com.minutesock.dawordgame.sqldelight.WordSessionEntityQueries
@@ -27,6 +28,9 @@ class SqlDelightDbClient(
 
     val wordSessionEntityQueries: WordSessionEntityQueries
         get() = database.wordSessionEntityQueries
+
+    val guessWordEntityQueries: GuessWordEntityQueries
+        get() = database.guessWordEntityQueries
 
     val guessLetterEntityQueries: GuessLetterEntityQueries
         get() = database.guessLetterEntityQueries
