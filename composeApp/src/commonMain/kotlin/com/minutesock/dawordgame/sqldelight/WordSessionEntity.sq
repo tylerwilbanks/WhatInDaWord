@@ -33,8 +33,9 @@ selectWordSessionEntity:
 SELECT
     ws.*,
     gw.id AS guess_word_id,
-    gw.state AS guess_word_state,
     gw.complete_time AS guess_word_complete_time,
+    gw.session_id AS guess_word_session_id,
+    gw.state AS guess_word_state,
     gl.id AS guess_letter_id,
     gl.character AS guess_letter_character,
     gl.state AS guess_letter_state

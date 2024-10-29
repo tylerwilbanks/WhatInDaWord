@@ -14,6 +14,7 @@ import com.minutesock.dawordgame.core.domain.GuessWordState
 import com.minutesock.dawordgame.core.domain.WordSelection
 import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
+import com.minutesock.dawordgame.di.KoinProvider
 import com.minutesock.dawordgame.feature.game.GameSetupHelper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -28,11 +29,11 @@ import kotlinx.datetime.todayIn
 import kotlin.random.Random
 
 class GameRepository(
-    private val validWordDataSource: ValidWordDataSource,
-    private val wordSelectionDataSource: WordSelectionDataSource,
-    private val wordSessionDataSource: WordSessionDataSource,
-    private val guessWordDataSource: GuessWordDataSource,
-    private val guessLetterDataSource: GuessLetterDataSource,
+    private val validWordDataSource: ValidWordDataSource = KoinProvider.instance.get(),
+    private val wordSelectionDataSource: WordSelectionDataSource = KoinProvider.instance.get(),
+    private val wordSessionDataSource: WordSessionDataSource = KoinProvider.instance.get(),
+    private val guessWordDataSource: GuessWordDataSource = KoinProvider.instance.get(),
+    private val guessLetterDataSource: GuessLetterDataSource = KoinProvider.instance.get(),
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     suspend fun setupWords(gameLanguage: GameLanguage) {
@@ -72,8 +73,8 @@ class GameRepository(
         language: GameLanguage,
         gameMode: GameMode,
         mysteryWord: String,
-        maxAttempts: Int,
-        wordLength: Int
+        maxAttempts: Int = 6,
+        wordLength: Int = 5
     ): WordSession {
         return withContext(defaultDispatcher) {
             wordSessionDataSource.selectWordSessionEntitiesByDate(

@@ -13,6 +13,7 @@ import kotlinx.coroutines.withContext
 interface DbClient {
     fun <T> transaction(block: () -> T): T
     suspend fun <T> suspendingTransaction(block: suspend () -> T): T
+    suspend fun clearDb()
 }
 
 class SqlDelightDbClient(
@@ -20,6 +21,9 @@ class SqlDelightDbClient(
     private val defaultDispatcher: CoroutineDispatcher,
 ) : DbClient {
     private val database = AppDatabase(driver.createDriver())
+
+    private val databaseQueries get() = database.databaseQueries
+
     val validWordEntityQueries: ValidWordEntityQueries
         get() = database.validWordEntityQueries
 
@@ -44,6 +48,12 @@ class SqlDelightDbClient(
             database.transactionWithResult {
                 runBlocking { block() }
             }
+        }
+    }
+
+    override suspend fun clearDb() {
+        suspendingTransaction {
+            databaseQueries.clearAllTables()
         }
     }
 }

@@ -1,0 +1,6 @@
+clearAllTables:
+DELETE FROM WordSessionEntity;
+DELETE FROM WordSelectionEntity;
+DELETE FROM GuessWordEntity;
+DELETE FROM GuessLetterEntity;
+DELETE FROM ValidWordEntity;
