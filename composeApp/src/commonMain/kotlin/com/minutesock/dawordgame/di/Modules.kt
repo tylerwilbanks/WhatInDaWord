@@ -2,18 +2,18 @@ package com.minutesock.dawordgame.di
 
 import com.minutesock.dawordgame.core.data.DatabaseDriverFactory
 import com.minutesock.dawordgame.core.data.DbClient
-import com.minutesock.dawordgame.core.data.GuessLetterDataSource
-import com.minutesock.dawordgame.core.data.GuessWordDataSource
 import com.minutesock.dawordgame.core.data.SqlDelightDbClient
-import com.minutesock.dawordgame.core.data.SqlDelightGuessLetterDataSource
-import com.minutesock.dawordgame.core.data.SqlDelightGuessWordDataSource
 import com.minutesock.dawordgame.core.data.SqlDelightValidWordDataSource
 import com.minutesock.dawordgame.core.data.SqlDelightWordSelectionDataSource
-import com.minutesock.dawordgame.core.data.SqlDelightWordSessionDataSource
 import com.minutesock.dawordgame.core.data.TestDatabaseDriverFactory
 import com.minutesock.dawordgame.core.data.ValidWordDataSource
 import com.minutesock.dawordgame.core.data.WordSelectionDataSource
-import com.minutesock.dawordgame.core.data.WordSessionDataSource
+import com.minutesock.dawordgame.core.data.guessletter.GuessLetterDataSource
+import com.minutesock.dawordgame.core.data.guessletter.SqlDelightGuessLetterDataSource
+import com.minutesock.dawordgame.core.data.guessword.GuessWordDataSource
+import com.minutesock.dawordgame.core.data.guessword.SqlDelightGuessWordDataSource
+import com.minutesock.dawordgame.core.data.wordsession.SqlDelightWordSessionDataSource
+import com.minutesock.dawordgame.core.data.wordsession.WordSessionDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO

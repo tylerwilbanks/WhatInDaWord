@@ -1,5 +1,6 @@
 import com.minutesock.dawordgame.core.data.DbClient
-import com.minutesock.dawordgame.core.data.WordSessionDataSource
+import com.minutesock.dawordgame.core.data.guessletter.GuessLetter
+import com.minutesock.dawordgame.core.data.wordsession.WordSessionDataSource
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.di.initKoin
@@ -53,8 +54,8 @@ class WordSessionTest {
             wordLength = 5
         )
         val wordSessionFromDb = wordSessionDataSource.selectWordSessionEntity(createdWordSession.id)
-
-        assertEquals(1L, wordSessionFromDb?.id)
+        assertNotNull(wordSessionFromDb)
+        assertEquals(1L, wordSessionFromDb.id)
     }
 
     @Test
@@ -76,5 +77,30 @@ class WordSessionTest {
 
         assertNotNull(wordSessionFromDb)
         assertEquals(6, wordSessionFromDb.guesses.size)
+    }
+
+    @Test
+    fun guessLetterDbInsertion() = runTest(testDispatcher) {
+        val createdWordSession = gameRepository.getOrCreateWordSessionByDate(
+            date = LocalDate(
+                year = 2024,
+                monthNumber = 10,
+                dayOfMonth = 29
+            ),
+            language = GameLanguage.English,
+            gameMode = GameMode.Daily,
+            mysteryWord = "smack",
+            maxAttempts = 6,
+            wordLength = 5
+        )
+
+        val wordSessionFromDb = wordSessionDataSource.selectWordSessionEntity(createdWordSession.id)
+
+        assertNotNull(wordSessionFromDb)
+        assertEquals(5, wordSessionFromDb.guesses.first().letters.size)
+        assertEquals(
+            GuessLetter.AVAILABLE_CHAR,
+            wordSessionFromDb.guesses.first().letters.first().character
+        )
     }
 }

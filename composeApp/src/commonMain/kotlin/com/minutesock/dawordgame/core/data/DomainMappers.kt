@@ -1,12 +1,12 @@
 package com.minutesock.dawordgame.core.data
 
+import com.minutesock.dawordgame.core.data.guessword.GuessWord
+import com.minutesock.dawordgame.core.data.wordsession.WordSession
+import com.minutesock.dawordgame.core.data.wordsession.WordSessionState
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
-import com.minutesock.dawordgame.core.domain.GuessWord
 import com.minutesock.dawordgame.core.domain.ValidWord
 import com.minutesock.dawordgame.core.domain.WordSelection
-import com.minutesock.dawordgame.core.domain.WordSession
-import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.sqldelight.ValidWordEntity
 import com.minutesock.dawordgame.sqldelight.WordSelectionEntity
 import com.minutesock.dawordgame.sqldelight.WordSessionEntity

@@ -1,5 +1,9 @@
-package com.minutesock.dawordgame.core.domain
+package com.minutesock.dawordgame.core.data.wordsession
 
+import com.minutesock.dawordgame.core.data.DbEntity
+import com.minutesock.dawordgame.core.data.guessword.GuessWord
+import com.minutesock.dawordgame.core.domain.GameLanguage
+import com.minutesock.dawordgame.core.domain.GameMode
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 
@@ -10,10 +14,10 @@ data class WordSession(
     val maxAttempts: Int,
     val gameMode: GameMode,
     val state: WordSessionState,
-    val id: Long = 0,
+    override val id: Long = 0,
     val guesses: List<GuessWord> = emptyList(),
     val startTime: Instant? = null,
-) {
+) : DbEntity {
     val endTime: Instant
         get() = TODO("Not implemented yet.")
 
@@ -106,31 +110,4 @@ enum class WordSessionState {
             Success, Failure -> true
             else -> false
         }
-}
-
-data class GuessWord(
-    val letters: List<GuessLetter>,
-    val state: GuessWordState,
-    val completeTime: Instant? = null,
-    val id: Long = 0,
-    val sessionId: Long = 0
-)
-
-enum class GuessWordState {
-    Unused,
-    Editing,
-    Complete,
-    Correct,
-    Failure
-}
-
-data class GuessLetter(
-    val character: Char,
-    val state: GuessLetterState,
-    val id: Long = 0,
-    val guessWordId: Long = 0,
-) {
-    companion object {
-        const val AVAILABLE_CHAR = ' '
-    }
 }

@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.minutesock.dawordgame.core.domain.GuessWordState
+import com.minutesock.dawordgame.core.data.guessword.GuessWordState
 import com.minutesock.dawordgame.core.uiutil.ShakeConfig
 import com.minutesock.dawordgame.core.uiutil.rememberShakeController
 import com.minutesock.dawordgame.core.uiutil.shake
