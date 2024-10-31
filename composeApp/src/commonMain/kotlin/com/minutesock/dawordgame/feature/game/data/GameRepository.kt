@@ -68,6 +68,12 @@ class GameRepository(
         }
     }
 
+    suspend fun upsertWordSession(wordSession: WordSession) {
+        withContext(defaultDispatcher) {
+            wordSessionDataSource.upsertWordSession(wordSession)
+        }
+    }
+
     suspend fun getOrCreateWordSessionByDate(
         date: LocalDate,
         language: GameLanguage,
