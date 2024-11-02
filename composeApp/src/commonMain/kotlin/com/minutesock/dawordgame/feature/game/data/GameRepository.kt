@@ -75,16 +75,41 @@ class GameRepository(
         }
     }
 
-    suspend fun getOrCreateWordSessionByDate(
-        date: LocalDate,
+    suspend fun getOrCreateWordSessionInfinityMode(
         language: GameLanguage,
-        gameMode: GameMode,
         mysteryWord: String,
+        date: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
         maxAttempts: Int = 6,
         wordLength: Int = 5
     ): WordSession {
         return withContext(defaultDispatcher) {
-            wordSessionDataSource.selectWordSessionEntitiesByDate(
+            wordSessionDataSource.selectWordSessionByGameModeAndState(
+                gameMode = GameMode.Infinity,
+                state = WordSessionState.InProgress
+            ) ?: wordSessionDataSource.selectWordSessionByGameModeAndState(
+                gameMode = GameMode.Infinity,
+                state = WordSessionState.NotStarted
+            ) ?: createAndInsertWordSession(
+                date = date,
+                language = language,
+                gameMode = GameMode.Infinity,
+                mysteryWord = mysteryWord,
+                maxAttempts = maxAttempts,
+                wordLength = wordLength
+            )
+        }
+    }
+
+    suspend fun getOrCreateWordSessionByDate(
+        language: GameLanguage,
+        gameMode: GameMode,
+        mysteryWord: String,
+        date: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+        maxAttempts: Int = 6,
+        wordLength: Int = 5
+    ): WordSession {
+        return withContext(defaultDispatcher) {
+            wordSessionDataSource.selectWordSessionsByDate(
                 date = date,
                 language = language,
                 gameMode = gameMode

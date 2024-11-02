@@ -12,8 +12,7 @@ import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.sqldelight.GuessLetterEntity
 import com.minutesock.dawordgame.sqldelight.GuessWordEntity
-import com.minutesock.dawordgame.sqldelight.SelectWordSessionEntitiesByDate
-import com.minutesock.dawordgame.sqldelight.SelectWordSessionEntity
+import com.minutesock.dawordgame.sqldelight.WordSessionEntity
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -23,13 +22,17 @@ import kotlinx.datetime.todayIn
 
 interface WordSessionDataSource {
     suspend fun upsertWordSession(wordSession: WordSession)
-    suspend fun selectWordSessionEntitiesByDate(
+    suspend fun selectWordSessionsByDate(
         date: LocalDate,
         language: GameLanguage,
         gameMode: GameMode
     ): List<WordSession>
 
-    suspend fun selectWordSessionEntity(id: Long): WordSession?
+    suspend fun selectWordSession(id: Long): WordSession?
+    suspend fun selectWordSessionByGameModeAndState(
+        gameMode: GameMode,
+        state: WordSessionState
+    ): WordSession?
     suspend fun selectHighestId(): Long
     suspend fun clearTable()
 }
@@ -72,7 +75,7 @@ class SqlDelightWordSessionDataSource(
         }
     }
 
-    override suspend fun selectWordSessionEntitiesByDate(
+    override suspend fun selectWordSessionsByDate(
         date: LocalDate,
         language: GameLanguage,
         gameMode: GameMode
@@ -83,85 +86,68 @@ class SqlDelightWordSessionDataSource(
                 language = language.dbName,
                 game_mode = gameMode.dbName
             ).executeAsList()
-                .map { wordSessionEntity: SelectWordSessionEntitiesByDate ->
-                    WordSession(
-                        id = wordSessionEntity.id,
-                        date = LocalDate.parse(wordSessionEntity.date.toString()),
-                        startTime = wordSessionEntity.start_time.letFromDb {
-                            Instant.parse(wordSessionEntity.start_time.toString())
-                        },
-                        mysteryWord = wordSessionEntity.mystery_word,
-                        language = GameLanguage.fromDb(wordSessionEntity.language),
-                        maxAttempts = wordSessionEntity.max_attempts.toInt(),
-                        gameMode = GameMode.fromDb(wordSessionEntity.game_mode),
-                        state = WordSessionState.entries[wordSessionEntity.state.toInt()],
-                        guesses = guessWordQueries.selectGuessWordEntitiesBySessionId(
-                            wordSessionEntity.id
-                        ).executeAsList().map { guessWordEntity: GuessWordEntity ->
-                            GuessWord(
-                                id = guessWordEntity.id,
-                                state = GuessWordState.entries[guessWordEntity.state.toInt()],
-                                completeTime = guessWordEntity.complete_time.letFromDb {
-                                    Instant.parse(it)
-                                },
-                                letters = guessLetterQueries.selectGuessLetterEntitiesByGuessWordId(
-                                    guessWordEntity.id
-                                ).executeAsList().map { guessLetterEntity: GuessLetterEntity ->
-                                    GuessLetter(
-                                        id = guessLetterEntity.id,
-                                        character = guessLetterEntity.character.first(),
-                                        state = GuessLetterState.entries[guessLetterEntity.state.toInt()]
-                                    )
-                                }.toImmutableList()
-                            )
-                        }.toImmutableList()
-                    )
-                }
+                .mapWordSessionEntities()
         }
     }
 
-    override suspend fun selectWordSessionEntity(id: Long): WordSession? {
+    override suspend fun selectWordSession(id: Long): WordSession? {
         return dbClient.suspendingTransaction {
             wordSessionQueries.selectWordSessionEntity(id)
                 .executeAsList()
-                .map { wordSessionEntity: SelectWordSessionEntity ->
-                    WordSession(
-                        id = wordSessionEntity.id,
-                        date = wordSessionEntity.date?.let { LocalDate.parse(it) }
-                            ?: Clock.System.todayIn(
-                                TimeZone.currentSystemDefault()
-                            ),
-                        mysteryWord = wordSessionEntity.mystery_word,
-                        language = GameLanguage.fromDb(wordSessionEntity.language),
-                        maxAttempts = wordSessionEntity.max_attempts.toInt(),
-                        gameMode = GameMode.fromDb(wordSessionEntity.game_mode),
-                        state = WordSessionState.entries[wordSessionEntity.state.toInt()],
-                        startTime = wordSessionEntity.start_time.letFromDb {
+                .mapWordSessionEntities()
+                .firstOrNull()
+        }
+    }
+
+    override suspend fun selectWordSessionByGameModeAndState(
+        gameMode: GameMode,
+        state: WordSessionState
+    ): WordSession? {
+        return wordSessionQueries.selectWordSessionEntityByModeAndState(
+            game_mode = gameMode.dbName,
+            state = state.ordinal.toLong()
+        ).executeAsList()
+            .mapWordSessionEntities()
+            .firstOrNull()
+    }
+
+    private fun List<WordSessionEntity>.mapWordSessionEntities(): List<WordSession> {
+        return this.map { wordSessionEntity: WordSessionEntity ->
+            WordSession(
+                id = wordSessionEntity.id,
+                date = wordSessionEntity.date?.let { LocalDate.parse(it) }
+                    ?: Clock.System.todayIn(
+                        TimeZone.currentSystemDefault()
+                    ),
+                mysteryWord = wordSessionEntity.mystery_word,
+                language = GameLanguage.fromDb(wordSessionEntity.language),
+                maxAttempts = wordSessionEntity.max_attempts.toInt(),
+                gameMode = GameMode.fromDb(wordSessionEntity.game_mode),
+                state = WordSessionState.entries[wordSessionEntity.state.toInt()],
+                startTime = wordSessionEntity.start_time.letFromDb {
+                    Instant.parse(it)
+                },
+                guesses = guessWordQueries.selectGuessWordEntitiesBySessionId(
+                    wordSessionEntity.id
+                ).executeAsList().map { guessWordEntity: GuessWordEntity ->
+                    GuessWord(
+                        id = guessWordEntity.id,
+                        state = GuessWordState.entries[guessWordEntity.state.toInt()],
+                        completeTime = guessWordEntity.complete_time.letFromDb {
                             Instant.parse(it)
                         },
-                        guesses = guessWordQueries.selectGuessWordEntitiesBySessionId(
-                            wordSessionEntity.id
-                        ).executeAsList().map { guessWordEntity: GuessWordEntity ->
-                            GuessWord(
-                                id = guessWordEntity.id,
-                                state = GuessWordState.entries[guessWordEntity.state.toInt()],
-                                completeTime = guessWordEntity.complete_time.letFromDb {
-                                    Instant.parse(it)
-                                },
-                                letters = guessLetterQueries.selectGuessLetterEntitiesByGuessWordId(
-                                    guessWordEntity.id
-                                ).executeAsList().map { guessLetterEntity: GuessLetterEntity ->
-                                    GuessLetter(
-                                        id = guessLetterEntity.id,
-                                        character = guessLetterEntity.character.first(),
-                                        state = GuessLetterState.entries[guessLetterEntity.state.toInt()]
-                                    )
-                                }.toImmutableList()
+                        letters = guessLetterQueries.selectGuessLetterEntitiesByGuessWordId(
+                            guessWordEntity.id
+                        ).executeAsList().map { guessLetterEntity: GuessLetterEntity ->
+                            GuessLetter(
+                                id = guessLetterEntity.id,
+                                character = guessLetterEntity.character.first(),
+                                state = GuessLetterState.entries[guessLetterEntity.state.toInt()]
                             )
                         }.toImmutableList()
                     )
-                }
-                .firstOrNull()
+                }.toImmutableList()
+            )
         }
     }
 

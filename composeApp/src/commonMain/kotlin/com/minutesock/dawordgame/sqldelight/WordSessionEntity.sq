@@ -15,34 +15,17 @@ INSERT OR REPLACE INTO WordSessionEntity(
 ) VALUES (:id, :date, :start_time, :mystery_word, :language, :max_attempts, :game_mode, :state);
 
 selectWordSessionEntitiesByDate:
-SELECT
-    ws.*,
-    gw.id AS guess_word_id,
-    gw.complete_time AS guess_word_complete_time,
-    gw.session_id AS guess_word_session_id,
-    gw.state AS guess_word_state,
-    gl.id AS guess_letter_id,
-    gl.character AS guess_letter_character,
-    gl.state AS guess_letter_state
-FROM WordSessionEntity ws
-LEFT JOIN GuessWordEntity gw ON ws.id = gw.session_id
-LEFT JOIN GuessLetterEntity gl ON gw.id = gl.guess_word_id
+SELECT * FROM WordSessionEntity
 WHERE date = ? AND language = ? AND game_mode = ?;
 
 selectWordSessionEntity:
-SELECT
-    ws.*,
-    gw.id AS guess_word_id,
-    gw.complete_time AS guess_word_complete_time,
-    gw.session_id AS guess_word_session_id,
-    gw.state AS guess_word_state,
-    gl.id AS guess_letter_id,
-    gl.character AS guess_letter_character,
-    gl.state AS guess_letter_state
-FROM WordSessionEntity ws
-LEFT JOIN GuessWordEntity gw ON ws.id = gw.session_id
-LEFT JOIN GuessLetterEntity gl ON gw.id = gl.guess_word_id
-WHERE ws.id = ? LIMIT 1;
+SELECT * FROM WordSessionEntity
+WHERE id = ? LIMIT 1;
+
+selectWordSessionEntityByModeAndState:
+SELECT * FROM WordSessionEntity
+WHERE game_mode = ? AND state = ?
+LIMIT 1;
 
 selectHighestId:
 SELECT MAX(id) AS max_id

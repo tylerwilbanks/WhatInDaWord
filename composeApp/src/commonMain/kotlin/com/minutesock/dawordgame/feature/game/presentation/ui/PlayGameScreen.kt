@@ -14,17 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.theme.AppTheme
 import com.minutesock.dawordgame.core.uiutil.rememberShakeController
 import com.minutesock.dawordgame.core.uiutil.shake
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModelState
-import com.minutesock.dawordgame.feature.game.presentation.GuessLetterItem
-import com.minutesock.dawordgame.feature.game.presentation.GuessWordItem
 import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 import com.minutesock.dawordgame.feature.game.presentation.ui.component.FalseKeyboard
-import com.minutesock.dawordgame.feature.game.presentation.ui.component.WordRow
-import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -54,15 +49,15 @@ fun PlayGameScreen(
             )
         }
 
-        state.guessWordItems.forEach {
-            WordRow(
-                guessWordItem = it,
-                guessLetterItems = it.letters,
-                message = "", // state.dailyWordStateMessage?.uiText?.asString(),
-                wordRowAnimating = state.wordRowAnimating,
-                onEvent = onEvent
-            )
-        }
+//        state.guessWordItems.forEach {
+//            WordRow(
+//                guessWordItem = it,
+//                guessLetterItems = it.letters,
+//                message = "", // state.dailyWordStateMessage?.uiText?.asString(),
+//                wordRowAnimating = state.wordRowAnimating,
+//                onEvent = onEvent
+//            )
+//        }
 
         FalseKeyboard(
             modifier = Modifier.fillMaxSize(),
@@ -82,18 +77,17 @@ private fun PlayGameScreenPreview() {
         ) {
             PlayGameScreen(
                 state = GameViewModelState(
-                    gameLanguage = GameLanguage.English,
-                    guessWordItems = persistentListOf(
-                        GuessWordItem(
-                            letters = persistentListOf(
-                                GuessLetterItem('c'),
-                                GuessLetterItem('h'),
-                                GuessLetterItem('u'),
-                                GuessLetterItem('m'),
-                                GuessLetterItem('b')
-                            )
-                        )
-                    )
+//                    guessWordItems = persistentListOf(
+//                        GuessWordItem(
+//                            letters = persistentListOf(
+//                                GuessLetterItem('c'),
+//                                GuessLetterItem('h'),
+//                                GuessLetterItem('u'),
+//                                GuessLetterItem('m'),
+//                                GuessLetterItem('b')
+//                            )
+//                        )
+//                    )
                 ),
                 onEvent = {}
             )

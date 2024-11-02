@@ -19,17 +19,40 @@ class GameViewModel(
 
     fun setupGame(gameMode: GameMode, wordLength: Int = 5, attempts: Int = 6) {
         viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    loadingState = GameLoadingState.Loading
+                )
+            }
             val gameLanguage = getSystemLanguage()
             gameRepository.setupWords(gameLanguage)
             val selectedWord = when (gameMode) {
                 GameMode.Daily -> gameRepository.selectMysteryWordByDate(gameLanguage)
                 GameMode.Infinity -> gameRepository.selectMysteryWord(gameLanguage)
             }
+
+            val wordSession = when (gameMode) {
+                GameMode.Daily -> gameRepository.getOrCreateWordSessionByDate(
+                    language = gameLanguage,
+                    gameMode = gameMode,
+                    mysteryWord = selectedWord.word,
+                    wordLength = wordLength,
+                    maxAttempts = attempts
+                )
+
+                GameMode.Infinity -> gameRepository.getOrCreateWordSessionInfinityMode(
+                    language = gameLanguage,
+                    mysteryWord = selectedWord.word,
+                    wordLength = wordLength,
+                    maxAttempts = attempts
+                )
+            }
+
             _state.update {
                 it.copy(
-                    gameLanguage = gameLanguage,
+                    loadingState = GameLoadingState.Loaded,
                     mysteryWord = selectedWord,
-                    gameMode = gameMode,
+                    wordSession = wordSession
                 )
             }
         }
