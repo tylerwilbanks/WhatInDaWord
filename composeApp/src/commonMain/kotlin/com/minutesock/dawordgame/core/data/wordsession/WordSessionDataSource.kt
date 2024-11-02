@@ -21,15 +21,15 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 
 interface WordSessionDataSource {
-    suspend fun upsertWordSession(wordSession: WordSession)
-    suspend fun selectWordSessionsByDate(
+    suspend fun upsert(wordSession: WordSession)
+    suspend fun selectByDate(
         date: LocalDate,
         language: GameLanguage,
         gameMode: GameMode
     ): List<WordSession>
 
-    suspend fun selectWordSession(id: Long): WordSession?
-    suspend fun selectWordSessionByGameModeAndState(
+    suspend fun selectById(id: Long): WordSession?
+    suspend fun selectByGameModeAndState(
         gameMode: GameMode,
         state: WordSessionState
     ): WordSession?
@@ -44,7 +44,7 @@ class SqlDelightWordSessionDataSource(
     private val guessWordQueries = dbClient.guessWordEntityQueries
     private val guessLetterQueries = dbClient.guessLetterEntityQueries
 
-    override suspend fun upsertWordSession(wordSession: WordSession) {
+    override suspend fun upsert(wordSession: WordSession) {
         dbClient.suspendingTransaction {
             wordSessionQueries.upsertWordSessionEntity(
                 id = wordSession.idForDbInsertion,
@@ -75,7 +75,7 @@ class SqlDelightWordSessionDataSource(
         }
     }
 
-    override suspend fun selectWordSessionsByDate(
+    override suspend fun selectByDate(
         date: LocalDate,
         language: GameLanguage,
         gameMode: GameMode
@@ -90,7 +90,7 @@ class SqlDelightWordSessionDataSource(
         }
     }
 
-    override suspend fun selectWordSession(id: Long): WordSession? {
+    override suspend fun selectById(id: Long): WordSession? {
         return dbClient.suspendingTransaction {
             wordSessionQueries.selectWordSessionEntity(id)
                 .executeAsList()
@@ -99,7 +99,7 @@ class SqlDelightWordSessionDataSource(
         }
     }
 
-    override suspend fun selectWordSessionByGameModeAndState(
+    override suspend fun selectByGameModeAndState(
         gameMode: GameMode,
         state: WordSessionState
     ): WordSession? {

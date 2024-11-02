@@ -46,6 +46,15 @@ enum class GameLanguage {
         }
     }
 
+    val idStartOffset: Long
+        get() {
+            return when (this) {
+                English -> 1
+                German -> English.expectedWordSelectionCount + 1
+                Spanish -> English.expectedWordSelectionCount + German.expectedWordSelectionCount + 2
+            }
+        }
+
     companion object {
         fun fromDb(dbName: String): GameLanguage {
            return GameLanguage.entries.first { it.dbName == dbName }

@@ -6,6 +6,7 @@ import com.minutesock.dawordgame.core.domain.WordSelection
 interface WordSelectionDataSource {
     suspend fun upsert(vararg wordSelections: WordSelection)
     suspend fun select(wordSelection: WordSelection): WordSelection
+    suspend fun selectById(id: Long): WordSelection?
     suspend fun selectAll(gameLanguage: GameLanguage): List<WordSelection>
     suspend fun getCount(gameLanguage: GameLanguage): Long
     suspend fun clearTable()
@@ -30,6 +31,15 @@ class SqlDelightWordSelectionDataSource(
                 .selectWordSelectionEntity(wordSelection.word, wordSelection.language.dbName)
                 .executeAsOne()
                 .toWordSelection()
+        }
+    }
+
+    override suspend fun selectById(id: Long): WordSelection? {
+        return dbClient.suspendingTransaction {
+            queries
+                .selectWordSelectionEntityById(id)
+                .executeAsOneOrNull()
+                ?.toWordSelection()
         }
     }
 

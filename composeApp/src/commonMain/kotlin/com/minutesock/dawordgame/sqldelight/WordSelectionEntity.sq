@@ -18,6 +18,10 @@ selectWordSelectionEntities:
 SELECT * FROM WordSelectionEntity
 WHERE language = ?;
 
+selectWordSelectionEntityById:
+SELECT * FROM WordSelectionEntity
+WHERE id = ? LIMIT 1;
+
 getWordSelectionEntityCount:
 SELECT COUNT(*) FROM WordSelectionEntity
 WHERE language = ?;

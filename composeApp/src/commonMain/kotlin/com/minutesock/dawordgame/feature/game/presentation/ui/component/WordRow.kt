@@ -8,13 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.minutesock.dawordgame.core.domain.GuessLetter
+import com.minutesock.dawordgame.core.domain.GuessWord
 import com.minutesock.dawordgame.core.domain.GuessWordState
 import com.minutesock.dawordgame.core.uiutil.ShakeConfig
 import com.minutesock.dawordgame.core.uiutil.rememberShakeController
 import com.minutesock.dawordgame.core.uiutil.shake
-import com.minutesock.dawordgame.feature.game.presentation.GuessLetterItem
 import com.minutesock.dawordgame.feature.game.presentation.GuessWordError
-import com.minutesock.dawordgame.feature.game.presentation.GuessWordItem
 import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
@@ -24,8 +24,8 @@ import whatindaword.composeapp.generated.resources.what_in_da_word
 
 @Composable
 fun WordRow(
-    guessWordItem: GuessWordItem,
-    guessLetterItems: ImmutableList<GuessLetterItem>,
+    guessWord: GuessWord,
+    guessLetters: ImmutableList<GuessLetter>,
     message: String?,
     wordRowAnimating: Boolean,
     onEvent: (WordGameEvent) -> Unit
@@ -38,13 +38,13 @@ fun WordRow(
         }
         if (
             message != defaultMessage &&
-            guessWordItem.state == GuessWordState.Editing &&
-            guessWordItem.errorState != GuessWordError.None
+            guessWord.state == GuessWordState.Editing &&
+            guessWord.errorState != GuessWordError.None
         ) {
             shakeController.shake(ShakeConfig.no())
         }
 
-        when (guessWordItem.state) {
+        when (guessWord.state) {
             GuessWordState.Correct -> shakeController.shake(ShakeConfig.yes())
             GuessWordState.Failure -> shakeController.shake(ShakeConfig.no())
             else -> Unit
@@ -60,13 +60,13 @@ fun WordRow(
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
-        guessLetterItems.forEachIndexed { index: Int, guessLetterItem: GuessLetterItem ->
+        guessLetters.forEachIndexed { index: Int, guessLetter: GuessLetter ->
             LetterBox(
-                letter = guessLetterItem,
-                guessWordState = guessWordItem.state,
+                letter = guessLetter,
+                guessWordState = guessWord.state,
                 onEvent = onEvent,
                 flipAnimDelay = index * 200,
-                isFinalLetterInRow = index + 1 == guessLetterItems.size
+                isFinalLetterInRow = index + 1 == guessLetters.size
             )
         }
     }

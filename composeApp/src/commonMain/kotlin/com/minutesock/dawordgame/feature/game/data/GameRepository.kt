@@ -58,20 +58,29 @@ class GameRepository(
             .atTime(0, 0)
     ): WordSelection {
         return withContext(defaultDispatcher) {
-            val wordSelection = wordSelectionDataSource.selectAll(gameLanguage)
-            wordSelection[Random(date.dayOfYear).nextInt(from = 0, until = wordSelection.size)]
+            val startIndex = gameLanguage.idStartOffset.toInt() - (gameLanguage.ordinal + 1)
+            val chosenId = Random(date.dayOfYear).nextInt(
+                from = startIndex,
+                until = wordSelectionDataSource.getCount(gameLanguage).toInt()
+            ).toLong()
+            wordSelectionDataSource.selectById(chosenId)!!
         }
     }
 
     suspend fun selectMysteryWord(gameLanguage: GameLanguage): WordSelection {
         return withContext(defaultDispatcher) {
-            wordSelectionDataSource.selectAll(gameLanguage).random()
+            val startIndex = gameLanguage.idStartOffset.toInt() - (gameLanguage.ordinal + 1)
+            val chosenId = Random.nextInt(
+                from = startIndex,
+                until = wordSelectionDataSource.getCount(gameLanguage).toInt()
+            ).toLong()
+            wordSelectionDataSource.selectById(chosenId)!!
         }
     }
 
     suspend fun upsertWordSession(wordSession: WordSession) {
         withContext(defaultDispatcher) {
-            wordSessionDataSource.upsertWordSession(wordSession)
+            wordSessionDataSource.upsert(wordSession)
         }
     }
 
@@ -83,10 +92,10 @@ class GameRepository(
         wordLength: Int = 5
     ): WordSession {
         return withContext(defaultDispatcher) {
-            wordSessionDataSource.selectWordSessionByGameModeAndState(
+            wordSessionDataSource.selectByGameModeAndState(
                 gameMode = GameMode.Infinity,
                 state = WordSessionState.InProgress
-            ) ?: wordSessionDataSource.selectWordSessionByGameModeAndState(
+            ) ?: wordSessionDataSource.selectByGameModeAndState(
                 gameMode = GameMode.Infinity,
                 state = WordSessionState.NotStarted
             ) ?: createAndInsertWordSession(
@@ -109,7 +118,7 @@ class GameRepository(
         wordLength: Int = 5
     ): WordSession {
         return withContext(defaultDispatcher) {
-            wordSessionDataSource.selectWordSessionsByDate(
+            wordSessionDataSource.selectByDate(
                 date = date,
                 language = language,
                 gameMode = gameMode
@@ -159,7 +168,7 @@ class GameRepository(
                 gameMode = gameMode,
                 state = WordSessionState.NotStarted
             ).also {
-                wordSessionDataSource.upsertWordSession(wordSession = it)
+                wordSessionDataSource.upsert(wordSession = it)
             }
         }
     }

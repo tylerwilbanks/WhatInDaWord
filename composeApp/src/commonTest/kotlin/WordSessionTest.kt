@@ -55,7 +55,7 @@ class WordSessionTest {
             maxAttempts = 6,
             wordLength = 5
         )
-        val wordSessionFromDb = wordSessionDataSource.selectWordSession(createdWordSession.id)
+        val wordSessionFromDb = wordSessionDataSource.selectById(createdWordSession.id)
         assertNotNull(wordSessionFromDb)
         assertEquals(1L, wordSessionFromDb.id)
     }
@@ -75,7 +75,7 @@ class WordSessionTest {
             wordLength = 5
         )
 
-        val wordSessionFromDb = wordSessionDataSource.selectWordSession(createdWordSession.id)
+        val wordSessionFromDb = wordSessionDataSource.selectById(createdWordSession.id)
 
         assertNotNull(wordSessionFromDb)
         assertEquals(6, wordSessionFromDb.guesses.size)
@@ -96,7 +96,7 @@ class WordSessionTest {
             wordLength = 5
         )
 
-        val wordSessionFromDb = wordSessionDataSource.selectWordSession(createdWordSession.id)
+        val wordSessionFromDb = wordSessionDataSource.selectById(createdWordSession.id)
 
         assertNotNull(wordSessionFromDb)
         assertEquals(5, wordSessionFromDb.guesses.first().letters.size)

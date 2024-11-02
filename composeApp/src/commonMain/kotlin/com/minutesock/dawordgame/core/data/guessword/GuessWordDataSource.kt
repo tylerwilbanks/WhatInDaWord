@@ -5,7 +5,7 @@ import com.minutesock.dawordgame.core.domain.GuessWord
 import com.minutesock.dawordgame.sqldelight.GuessWordEntityQueries
 
 interface GuessWordDataSource {
-    suspend fun upsertGuessWord(vararg guessWords: GuessWord)
+    suspend fun upsert(vararg guessWords: GuessWord)
     suspend fun selectHighestId(): Long
     suspend fun clearTable()
 }
@@ -15,7 +15,7 @@ class SqlDelightGuessWordDataSource(
 ) : GuessWordDataSource {
     private val queries: GuessWordEntityQueries = dbClient.guessWordEntityQueries
 
-    override suspend fun upsertGuessWord(vararg guessWords: GuessWord) {
+    override suspend fun upsert(vararg guessWords: GuessWord) {
         dbClient.suspendingTransaction {
             guessWords.forEach { guessWord ->
                 queries.upsertGuessWordEntity(
