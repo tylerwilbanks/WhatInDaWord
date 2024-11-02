@@ -1,30 +1,30 @@
 import com.minutesock.dawordgame.core.data.DbClient
-import com.minutesock.dawordgame.core.data.guessletter.GuessLetter
-import com.minutesock.dawordgame.core.data.guessword.GuessWord
-import com.minutesock.dawordgame.core.data.guessword.GuessWordState
-import com.minutesock.dawordgame.core.data.wordsession.WordSession
 import com.minutesock.dawordgame.core.data.wordsession.WordSessionDataSource
-import com.minutesock.dawordgame.core.data.wordsession.WordSessionState
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
+import com.minutesock.dawordgame.core.domain.GuessLetter
 import com.minutesock.dawordgame.core.domain.GuessLetterState
-import com.minutesock.dawordgame.di.initKoin
+import com.minutesock.dawordgame.core.domain.GuessWord
+import com.minutesock.dawordgame.core.domain.GuessWordState
+import com.minutesock.dawordgame.core.domain.WordSession
+import com.minutesock.dawordgame.core.domain.WordSessionState
+import com.minutesock.dawordgame.di.initKoinForTesting
 import com.minutesock.dawordgame.di.testDbModule
 import com.minutesock.dawordgame.feature.game.data.GameRepository
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import org.koin.core.context.stopKoin
 import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class WordSessionTest {
     private val testDispatcher = StandardTestDispatcher()
-    private val koin = initKoin {
+    private val koin = initKoinForTesting {
         modules(testDbModule(testDispatcher))
     }.koin
 
@@ -35,13 +35,9 @@ class WordSessionTest {
         defaultDispatcher = testDispatcher
     )
 
-    @BeforeTest
-    fun setup() = runTest(testDispatcher) {
-        dbClient.clearDb()
-    }
-
     @AfterTest
-    fun teardown() {
+    fun teardown() = runTest(testDispatcher) {
+        dbClient.clearDb()
         stopKoin()
     }
 
@@ -137,12 +133,12 @@ class WordSessionTest {
                                 character = 'f',
                                 state = GuessLetterState.Absent,
                             )
-                        },
+                        }.toImmutableList(),
                         completeTime = Clock.System.now(),
                         sessionId = 1L,
                         state = GuessWordState.Failure
                     )
-                },
+                }.toImmutableList(),
                 state = WordSessionState.Failure,
             )
         )

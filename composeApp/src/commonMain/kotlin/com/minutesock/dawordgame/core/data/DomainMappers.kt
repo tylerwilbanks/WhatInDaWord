@@ -1,15 +1,16 @@
 package com.minutesock.dawordgame.core.data
 
-import com.minutesock.dawordgame.core.data.guessword.GuessWord
-import com.minutesock.dawordgame.core.data.wordsession.WordSession
-import com.minutesock.dawordgame.core.data.wordsession.WordSessionState
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
+import com.minutesock.dawordgame.core.domain.GuessWord
 import com.minutesock.dawordgame.core.domain.ValidWord
 import com.minutesock.dawordgame.core.domain.WordSelection
+import com.minutesock.dawordgame.core.domain.WordSession
+import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.sqldelight.ValidWordEntity
 import com.minutesock.dawordgame.sqldelight.WordSelectionEntity
 import com.minutesock.dawordgame.sqldelight.WordSessionEntity
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -28,7 +29,7 @@ fun WordSelectionEntity.toWordSelection(): WordSelection =
 fun WordSelection.toWordSelectionEntity(): WordSelectionEntity =
     WordSelectionEntity(id = id, word = word, language = language.dbName)
 
-fun WordSessionEntity.toWordSession(guesses: List<GuessWord>): WordSession =
+fun WordSessionEntity.toWordSession(guesses: ImmutableList<GuessWord>): WordSession =
     WordSession(
         date = date?.let { LocalDate.parse(date) }
             ?: Clock.System.todayIn(TimeZone.currentSystemDefault()),

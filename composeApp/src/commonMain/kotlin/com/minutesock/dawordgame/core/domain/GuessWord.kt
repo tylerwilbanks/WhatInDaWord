@@ -1,11 +1,11 @@
-package com.minutesock.dawordgame.core.data.guessword
+package com.minutesock.dawordgame.core.domain
 
 import com.minutesock.dawordgame.core.data.DbEntity
-import com.minutesock.dawordgame.core.data.guessletter.GuessLetter
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.datetime.Instant
 
 data class GuessWord(
-    val letters: List<GuessLetter>,
+    val letters: ImmutableList<GuessLetter>,
     val state: GuessWordState,
     val completeTime: Instant? = null,
     override val id: Long = 0,

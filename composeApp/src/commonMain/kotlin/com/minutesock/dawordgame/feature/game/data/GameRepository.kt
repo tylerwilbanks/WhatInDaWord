@@ -2,20 +2,21 @@ package com.minutesock.dawordgame.feature.game.data
 
 import com.minutesock.dawordgame.core.data.ValidWordDataSource
 import com.minutesock.dawordgame.core.data.WordSelectionDataSource
-import com.minutesock.dawordgame.core.data.guessletter.GuessLetter
 import com.minutesock.dawordgame.core.data.guessletter.GuessLetterDataSource
-import com.minutesock.dawordgame.core.data.guessword.GuessWord
 import com.minutesock.dawordgame.core.data.guessword.GuessWordDataSource
-import com.minutesock.dawordgame.core.data.guessword.GuessWordState
-import com.minutesock.dawordgame.core.data.wordsession.WordSession
 import com.minutesock.dawordgame.core.data.wordsession.WordSessionDataSource
-import com.minutesock.dawordgame.core.data.wordsession.WordSessionState
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
+import com.minutesock.dawordgame.core.domain.GuessLetter
 import com.minutesock.dawordgame.core.domain.GuessLetterState
+import com.minutesock.dawordgame.core.domain.GuessWord
+import com.minutesock.dawordgame.core.domain.GuessWordState
 import com.minutesock.dawordgame.core.domain.WordSelection
+import com.minutesock.dawordgame.core.domain.WordSession
+import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.di.KoinProvider
 import com.minutesock.dawordgame.feature.game.GameSetupHelper
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -125,11 +126,11 @@ class GameRepository(
                                 character = GuessLetter.AVAILABLE_CHAR,
                                 state = GuessLetterState.Unknown
                             )
-                        },
+                        }.toImmutableList(),
                         state = if (index == 0) GuessWordState.Editing else GuessWordState.Unused,
                         completeTime = null
                     )
-                },
+                }.toImmutableList(),
                 gameMode = gameMode,
                 state = WordSessionState.NotStarted
             ).also {

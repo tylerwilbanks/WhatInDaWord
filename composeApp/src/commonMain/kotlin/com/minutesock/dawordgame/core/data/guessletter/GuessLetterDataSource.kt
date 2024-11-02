@@ -1,6 +1,7 @@
 package com.minutesock.dawordgame.core.data.guessletter
 
 import com.minutesock.dawordgame.core.data.SqlDelightDbClient
+import com.minutesock.dawordgame.core.domain.GuessLetter
 
 interface GuessLetterDataSource {
     suspend fun upsertGuessLetter(vararg guessLetters: GuessLetter)

@@ -1,7 +1,7 @@
 package com.minutesock.dawordgame.feature.game.presentation
 
-import com.minutesock.dawordgame.core.data.guessword.GuessWordState
 import com.minutesock.dawordgame.core.domain.GuessLetterState
+import com.minutesock.dawordgame.core.domain.GuessWordState
 import com.minutesock.dawordgame.core.util.Option
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

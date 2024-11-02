@@ -1,6 +1,7 @@
 package com.minutesock.dawordgame.core.data.guessword
 
 import com.minutesock.dawordgame.core.data.SqlDelightDbClient
+import com.minutesock.dawordgame.core.domain.GuessWord
 import com.minutesock.dawordgame.sqldelight.GuessWordEntityQueries
 
 interface GuessWordDataSource {

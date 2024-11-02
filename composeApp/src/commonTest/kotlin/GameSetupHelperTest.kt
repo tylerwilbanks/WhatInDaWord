@@ -1,7 +1,8 @@
+import com.minutesock.dawordgame.core.data.DbClient
 import com.minutesock.dawordgame.core.data.ValidWordDataSource
 import com.minutesock.dawordgame.core.data.WordSelectionDataSource
 import com.minutesock.dawordgame.core.domain.GameLanguage
-import com.minutesock.dawordgame.di.initKoin
+import com.minutesock.dawordgame.di.initKoinForTesting
 import com.minutesock.dawordgame.di.testDbModule
 import com.minutesock.dawordgame.feature.game.GameSetupHelper
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -14,12 +15,14 @@ import kotlin.test.assertEquals
 
 class GameSetupHelperTest {
     private val testDispatcher = StandardTestDispatcher()
-    private val koin = initKoin {
+    private val koin = initKoinForTesting {
         modules(testDbModule(testDispatcher))
     }.koin
 
+
     private val validWordDataSource: ValidWordDataSource = koin.get()
     private val wordSelectionDataSource: WordSelectionDataSource = koin.get()
+    private val dbClient: DbClient = koin.get()
 
     private val gameSetupHelper =
         GameSetupHelper(
@@ -29,7 +32,8 @@ class GameSetupHelperTest {
         )
 
     @AfterTest
-    fun teardown() {
+    fun teardown() = runTest(testDispatcher) {
+        dbClient.clearDb()
         stopKoin()
     }
 

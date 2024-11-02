@@ -1,17 +1,20 @@
 package com.minutesock.dawordgame.core.data.wordsession
 
 import com.minutesock.dawordgame.core.data.SqlDelightDbClient
-import com.minutesock.dawordgame.core.data.guessletter.GuessLetter
-import com.minutesock.dawordgame.core.data.guessword.GuessWord
-import com.minutesock.dawordgame.core.data.guessword.GuessWordState
 import com.minutesock.dawordgame.core.data.letFromDb
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
+import com.minutesock.dawordgame.core.domain.GuessLetter
 import com.minutesock.dawordgame.core.domain.GuessLetterState
+import com.minutesock.dawordgame.core.domain.GuessWord
+import com.minutesock.dawordgame.core.domain.GuessWordState
+import com.minutesock.dawordgame.core.domain.WordSession
+import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.sqldelight.GuessLetterEntity
 import com.minutesock.dawordgame.sqldelight.GuessWordEntity
 import com.minutesock.dawordgame.sqldelight.SelectWordSessionEntitiesByDate
 import com.minutesock.dawordgame.sqldelight.SelectWordSessionEntity
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -109,9 +112,9 @@ class SqlDelightWordSessionDataSource(
                                         character = guessLetterEntity.character.first(),
                                         state = GuessLetterState.entries[guessLetterEntity.state.toInt()]
                                     )
-                                }
+                                }.toImmutableList()
                             )
-                        }
+                        }.toImmutableList()
                     )
                 }
         }
@@ -153,9 +156,9 @@ class SqlDelightWordSessionDataSource(
                                         character = guessLetterEntity.character.first(),
                                         state = GuessLetterState.entries[guessLetterEntity.state.toInt()]
                                     )
-                                }
+                                }.toImmutableList()
                             )
-                        }
+                        }.toImmutableList()
                     )
                 }
                 .firstOrNull()

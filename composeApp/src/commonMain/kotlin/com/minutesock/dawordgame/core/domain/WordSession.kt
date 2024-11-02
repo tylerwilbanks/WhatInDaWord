@@ -1,9 +1,8 @@
-package com.minutesock.dawordgame.core.data.wordsession
+package com.minutesock.dawordgame.core.domain
 
 import com.minutesock.dawordgame.core.data.DbEntity
-import com.minutesock.dawordgame.core.data.guessword.GuessWord
-import com.minutesock.dawordgame.core.domain.GameLanguage
-import com.minutesock.dawordgame.core.domain.GameMode
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 
@@ -15,7 +14,7 @@ data class WordSession(
     val gameMode: GameMode,
     val state: WordSessionState,
     override val id: Long = 0,
-    val guesses: List<GuessWord> = emptyList(),
+    val guesses: ImmutableList<GuessWord> = persistentListOf(),
     val startTime: Instant? = null,
 ) : DbEntity {
     val endTime: Instant

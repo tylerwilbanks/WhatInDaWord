@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.minutesock.dawordgame.core.data.guessword.GuessWordState
+import com.minutesock.dawordgame.core.domain.GuessWordState
 import com.minutesock.dawordgame.feature.game.presentation.GuessLetterItem
 import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 
