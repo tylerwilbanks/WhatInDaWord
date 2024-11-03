@@ -2,26 +2,16 @@ package com.minutesock.dawordgame.core.util
 
 import com.minutesock.dawordgame.core.uiutil.TextRes
 
-sealed class Option<T>(
-    val data: T? = null,
-    val message: String? = null,
-    val textRes: TextRes? = null,
-    val errorCode: Int? = null
-) {
-    class Loading<T>(data: T? = null) : Option<T>(data = data)
-    class Success<T>(data: T?) : Option<T>(data = data)
-    class Error<T>(
-        textRes: TextRes? = null,
-        message: String? = null,
-        data: T? = null,
-        errorCode: Int? = null
-    ) :
-        Option<T>(
-            data = data,
-            textRes = textRes,
-            message = message,
-            errorCode = errorCode
-        )
+sealed class Option<out T> {
+    class Loading(
+        val textRes: TextRes,
+    ) : Option<Nothing>()
 
-    val hasMessageToDisplay get() = textRes != null
+    class Error(
+        val textRes: TextRes,
+        val errorCode: Int = 1_000
+    ) : Option<Nothing>()
+
+    class Success<out T>(val data: T) : Option<T>()
 }
+

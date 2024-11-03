@@ -15,6 +15,13 @@ sealed class TextRes {
         val args: ImmutableList<Any>? = null
     ) : TextRes()
 
+    fun asRawString(): String {
+        return when (this) {
+            is Raw -> value
+            is StringRes -> "Failed to retrieve string resource: ${resource.key}"
+        }
+    }
+
     @Composable
     fun asString(): String {
         return when (this) {

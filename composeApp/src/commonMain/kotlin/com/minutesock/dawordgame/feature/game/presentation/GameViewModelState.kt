@@ -46,7 +46,6 @@ data class GameViewModelState(
     }
 }
 
-
 data class GameTitleMessage(
     val message: TextRes = TextRes.StringRes(Res.string.what_in_da_word),
     val isError: Boolean = false

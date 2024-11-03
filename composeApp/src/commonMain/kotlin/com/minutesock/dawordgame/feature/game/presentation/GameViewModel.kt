@@ -3,10 +3,16 @@ package com.minutesock.dawordgame.feature.game.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.minutesock.dawordgame.core.domain.GameMode
+import com.minutesock.dawordgame.core.domain.GuessLetter
+import com.minutesock.dawordgame.core.domain.GuessLetterState
+import com.minutesock.dawordgame.core.domain.GuessWord
 import com.minutesock.dawordgame.core.domain.GuessWordState
 import com.minutesock.dawordgame.core.uiutil.TextRes
+import com.minutesock.dawordgame.core.util.Option
 import com.minutesock.dawordgame.feature.game.data.GameRepository
 import com.minutesock.dawordgame.getSystemLanguage
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -80,19 +86,43 @@ class GameViewModel(
     }
 
     private fun WordGameEvent.OnCharacterPress.onEvent() {
-//        when (val result = getCurrentGuessWordIndex()) {
-//            is Option.Error, is Option.Loading -> _state.update {
-//                it.copy(
-//                    gameTitleMessage = GameTitleMessage(
-//                        message = result.textRes ?: TextRes.StringRes(Res.string.what_in_da_word),
-//                        isError = true
-//                    )
-//                )
-//            }
-//            is Option.Success -> getCurrentGuessWordIndexAndHandleError()?.let { index: Int ->
-//                updateCurrentGuessWord()
-//            }
-//        }
+        getCurrentGuessWordIndexAndHandleError()?.let { index ->
+            val result = requireWordSession.guesses[index].addGuessLetter(
+                GuessLetter(
+                    character = this.character,
+                    state = GuessLetterState.Unknown
+                )
+            )
+
+            when (result) {
+                is Option.Loading -> Unit
+                is Option.Error -> _state.update {
+                    it.copy(
+                        gameTitleMessage = GameTitleMessage(
+                            message = result.textRes,
+                            isError = true
+                        )
+                    )
+                }
+
+                is Option.Success -> {
+                    _state.update { state ->
+                        state.copy(
+                            wordSession = requireWordSession.copy(
+                                guesses = getUpdatedWordRows(index, result.data)
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getUpdatedWordRows(index: Int, guessWord: GuessWord): ImmutableList<GuessWord> {
+        val mut = mutableListOf<GuessWord>()
+        mut.addAll(requireWordSession.guesses)
+        mut[index] = guessWord
+        return mut.toImmutableList()
     }
 
     private fun getCurrentGuessWordIndexAndHandleError(): Int? {
@@ -158,6 +188,4 @@ class GameViewModel(
 //            else -> Unit
 //        }
 //    }
-
-
 }
