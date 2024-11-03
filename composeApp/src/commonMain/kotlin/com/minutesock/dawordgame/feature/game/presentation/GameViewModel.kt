@@ -143,49 +143,4 @@ class GameViewModel(
             index
         }
     }
-
-//    private fun updateCurrentGuessWord(index: Int, character: Char) {
-//        val result = requireWordSession.guesses[index].addGuessLetter(
-//            GuessLetter(character = character, state = GuessLetterState.Unknown)
-//        )
-//        when (result) {
-//            is Option.Error -> {
-//                result.uiText?.let { uiTextError ->
-//                    result.errorCode?.let { errorCode ->
-//                        _state.update {
-//                            it.copy(
-//                                guessWords = getUpdatedWordRows(
-//                                    index, state.value.guessWords[index].copy(
-//                                        errorState = GuessWordError.values()[errorCode]
-//                                    )
-//                                )
-//                            )
-//                        }
-//
-//                    }
-//                    _state.update {
-//                        it.copy(
-//                            dailyWordStateMessage = DailyWordStateMessage(
-//                                uiText = uiTextError,
-//                                isError = true
-//                            )
-//                        )
-//                    }
-//                }
-//
-//            }
-//
-//            is Option.Success -> {
-//                result.data?.let { newGuessWord ->
-//                    _state.update {
-//                        it.copy(
-//                            guessWords = getUpdatedWordRows(index, newGuessWord)
-//                        )
-//                    }
-//                }
-//            }
-//
-//            else -> Unit
-//        }
-//    }
 }

@@ -20,6 +20,7 @@ import com.minutesock.dawordgame.core.uiutil.shake
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModelState
 import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 import com.minutesock.dawordgame.feature.game.presentation.ui.component.FalseKeyboard
+import com.minutesock.dawordgame.feature.game.presentation.ui.component.WordRow
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -44,20 +45,20 @@ fun PlayGameScreen(
 
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.h3,
-                text = "" // state.dailyWordStateMessage?.textRes?.asString() ?: "",
+                text = state.gameTitleMessage.message.asString()
                 // color = messageColor
             )
         }
 
-//        state.guessWordItems.forEach {
-//            WordRow(
-//                guessWordItem = it,
-//                guessLetterItems = it.letters,
-//                message = "", // state.dailyWordStateMessage?.uiText?.asString(),
-//                wordRowAnimating = state.wordRowAnimating,
-//                onEvent = onEvent
-//            )
-//        }
+        state.wordSession?.guesses?.forEach {
+            WordRow(
+                guessWord = it,
+                guessLetters = it.letters,
+                message = state.gameTitleMessage.message.asString(),
+                wordRowAnimating = state.wordRowAnimating,
+                onEvent = onEvent
+            )
+        }
 
         FalseKeyboard(
             modifier = Modifier.fillMaxSize(),

@@ -1,5 +1,6 @@
 package com.minutesock.dawordgame.core.data
 
+import app.cash.sqldelight.db.SqlDriver
 import com.minutesock.dawordgame.sqldelight.AppDatabase
 import com.minutesock.dawordgame.sqldelight.GuessLetterEntityQueries
 import com.minutesock.dawordgame.sqldelight.GuessWordEntityQueries
@@ -17,10 +18,10 @@ interface DbClient {
 }
 
 class SqlDelightDbClient(
-    driver: DatabaseDriverFactory,
+    driver: SqlDriver,
     private val defaultDispatcher: CoroutineDispatcher,
 ) : DbClient {
-    private val database = AppDatabase(driver.createDriver())
+    private val database = AppDatabase(driver)
 
     private val databaseQueries get() = database.databaseQueries
 
