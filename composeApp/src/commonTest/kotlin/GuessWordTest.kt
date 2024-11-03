@@ -57,11 +57,11 @@ class GuessWordTest {
             updatedGuessWord.letters[0].state
         )
         assertEquals(
-            GuessLetterState.Absent,
+            GuessLetterState.Present,
             updatedGuessWord.letters[1].state
         )
         assertEquals(
-            GuessLetterState.Present,
+            GuessLetterState.Absent,
             updatedGuessWord.letters[2].state
         )
         assertEquals(

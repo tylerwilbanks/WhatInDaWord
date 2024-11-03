@@ -101,11 +101,12 @@ data class GuessWord(
         }
 
         //clean up any extra present letters
-        this.letters.forEachIndexed { index, userGuessLetter ->
+        for (index in this.letters.size - 1 downTo 0) {
+            val userGuessLetter = this.letters[index]
             val correctDuplicateLetterCount = correctChars.count { it == userGuessLetter.character }
             val currentPresentAndCorrectLetterCount = newGuessLetterItems.count {
-                it.character == this.letters[index].character && it.state == GuessLetterState.Correct ||
-                        it.character == this.letters[index].character && it.state == GuessLetterState.Present
+                it.character == userGuessLetter.character && it.state == GuessLetterState.Correct ||
+                        it.character == userGuessLetter.character && it.state == GuessLetterState.Present
             }
 
             if (newGuessLetterItems[index].state == GuessLetterState.Present && currentPresentAndCorrectLetterCount > correctDuplicateLetterCount) {
@@ -113,7 +114,6 @@ data class GuessWord(
                     state = GuessLetterState.Absent
                 )
             }
-
         }
 
         return this.copy(
