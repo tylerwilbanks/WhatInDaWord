@@ -27,7 +27,7 @@ class GameViewModel(
     private val _state = MutableStateFlow(GameViewModelState())
     val state = _state.asStateFlow()
 
-    private val requireWordSession = state.value.wordSession!!
+    private val requireWordSession get() = state.value.wordSession!!
 
     fun setupGame(gameMode: GameMode, wordLength: Int = 5, attempts: Int = 6) {
         viewModelScope.launch {
