@@ -78,11 +78,17 @@ class GameViewModel(
                 is WordGameEvent.OnAnsweredWordRowAnimationFinished -> TODO()
                 is WordGameEvent.OnCharacterPress -> event.onEvent()
                 is WordGameEvent.OnCompleteAnimationFinished -> TODO()
-                is WordGameEvent.OnDeletePress -> TODO()
+                is WordGameEvent.OnDeletePress -> event.onEvent()
                 is WordGameEvent.OnEnterPress -> TODO()
                 is WordGameEvent.OnErrorAnimationFinished -> event.onEvent()
                 is WordGameEvent.OnStatsPress -> TODO()
             }
+        }
+    }
+
+    private fun WordGameEvent.OnDeletePress.onEvent() {
+        getCurrentGuessWordIndexAndHandleError()?.let { index: Int ->
+            eraseLetter(index)
         }
     }
 
@@ -128,6 +134,31 @@ class GameViewModel(
                     message = TextRes.StringRes(Res.string.what_in_da_word)
                 )
             )
+        }
+    }
+
+    private fun eraseLetter(index: Int) {
+        when (val result = requireWordSession.guesses[index].eraseLetter()) {
+            is Option.Error -> {
+                _state.update {
+                    it.copy(
+                        gameTitleMessage = GameTitleMessage(
+                            message = result.textRes,
+                            isError = true
+                        )
+                    )
+                }
+            }
+
+            is Option.Success -> {
+                _state.update {
+                    it.copy(
+                        wordSession = requireWordSession.copy(
+                            guesses = getUpdatedWordRows(index, result.data)
+                        )
+                    )
+                }
+            }
         }
     }
 

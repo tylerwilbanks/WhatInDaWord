@@ -43,7 +43,7 @@ data class GuessWord(
         )
     }
 
-    fun eraseLetter(): Option<GuessWord?> {
+    fun eraseLetter(): Option<GuessWord> {
         val newGuessLetterList = this.letters.toMutableList()
         newGuessLetterList.indexOfLast { it.answered }.let { index ->
             if (index == -1) {
