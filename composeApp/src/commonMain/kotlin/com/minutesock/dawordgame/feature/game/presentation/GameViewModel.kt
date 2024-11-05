@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import whatindaword.composeapp.generated.resources.Res
 import whatindaword.composeapp.generated.resources.no_more_guess_attempts_left
+import whatindaword.composeapp.generated.resources.what_in_da_word
 
 class GameViewModel(
     private val gameRepository: GameRepository
@@ -74,13 +75,13 @@ class GameViewModel(
     fun onEvent(event: WordGameEvent) {
         viewModelScope.launch {
             when (event) {
-                WordGameEvent.OnAnsweredWordRowAnimationFinished -> TODO()
+                is WordGameEvent.OnAnsweredWordRowAnimationFinished -> TODO()
                 is WordGameEvent.OnCharacterPress -> event.onEvent()
-                WordGameEvent.OnCompleteAnimationFinished -> TODO()
-                WordGameEvent.OnDeletePress -> TODO()
-                WordGameEvent.OnEnterPress -> TODO()
-                WordGameEvent.OnErrorAnimationFinished -> TODO()
-                WordGameEvent.OnStatsPress -> TODO()
+                is WordGameEvent.OnCompleteAnimationFinished -> TODO()
+                is WordGameEvent.OnDeletePress -> TODO()
+                is WordGameEvent.OnEnterPress -> TODO()
+                is WordGameEvent.OnErrorAnimationFinished -> event.onEvent()
+                is WordGameEvent.OnStatsPress -> TODO()
             }
         }
     }
@@ -95,7 +96,6 @@ class GameViewModel(
             )
 
             when (result) {
-                is Option.Loading -> Unit
                 is Option.Error -> _state.update {
                     it.copy(
                         gameTitleMessage = GameTitleMessage(
@@ -115,6 +115,19 @@ class GameViewModel(
                     }
                 }
             }
+        }
+    }
+
+    private fun WordGameEvent.OnErrorAnimationFinished.onEvent() {
+        if (state.value.gameState.isGameOver) {
+            return
+        }
+        _state.update {
+            it.copy(
+                gameTitleMessage = GameTitleMessage(
+                    message = TextRes.StringRes(Res.string.what_in_da_word)
+                )
+            )
         }
     }
 

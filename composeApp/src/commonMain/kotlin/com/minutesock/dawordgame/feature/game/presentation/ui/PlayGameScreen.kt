@@ -1,6 +1,9 @@
 package com.minutesock.dawordgame.feature.game.presentation.ui
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,24 +14,89 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.core.theme.AppTheme
+import com.minutesock.dawordgame.core.uiutil.ShakeConfig
 import com.minutesock.dawordgame.core.uiutil.rememberShakeController
 import com.minutesock.dawordgame.core.uiutil.shake
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModelState
 import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 import com.minutesock.dawordgame.feature.game.presentation.ui.component.FalseKeyboard
 import com.minutesock.dawordgame.feature.game.presentation.ui.component.WordRow
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import whatindaword.composeapp.generated.resources.Res
+import whatindaword.composeapp.generated.resources.what_in_da_word
 
 @Composable
 fun PlayGameScreen(
     state: GameViewModelState,
     onEvent: (WordGameEvent) -> Unit
 ) {
+    val defaultMessageDelay by remember {
+        mutableStateOf(1000L)
+    }
     val shakeController = rememberShakeController()
+    val messageColor by animateColorAsState(
+        targetValue = if (
+            state.gameTitleMessage.message.asString() != stringResource(Res.string.what_in_da_word) &&
+            (state.gameTitleMessage.isError || state.gameState == WordSessionState.Failure)
+        ) {
+            MaterialTheme.colors.error
+        } else {
+            MaterialTheme.colors.primary
+        },
+        animationSpec = tween(
+            durationMillis = if (state.gameTitleMessage.isError) 200 else 1000,
+            easing = LinearEasing
+        ), label = "title message color"
+    )
+
+    LaunchedEffect(state.gameTitleMessage) {
+        if (state.wordRowAnimating) {
+            return@LaunchedEffect
+        }
+        if (state.gameTitleMessage.isError || state.gameState == WordSessionState.Failure) {
+            shakeController.shake(
+                ShakeConfig.no(defaultMessageDelay) {
+                    if (state.gameState == WordSessionState.Failure) {
+                        onEvent(WordGameEvent.OnCompleteAnimationFinished)
+                    } else {
+                        onEvent(WordGameEvent.OnErrorAnimationFinished)
+                    }
+                }
+            )
+            return@LaunchedEffect
+        }
+        if (state.gameState == WordSessionState.Success) {
+            shakeController.shake(
+                ShakeConfig.yes(defaultMessageDelay) {
+                    onEvent(
+                        WordGameEvent.OnCompleteAnimationFinished
+                    )
+                }
+            )
+            return@LaunchedEffect
+        }
+
+        shakeController.shake(
+            ShakeConfig(
+                iterations = 1,
+                intensity = 1_000f,
+                rotateX = 5f,
+                translateY = 15f,
+            )
+        )
+    }
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -45,8 +113,9 @@ fun PlayGameScreen(
 
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.h3,
-                text = state.gameTitleMessage.message.asString()
-                // color = messageColor
+                fontSize = TextUnit(28f, TextUnitType.Sp),
+                text = state.gameTitleMessage.message.asString(),
+                color = messageColor
             )
         }
 
