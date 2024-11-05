@@ -8,12 +8,12 @@ import java.io.File
 actual class ProductionDatabaseDriverFactory : DatabaseDriverFactory {
     actual override fun createDriver(): SqlDriver {
         val databaseDir = File(System.getProperty("user.home"), ".whatindaword")
-        val databaseShouldBeCreated = !databaseDir.exists()
-        if (databaseShouldBeCreated) {
+        if (!databaseDir.exists()) {
             databaseDir.mkdirs()
         }
-        val databasePath = File(databaseDir, "app.db").absolutePath
-        val driver = JdbcSqliteDriver("jdbc:sqlite:$databasePath")
+        val databaseFile = File(databaseDir, "app.db")
+        val databaseShouldBeCreated = !databaseFile.exists()
+        val driver = JdbcSqliteDriver("jdbc:sqlite:${databaseFile.absolutePath}")
         if (databaseShouldBeCreated) {
             AppDatabase.Schema.create(driver)
         }
