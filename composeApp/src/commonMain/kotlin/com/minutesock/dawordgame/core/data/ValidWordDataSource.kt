@@ -7,7 +7,7 @@ interface ValidWordDataSource {
     suspend fun clearTable()
     suspend fun upsert(validWords: List<ValidWord>)
     suspend fun selectAll(language: GameLanguage): List<ValidWord>
-    suspend fun select(word: String, language: GameLanguage): ValidWord
+    suspend fun select(word: String, language: GameLanguage): ValidWord?
     suspend fun getCount(gameLanguage: GameLanguage): Long
 }
 
@@ -39,12 +39,12 @@ class SqlDelightValidWordDataSource(
         }
     }
 
-    override suspend fun select(word: String, language: GameLanguage): ValidWord {
+    override suspend fun select(word: String, language: GameLanguage): ValidWord? {
         return dbClient.suspendingTransaction {
             validWordQueries
                 .selectValidWordEntity(word = word, language = language.dbName)
-                .executeAsOne()
-                .toValidWord()
+                .executeAsOneOrNull()
+                ?.toValidWord()
         }
     }
 

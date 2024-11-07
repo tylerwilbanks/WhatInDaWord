@@ -9,21 +9,16 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.minutesock.dawordgame.core.domain.GameMode
-import com.minutesock.dawordgame.di.KoinProvider
 import com.minutesock.dawordgame.feature.game.data.GameRepository
+import com.minutesock.dawordgame.feature.game.domain.GuessWordValidator
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 
 @Composable
 fun GameScreen(
     gameViewModel: GameViewModel = viewModel {
         GameViewModel(
-            gameRepository = GameRepository(
-                validWordDataSource = KoinProvider.instance.get(),
-                wordSelectionDataSource = KoinProvider.instance.get(),
-                defaultDispatcher = Dispatchers.IO
-            )
+            gameRepository = GameRepository(),
+            guessWordValidator = GuessWordValidator()
         )
     }
 ) {

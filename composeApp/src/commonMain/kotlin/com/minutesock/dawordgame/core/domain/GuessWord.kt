@@ -70,18 +70,6 @@ data class GuessWord(
         )
     }
 
-    private fun updateStateAfterGuess(
-        correctWord: String,
-        isFinalGuess: Boolean
-    ): GuessWordState {
-        return when {
-            this.word.lowercase() == correctWord.lowercase() -> GuessWordState.Correct
-            !isFinalGuess && this.word.lowercase() != correctWord.lowercase() -> GuessWordState.Complete
-            isFinalGuess && this.word.lowercase() != correctWord.lowercase() -> GuessWordState.Failure
-            else -> GuessWordState.Complete
-        }
-    }
-
     fun lockInGuess(correctWord: String, isFinalGuess: Boolean): GuessWord {
         val newGuessLetterItems = mutableListOf<GuessLetter>()
         val correctChars: List<Char> = correctWord.map { it.lowercaseChar() }
@@ -93,8 +81,7 @@ data class GuessWord(
                 else -> GuessLetterState.Absent
             }
             newGuessLetterItems.add(
-                GuessLetter(
-                    character = guessLetter.character,
+                guessLetter.copy(
                     state = newState
                 )
             )
@@ -121,6 +108,18 @@ data class GuessWord(
             state = updateStateAfterGuess(correctWord, isFinalGuess),
             completeTime = Clock.System.now()
         )
+    }
+
+    private fun updateStateAfterGuess(
+        correctWord: String,
+        isFinalGuess: Boolean
+    ): GuessWordState {
+        return when {
+            this.word.lowercase() == correctWord.lowercase() -> GuessWordState.Correct
+            !isFinalGuess && this.word.lowercase() != correctWord.lowercase() -> GuessWordState.Complete
+            isFinalGuess && this.word.lowercase() != correctWord.lowercase() -> GuessWordState.Failure
+            else -> GuessWordState.Complete
+        }
     }
 }
 
