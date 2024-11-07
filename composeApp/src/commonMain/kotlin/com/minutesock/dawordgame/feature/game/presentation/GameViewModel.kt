@@ -17,6 +17,7 @@ import com.minutesock.dawordgame.feature.game.domain.WordGameValidationResultTyp
 import com.minutesock.dawordgame.getSystemLanguage
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -27,7 +28,7 @@ import whatindaword.composeapp.generated.resources.what_in_da_word
 
 class GameViewModel(
     private val gameRepository: GameRepository,
-    private val guessWordValidator: GuessWordValidator
+    private val guessWordValidator: GuessWordValidator,
 ) : ViewModel() {
 
     private var finalMessage: GameTitleMessage? = null
@@ -37,8 +38,9 @@ class GameViewModel(
 
     private val requireWordSession get() = state.value.wordSession!!
 
-    fun setupGame(gameMode: GameMode, wordLength: Int = 5, attempts: Int = 6) {
-        viewModelScope.launch {
+
+    fun setupGame(gameMode: GameMode, wordLength: Int = 5, attempts: Int = 6): Job {
+        return viewModelScope.launch {
             _state.update {
                 it.copy(
                     loadingState = GameLoadingState.Loading
@@ -120,8 +122,8 @@ class GameViewModel(
         return mutableRow.toImmutableList()
     }
 
-    fun onEvent(event: WordGameEvent) {
-        viewModelScope.launch {
+    fun onEvent(event: WordGameEvent): Job {
+        return viewModelScope.launch {
             when (event) {
                 is WordGameEvent.OnAnsweredWordRowAnimationFinished -> event.onEvent()
                 is WordGameEvent.OnCharacterPress -> event.onEvent()

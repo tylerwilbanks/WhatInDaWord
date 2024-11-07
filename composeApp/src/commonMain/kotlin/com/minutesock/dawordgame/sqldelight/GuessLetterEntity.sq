@@ -15,5 +15,8 @@ selectGuessLetterEntitiesByGuessWordId:
 SELECT * FROM GuessLetterEntity
 WHERE guess_word_id = ?;
 
+selectCount:
+SELECT COUNT(*) FROM GuessLetterEntity;
+
 clearGuessLetterEntities:
 DELETE FROM GuessLetterEntity;

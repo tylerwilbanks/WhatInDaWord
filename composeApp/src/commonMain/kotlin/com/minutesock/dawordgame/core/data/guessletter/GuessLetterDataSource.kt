@@ -5,6 +5,7 @@ import com.minutesock.dawordgame.core.domain.GuessLetter
 
 interface GuessLetterDataSource {
     suspend fun upsert(vararg guessLetters: GuessLetter)
+    suspend fun getCount(): Long
     suspend fun clearTable()
 }
 
@@ -23,6 +24,12 @@ class SqlDelightGuessLetterDataSource(
                     state = guessLetter.state.ordinal.toLong()
                 )
             }
+        }
+    }
+
+    override suspend fun getCount(): Long {
+        return dbClient.suspendingTransaction {
+            queries.selectCount().executeAsOne()
         }
     }
 

@@ -19,5 +19,8 @@ selectHighestId:
 SELECT MAX(id) AS max_id
 FROM GuessWordEntity;
 
+selectCount:
+SELECT COUNT(*) FROM GuessWordEntity;
+
 clearGuessWordEntities:
 DELETE FROM GuessWordEntity;

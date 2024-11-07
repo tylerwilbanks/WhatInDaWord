@@ -7,6 +7,7 @@ import com.minutesock.dawordgame.sqldelight.GuessWordEntityQueries
 interface GuessWordDataSource {
     suspend fun upsert(vararg guessWords: GuessWord)
     suspend fun selectHighestId(): Long
+    suspend fun getCount(): Long
     suspend fun clearTable()
 }
 
@@ -31,6 +32,12 @@ class SqlDelightGuessWordDataSource(
     override suspend fun selectHighestId(): Long {
         return dbClient.suspendingTransaction {
             queries.selectHighestId().executeAsOneOrNull()?.max_id ?: 0L
+        }
+    }
+
+    override suspend fun getCount(): Long {
+        return dbClient.suspendingTransaction {
+            queries.selectCount().executeAsOne()
         }
     }
 
