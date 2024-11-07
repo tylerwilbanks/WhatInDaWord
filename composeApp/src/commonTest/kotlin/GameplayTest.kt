@@ -58,9 +58,9 @@ class GameplayTest {
             attempts = attempts
         ).join()
 
-        assertEquals(1L, gameViewModel.state.value.wordSession?.id)
         val wordSession = wordSessionDataSource.selectById(1)
         assertNotNull(wordSession)
+        assertEquals(wordSession.id, gameViewModel.state.value.wordSession?.id)
         assertEquals(6, guessWordDataSource.getCount())
         assertEquals(wordLength.toLong() * attempts, guessLetterDataSource.getCount())
     }
