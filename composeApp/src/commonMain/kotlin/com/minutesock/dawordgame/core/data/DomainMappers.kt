@@ -1,16 +1,24 @@
 package com.minutesock.dawordgame.core.data
 
+import com.minutesock.dawordgame.core.data.guessletter.GuessLetterDataSource
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
+import com.minutesock.dawordgame.core.domain.GuessLetter
+import com.minutesock.dawordgame.core.domain.GuessLetterState
 import com.minutesock.dawordgame.core.domain.GuessWord
+import com.minutesock.dawordgame.core.domain.GuessWordState
 import com.minutesock.dawordgame.core.domain.ValidWord
 import com.minutesock.dawordgame.core.domain.WordSelection
 import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
+import com.minutesock.dawordgame.sqldelight.GuessLetterEntity
+import com.minutesock.dawordgame.sqldelight.GuessWordEntity
 import com.minutesock.dawordgame.sqldelight.ValidWordEntity
 import com.minutesock.dawordgame.sqldelight.WordSelectionEntity
 import com.minutesock.dawordgame.sqldelight.WordSessionEntity
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -42,3 +50,48 @@ fun WordSessionEntity.toWordSession(guesses: ImmutableList<GuessWord>): WordSess
         startTime = start_time?.let { Instant.parse(start_time) },
         guesses = guesses
     )
+
+fun GuessWordEntity.toGuessWord(): GuessWord {
+    return GuessWord(
+        id = id,
+        sessionId = session_id,
+        state = GuessWordState.entries[state.toInt()],
+        completeTime = complete_time.letFromDb {
+            Instant.parse(it)
+        },
+        letters = persistentListOf()
+    )
+}
+
+fun GuessWordEntity.toGuessWord(letters: List<GuessLetter>): GuessWord {
+    return GuessWord(
+        id = id,
+        sessionId = session_id,
+        state = GuessWordState.entries[state.toInt()],
+        completeTime = complete_time.letFromDb {
+            Instant.parse(it)
+        },
+        letters = letters.toImmutableList()
+    )
+}
+
+suspend fun GuessWordEntity.toGuessWord(guessLetterDataSource: GuessLetterDataSource): GuessWord {
+    return GuessWord(
+        id = id,
+        sessionId = session_id,
+        state = GuessWordState.entries[state.toInt()],
+        completeTime = complete_time.letFromDb {
+            Instant.parse(it)
+        },
+        letters = guessLetterDataSource.selectByGuessWordId(id).toImmutableList()
+    )
+}
+
+fun GuessLetterEntity.toGuessLetter(): GuessLetter {
+    return GuessLetter(
+        id = id,
+        guessWordId = guess_word_id,
+        character = character.first(),
+        state = GuessLetterState.entries[state.toInt()]
+    )
+}

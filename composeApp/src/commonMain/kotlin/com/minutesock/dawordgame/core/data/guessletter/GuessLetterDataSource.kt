@@ -1,10 +1,12 @@
 package com.minutesock.dawordgame.core.data.guessletter
 
 import com.minutesock.dawordgame.core.data.SqlDelightDbClient
+import com.minutesock.dawordgame.core.data.toGuessLetter
 import com.minutesock.dawordgame.core.domain.GuessLetter
 
 interface GuessLetterDataSource {
     suspend fun upsert(vararg guessLetters: GuessLetter)
+    suspend fun selectByGuessWordId(guessWordId: Long): List<GuessLetter>
     suspend fun getCount(): Long
     suspend fun clearTable()
 }
@@ -24,6 +26,14 @@ class SqlDelightGuessLetterDataSource(
                     state = guessLetter.state.ordinal.toLong()
                 )
             }
+        }
+    }
+
+    override suspend fun selectByGuessWordId(guessWordId: Long): List<GuessLetter> {
+        return dbClient.suspendingTransaction {
+            queries.selectGuessLetterEntitiesByGuessWordId(guessWordId)
+                .executeAsList()
+                .map { it.toGuessLetter() }
         }
     }
 

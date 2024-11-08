@@ -27,9 +27,9 @@ val appModule = module {
     single { SqlDelightDbClient(get(), Dispatchers.IO) }.bind<DbClient>()
     singleOf(::SqlDelightValidWordDataSource).bind<ValidWordDataSource>()
     singleOf(::SqlDelightWordSelectionDataSource).bind<WordSelectionDataSource>()
-    singleOf(::SqlDelightWordSessionDataSource).bind<WordSessionDataSource>()
-    singleOf(::SqlDelightGuessWordDataSource).bind<GuessWordDataSource>()
     singleOf(::SqlDelightGuessLetterDataSource).bind<GuessLetterDataSource>()
+    singleOf(::SqlDelightGuessWordDataSource).bind<GuessWordDataSource>()
+    singleOf(::SqlDelightWordSessionDataSource).bind<WordSessionDataSource>()
 }
 
 fun testDbModule(coroutineDispatcher: CoroutineDispatcher): Module {
@@ -39,8 +39,8 @@ fun testDbModule(coroutineDispatcher: CoroutineDispatcher): Module {
         single { SqlDelightDbClient(get(), coroutineDispatcher) }.bind<DbClient>()
         singleOf(::SqlDelightValidWordDataSource).bind<ValidWordDataSource>()
         singleOf(::SqlDelightWordSelectionDataSource).bind<WordSelectionDataSource>()
-        singleOf(::SqlDelightWordSessionDataSource).bind<WordSessionDataSource>()
-        singleOf(::SqlDelightGuessWordDataSource).bind<GuessWordDataSource>()
         singleOf(::SqlDelightGuessLetterDataSource).bind<GuessLetterDataSource>()
+        singleOf(::SqlDelightGuessWordDataSource).bind<GuessWordDataSource>()
+        singleOf(::SqlDelightWordSessionDataSource).bind<WordSessionDataSource>()
     }
 }

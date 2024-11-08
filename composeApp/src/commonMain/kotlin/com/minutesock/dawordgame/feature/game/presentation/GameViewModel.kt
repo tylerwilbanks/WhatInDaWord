@@ -3,7 +3,6 @@ package com.minutesock.dawordgame.feature.game.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.minutesock.dawordgame.core.domain.GameMode
-import com.minutesock.dawordgame.core.domain.GuessLetter
 import com.minutesock.dawordgame.core.domain.GuessLetterState
 import com.minutesock.dawordgame.core.domain.GuessWord
 import com.minutesock.dawordgame.core.domain.GuessWordState
@@ -37,7 +36,6 @@ class GameViewModel(
     val state = _state.asStateFlow()
 
     private val requireWordSession get() = state.value.wordSession!!
-
 
     fun setupGame(gameMode: GameMode, wordLength: Int = 5, attempts: Int = 6): Job {
         return viewModelScope.launch {
@@ -176,10 +174,8 @@ class GameViewModel(
     private fun WordGameEvent.OnCharacterPress.onEvent() {
         getCurrentGuessWordIndexAndHandleError()?.let { index ->
             val result = requireWordSession.guesses[index].addGuessLetter(
-                GuessLetter(
-                    character = this.character,
-                    state = GuessLetterState.Unknown
-                )
+                newCharacter = this.character,
+                newState = GuessLetterState.Unknown
             )
 
             when (result) {

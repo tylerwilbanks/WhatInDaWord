@@ -62,6 +62,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.collections.immutable)
+            implementation("org.slf4j:slf4j-nop:1.7.36")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

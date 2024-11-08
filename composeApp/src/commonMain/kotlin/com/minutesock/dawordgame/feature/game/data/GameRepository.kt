@@ -170,7 +170,8 @@ class GameRepository(
             ).also {
                 wordSessionDataSource.upsert(wordSession = it)
             }
-            wordSessionDataSource.selectById(newWordSessionId)!!
+            val ws = wordSessionDataSource.selectById(newWordSessionId)
+            ws!!
         }
     }
 }

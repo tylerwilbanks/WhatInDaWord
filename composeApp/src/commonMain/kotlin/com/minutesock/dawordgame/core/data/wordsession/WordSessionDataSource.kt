@@ -2,12 +2,10 @@ package com.minutesock.dawordgame.core.data.wordsession
 
 import com.minutesock.dawordgame.core.data.SqlDelightDbClient
 import com.minutesock.dawordgame.core.data.letFromDb
+import com.minutesock.dawordgame.core.data.toGuessLetter
+import com.minutesock.dawordgame.core.data.toGuessWord
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
-import com.minutesock.dawordgame.core.domain.GuessLetter
-import com.minutesock.dawordgame.core.domain.GuessLetterState
-import com.minutesock.dawordgame.core.domain.GuessWord
-import com.minutesock.dawordgame.core.domain.GuessWordState
 import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.sqldelight.GuessLetterEntity
@@ -38,7 +36,7 @@ interface WordSessionDataSource {
 }
 
 class SqlDelightWordSessionDataSource(
-    private val dbClient: SqlDelightDbClient
+    private val dbClient: SqlDelightDbClient,
 ) : WordSessionDataSource {
     private val wordSessionQueries = dbClient.wordSessionEntityQueries
     private val guessWordQueries = dbClient.guessWordEntityQueries
@@ -130,21 +128,12 @@ class SqlDelightWordSessionDataSource(
                 guesses = guessWordQueries.selectGuessWordEntitiesBySessionId(
                     wordSessionEntity.id
                 ).executeAsList().map { guessWordEntity: GuessWordEntity ->
-                    GuessWord(
-                        id = guessWordEntity.id,
-                        state = GuessWordState.entries[guessWordEntity.state.toInt()],
-                        completeTime = guessWordEntity.complete_time.letFromDb {
-                            Instant.parse(it)
-                        },
+                    guessWordEntity.toGuessWord(
                         letters = guessLetterQueries.selectGuessLetterEntitiesByGuessWordId(
                             guessWordEntity.id
                         ).executeAsList().map { guessLetterEntity: GuessLetterEntity ->
-                            GuessLetter(
-                                id = guessLetterEntity.id,
-                                character = guessLetterEntity.character.first(),
-                                state = GuessLetterState.entries[guessLetterEntity.state.toInt()]
-                            )
-                        }.toImmutableList()
+                            guessLetterEntity.toGuessLetter()
+                        }
                     )
                 }.toImmutableList()
             )

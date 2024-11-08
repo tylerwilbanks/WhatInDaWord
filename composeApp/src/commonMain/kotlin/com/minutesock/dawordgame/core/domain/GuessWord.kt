@@ -20,7 +20,7 @@ data class GuessWord(
     val displayWord: String get() = letters.joinToString("") { it.displayCharacter }.uppercase()
     val isIncomplete: Boolean get() = letters.any { it.availableForInput }
 
-    fun addGuessLetter(guessLetter: GuessLetter): Option<GuessWord> {
+    fun addGuessLetter(newCharacter: Char, newState: GuessLetterState): Option<GuessWord> {
         val newGuessLetterList = this.letters.toMutableList()
         newGuessLetterList.indexOfFirst { it.availableForInput }.let { index ->
             if (index == -1) {
@@ -31,8 +31,8 @@ data class GuessWord(
                 )
             }
             newGuessLetterList[index] = newGuessLetterList[index].copy(
-                character = guessLetter.character,
-                state = guessLetter.state
+                character = newCharacter,
+                state = newState
             )
         }
         return Option.Success(
