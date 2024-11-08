@@ -2,7 +2,6 @@ package com.minutesock.dawordgame.feature.game.presentation.ui.component
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.minutesock.dawordgame.core.theme.md_theme_dark_onSecondary
 import com.minutesock.dawordgame.core.theme.md_theme_light_onSecondary
+import com.minutesock.dawordgame.core.theme.rememberDarkTheme
 import com.minutesock.dawordgame.core.uiutil.bounceClick
 import com.minutesock.dawordgame.feature.game.presentation.GuessKeyboardLetter
 import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
@@ -35,8 +35,8 @@ fun FalseKeyboardLetter(
     onEvent: (WordGameEvent) -> Unit,
     guessKeyboardLetter: GuessKeyboardLetter,
     isWordRowAnimating: Boolean = false,
-    darkTheme: Boolean = isSystemInDarkTheme()
 ) {
+    val darkTheme by rememberDarkTheme()
     val isLetter by remember { mutableStateOf(guessKeyboardLetter.keyName.length == 1) }
     val sizeX by remember {
         mutableStateOf(

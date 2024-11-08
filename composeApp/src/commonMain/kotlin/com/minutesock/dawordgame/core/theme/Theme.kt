@@ -5,6 +5,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import com.minutesock.dawordgame.core.data.DataStoreManager
+import com.minutesock.dawordgame.core.data.rememberPreference
 
 private val lightColors = lightColors(
     primary = md_theme_light_primary,
@@ -33,12 +39,37 @@ private val darkColors = darkColors(
 )
 
 @Composable
+fun rememberDarkTheme(): State<Boolean> {
+    val darkTheme by rememberPreference(DataStoreManager.darkModeDelegate)
+    val useSystemTheme by rememberPreference(DataStoreManager.useSystemThemeDelegate)
+    val isSystemInDarkTheme = isSystemInDarkTheme()
+
+    return remember {
+        derivedStateOf {
+            if (useSystemTheme) {
+                isSystemInDarkTheme
+            } else {
+                darkTheme
+            }
+        }
+    }
+}
+
+@Composable
 fun AppTheme(
-    useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {
+    val darkTheme by rememberPreference(DataStoreManager.darkModeDelegate)
+    val useSystemTheme by rememberPreference(DataStoreManager.useSystemThemeDelegate)
+
+    val darkMode = if (useSystemTheme) {
+        isSystemInDarkTheme()
+    } else {
+        darkTheme
+    }
+
     MaterialTheme(
-        colors = if (useDarkTheme) {
+        colors = if (darkMode) {
             darkColors
         } else {
             lightColors

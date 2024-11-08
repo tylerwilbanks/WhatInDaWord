@@ -63,6 +63,8 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.collections.immutable)
             implementation("org.slf4j:slf4j-nop:1.7.36")
+            implementation(libs.androidx.datastore)
+            implementation(libs.androidx.datastore.preferences)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -136,4 +138,7 @@ sqldelight {
             srcDirs("src/commonMain/kotlin")
         }
     }
+}
+dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
 }

@@ -40,8 +40,18 @@ import whatindaword.composeapp.generated.resources.what_in_da_word
 @Composable
 fun PlayGameScreen(
     state: GameViewModelState,
+//    isDarkTheme: Boolean,
     onEvent: (WordGameEvent) -> Unit
 ) {
+//    val themeIconId by remember(isDarkTheme) {
+//        mutableStateOf(
+//            when (isDarkTheme) {
+//                false -> R.drawable.baseline_wb_sunny_24
+//                true -> R.drawable.baseline_moon_24
+//            }
+//        )
+//    }
+
     val defaultMessageDelay by remember {
         mutableStateOf(1000L)
     }
@@ -101,6 +111,41 @@ fun PlayGameScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
+//        Row(
+//            modifier = Modifier.fillMaxWidth(),
+//            horizontalArrangement = Arrangement.SpaceBetween
+//        ) {
+//            IconButton(onClick = { navController.navigate("how") }) {
+//                Icon(
+//                    modifier = Modifier
+//                        .size(45.dp)
+//                        .padding(10.dp),
+//                    painter = painterResource(
+//                        id = R.drawable.baseline_question_mark_24
+//                    ),
+//                    contentDescription = null
+//                )
+//            }
+//
+//            IconButton(
+//                onClick = { onDarkThemeToggled(!isDarkTheme) }
+//            ) {
+//                Icon(
+//                    modifier = Modifier
+//                        .size(45.dp)
+//                        .padding(10.dp),
+//                    painter = painterResource(id = themeIconId),
+//                    contentDescription = null
+//                )
+//            }
+//            IconButton(onClick = { onEvent(WordEventGame.OnStatsPress) }) {
+//                Icon(
+//                    painterResource(id = R.drawable.baseline_bar_chart_24),
+//                    contentDescription = "Stats"
+//                )
+//            }
+//        }
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
