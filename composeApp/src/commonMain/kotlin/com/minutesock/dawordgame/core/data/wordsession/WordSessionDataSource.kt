@@ -1,9 +1,9 @@
 package com.minutesock.dawordgame.core.data.wordsession
 
 import com.minutesock.dawordgame.core.data.SqlDelightDbClient
-import com.minutesock.dawordgame.core.data.letFromDb
 import com.minutesock.dawordgame.core.data.toGuessLetter
 import com.minutesock.dawordgame.core.data.toGuessWord
+import com.minutesock.dawordgame.core.data.toWordSession
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.WordSession
@@ -11,12 +11,7 @@ import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.sqldelight.GuessLetterEntity
 import com.minutesock.dawordgame.sqldelight.GuessWordEntity
 import com.minutesock.dawordgame.sqldelight.WordSessionEntity
-import kotlinx.collections.immutable.toImmutableList
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.todayIn
 
 interface WordSessionDataSource {
     suspend fun upsert(wordSession: WordSession)
@@ -46,7 +41,6 @@ class SqlDelightWordSessionDataSource(
         dbClient.suspendingTransaction {
             wordSessionQueries.upsertWordSessionEntity(
                 id = wordSession.idForDbInsertion,
-                start_time = wordSession.startTime.toString(),
                 date = wordSession.date.toString(),
                 mystery_word = wordSession.mysteryWord,
                 language = wordSession.language.dbName,
@@ -111,20 +105,7 @@ class SqlDelightWordSessionDataSource(
 
     private fun List<WordSessionEntity>.mapWordSessionEntities(): List<WordSession> {
         return this.map { wordSessionEntity: WordSessionEntity ->
-            WordSession(
-                id = wordSessionEntity.id,
-                date = wordSessionEntity.date?.let { LocalDate.parse(it) }
-                    ?: Clock.System.todayIn(
-                        TimeZone.currentSystemDefault()
-                    ),
-                mysteryWord = wordSessionEntity.mystery_word,
-                language = GameLanguage.fromDb(wordSessionEntity.language),
-                maxAttempts = wordSessionEntity.max_attempts.toInt(),
-                gameMode = GameMode.fromDb(wordSessionEntity.game_mode),
-                state = WordSessionState.entries[wordSessionEntity.state.toInt()],
-                startTime = wordSessionEntity.start_time.letFromDb {
-                    Instant.parse(it)
-                },
+            wordSessionEntity.toWordSession(
                 guesses = guessWordQueries.selectGuessWordEntitiesBySessionId(
                     wordSessionEntity.id
                 ).executeAsList().map { guessWordEntity: GuessWordEntity ->
@@ -135,7 +116,7 @@ class SqlDelightWordSessionDataSource(
                             guessLetterEntity.toGuessLetter()
                         }
                     )
-                }.toImmutableList()
+                }
             )
         }
     }

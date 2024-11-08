@@ -16,7 +16,6 @@ import com.minutesock.dawordgame.sqldelight.GuessWordEntity
 import com.minutesock.dawordgame.sqldelight.ValidWordEntity
 import com.minutesock.dawordgame.sqldelight.WordSelectionEntity
 import com.minutesock.dawordgame.sqldelight.WordSessionEntity
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.Clock
@@ -37,8 +36,9 @@ fun WordSelectionEntity.toWordSelection(): WordSelection =
 fun WordSelection.toWordSelectionEntity(): WordSelectionEntity =
     WordSelectionEntity(id = id, word = word, language = language.dbName)
 
-fun WordSessionEntity.toWordSession(guesses: ImmutableList<GuessWord>): WordSession =
+fun WordSessionEntity.toWordSession(guesses: List<GuessWord>): WordSession =
     WordSession(
+        id = id,
         date = date?.let { LocalDate.parse(date) }
             ?: Clock.System.todayIn(TimeZone.currentSystemDefault()),
         mysteryWord = mystery_word,
@@ -46,9 +46,7 @@ fun WordSessionEntity.toWordSession(guesses: ImmutableList<GuessWord>): WordSess
         maxAttempts = max_attempts.toInt(),
         gameMode = GameMode.fromDb(game_mode),
         state = WordSessionState.entries[state.toInt()],
-        id = id,
-        startTime = start_time?.let { Instant.parse(start_time) },
-        guesses = guesses
+        guesses = guesses.toImmutableList()
     )
 
 fun GuessWordEntity.toGuessWord(): GuessWord {

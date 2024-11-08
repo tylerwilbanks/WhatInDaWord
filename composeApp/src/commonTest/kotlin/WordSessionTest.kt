@@ -109,7 +109,6 @@ class WordSessionTest {
     @Test
     fun loadExistingWordSession() = runTest(testDispatcher) {
         val startingGuessWordId = 1
-        val wordSessionStartTime = Clock.System.now()
 
         gameRepository.upsertWordSession(
             WordSession(
@@ -122,7 +121,6 @@ class WordSessionTest {
                 gameMode = GameMode.Daily,
                 mysteryWord = "smack",
                 maxAttempts = 6,
-                startTime = wordSessionStartTime,
                 guesses = List(6) { index ->
                     val newGuessWordId = startingGuessWordId + index.toLong()
                     GuessWord(
@@ -163,6 +161,5 @@ class WordSessionTest {
         assertEquals(6, loadedWordSession.guesses.size)
         assertEquals("smack", loadedWordSession.mysteryWord)
         assertEquals(GameMode.Daily, loadedWordSession.gameMode)
-        assertEquals(wordSessionStartTime, loadedWordSession.startTime)
     }
 }

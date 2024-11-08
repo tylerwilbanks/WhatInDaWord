@@ -15,7 +15,6 @@ data class WordSession(
     val state: WordSessionState,
     override val id: Long = 0,
     val guesses: ImmutableList<GuessWord> = persistentListOf(),
-    val startTime: Instant? = null,
 ) : DbEntity {
     val endTime: Instant
         get() = TODO("Not implemented yet.")

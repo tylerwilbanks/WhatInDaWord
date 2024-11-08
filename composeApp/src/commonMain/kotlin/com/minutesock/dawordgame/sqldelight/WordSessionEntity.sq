@@ -1,7 +1,6 @@
 CREATE TABLE WordSessionEntity(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     date TEXT,
-    start_time TEXT,
     mystery_word TEXT NOT NULL,
     language TEXT NOT NULL,
     max_attempts INTEGER NOT NULL,
@@ -11,8 +10,8 @@ CREATE TABLE WordSessionEntity(
 
 upsertWordSessionEntity:
 INSERT OR REPLACE INTO WordSessionEntity(
-    id, date, start_time, mystery_word, language, max_attempts, game_mode, state
-) VALUES (:id, :date, :start_time, :mystery_word, :language, :max_attempts, :game_mode, :state);
+    id, date, mystery_word, language, max_attempts, game_mode, state
+) VALUES (:id, :date, :mystery_word, :language, :max_attempts, :game_mode, :state);
 
 selectWordSessionEntitiesByDate:
 SELECT * FROM WordSessionEntity
