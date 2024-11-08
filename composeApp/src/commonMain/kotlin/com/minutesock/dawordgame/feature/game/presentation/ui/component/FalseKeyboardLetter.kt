@@ -33,7 +33,8 @@ import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 fun FalseKeyboardLetter(
     onEvent: (WordGameEvent) -> Unit,
     guessKeyboardLetter: GuessKeyboardLetter,
-    isWordRowAnimating: Boolean = false
+    isWordRowAnimating: Boolean = false,
+    darkTheme: Boolean = isSystemInDarkTheme()
 ) {
     val isLetter by remember { mutableStateOf(guessKeyboardLetter.keyName.length == 1) }
     val sizeX by remember {
@@ -45,7 +46,7 @@ fun FalseKeyboardLetter(
     val backgroundColor by animateColorAsState(
         targetValue = guessKeyboardLetter
             .displayColor(
-                if (isSystemInDarkTheme()) {
+                if (darkTheme) {
                     md_theme_dark_onSecondary
                 } else {
                     md_theme_light_onSecondary
@@ -96,13 +97,13 @@ fun FalseKeyboardLetter(
             "remove" -> Icon(
                 imageVector = Icons.Default.Close,
                 contentDescription = "remove",
-                tint = if (isSystemInDarkTheme()) Color.White else Color.Black
+                tint = if (darkTheme) Color.White else Color.Black
             )
 
             else -> Text(
                 textAlign = TextAlign.Center,
                 text = guessKeyboardLetter.character.toString(),
-                color = if (isSystemInDarkTheme()) Color.White else Color.Black,
+                color = if (darkTheme) Color.White else Color.Black,
                 fontSize = 16.sp
             )
         }

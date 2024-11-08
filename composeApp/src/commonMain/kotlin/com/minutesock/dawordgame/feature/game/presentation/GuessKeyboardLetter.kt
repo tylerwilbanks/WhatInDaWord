@@ -2,6 +2,7 @@ package com.minutesock.dawordgame.feature.game.presentation
 
 import androidx.compose.ui.graphics.Color
 import com.minutesock.dawordgame.core.domain.GuessLetterState
+import com.minutesock.dawordgame.core.theme.guessLetterAbsent
 import com.minutesock.dawordgame.core.theme.guessLetterGreen
 import com.minutesock.dawordgame.core.theme.guessLetterYellow
 
@@ -12,7 +13,7 @@ data class GuessKeyboardLetter(
 ) {
     fun displayColor(defaultColor: Color) = when (state) {
         GuessLetterState.Unknown -> defaultColor
-        GuessLetterState.Absent -> defaultColor.copy(alpha = 0.25f)
+        GuessLetterState.Absent -> guessLetterAbsent
         GuessLetterState.Present -> guessLetterYellow
         GuessLetterState.Correct -> guessLetterGreen
     }

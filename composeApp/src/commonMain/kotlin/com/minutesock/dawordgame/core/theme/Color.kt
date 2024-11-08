@@ -66,5 +66,14 @@ val md_theme_dark_scrim = Color(0xFF000000)
 
 val guessLetterYellow = Color(172, 169, 34, 255) // #ACA922
 val guessLetterGreen = Color(0xFF189818) // #189818
+val guessLetterAbsent = Color(0xFF8c8c8c)
 
 val seed = Color(0xFF00B260)
+
+fun Color.brighten(factor: Float): Color {
+    val clampedFactor = factor.coerceIn(0f, 1f)
+    val newRed = red + (1.0f - red) * clampedFactor
+    val newGreen = green + (1.0f - green) * clampedFactor
+    val newBlue = blue + (1.0f - blue) * clampedFactor
+    return Color(newRed, newGreen, newBlue, alpha)
+}
