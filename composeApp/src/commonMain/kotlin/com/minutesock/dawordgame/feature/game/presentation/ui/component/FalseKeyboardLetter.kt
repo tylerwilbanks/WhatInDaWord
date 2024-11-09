@@ -47,7 +47,8 @@ fun FalseKeyboardLetter(
     val backgroundColor by animateColorAsState(
         targetValue = guessKeyboardLetter
             .displayColor(
-                if (darkTheme) {
+                darkTheme = darkTheme,
+                defaultColor = if (darkTheme) {
                     md_theme_dark_onSecondary
                 } else {
                     md_theme_light_onSecondary

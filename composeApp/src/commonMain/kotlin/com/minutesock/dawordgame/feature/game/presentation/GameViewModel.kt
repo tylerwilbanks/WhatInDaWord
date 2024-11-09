@@ -2,7 +2,6 @@ package com.minutesock.dawordgame.feature.game.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.minutesock.dawordgame.core.data.DataStoreManager
 import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.GuessLetterState
 import com.minutesock.dawordgame.core.domain.GuessWord
@@ -37,10 +36,6 @@ class GameViewModel(
     val state = _state.asStateFlow()
 
     private val requireWordSession get() = state.value.wordSession!!
-
-    init {
-        println("view model here is my datastore!: ${DataStoreManager.dataStore}")
-    }
 
     fun setupGame(gameMode: GameMode, wordLength: Int = 5, attempts: Int = 6): Job {
         return viewModelScope.launch {

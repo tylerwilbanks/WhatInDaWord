@@ -44,7 +44,7 @@ fun rememberDarkTheme(): State<Boolean> {
     val useSystemTheme by rememberPreference(DataStoreManager.useSystemThemeDelegate)
     val isSystemInDarkTheme = isSystemInDarkTheme()
 
-    return remember {
+    return remember(darkTheme, useSystemTheme, isSystemInDarkTheme) {
         derivedStateOf {
             if (useSystemTheme) {
                 isSystemInDarkTheme

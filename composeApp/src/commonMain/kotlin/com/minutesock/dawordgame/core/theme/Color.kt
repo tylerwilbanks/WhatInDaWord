@@ -66,7 +66,8 @@ val md_theme_dark_scrim = Color(0xFF000000)
 
 val guessLetterYellow = Color(172, 169, 34, 255) // #ACA922
 val guessLetterGreen = Color(0xFF189818) // #189818
-val guessLetterAbsent = Color(0xFF8c8c8c)
+val guessLetterAbsentDark = Color(0xFF8c8c8c)
+val guessLetterAbsentLight = Color(0xFF636363)
 
 val seed = Color(0xFF00B260)
 
