@@ -2,6 +2,7 @@ package com.minutesock.dawordgame.feature.game.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.minutesock.dawordgame.core.data.DataStoreManager
 import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.GuessLetterState
 import com.minutesock.dawordgame.core.domain.GuessWord
@@ -130,6 +131,7 @@ class GameViewModel(
                 is WordGameEvent.OnEnterPress -> event.onEvent()
                 is WordGameEvent.OnErrorAnimationFinished -> event.onEvent()
                 is WordGameEvent.OnStatsPress -> TODO()
+                is WordGameEvent.OnDarkThemeToggle -> DataStoreManager.darkMode = !DataStoreManager.darkMode
             }
         }
     }

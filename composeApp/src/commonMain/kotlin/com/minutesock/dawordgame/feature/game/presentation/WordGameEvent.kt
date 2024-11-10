@@ -8,4 +8,5 @@ sealed class WordGameEvent {
     data object OnAnsweredWordRowAnimationFinished : WordGameEvent()
     data object OnCompleteAnimationFinished : WordGameEvent()
     data object OnStatsPress : WordGameEvent()
+    data object OnDarkThemeToggle : WordGameEvent()
 }

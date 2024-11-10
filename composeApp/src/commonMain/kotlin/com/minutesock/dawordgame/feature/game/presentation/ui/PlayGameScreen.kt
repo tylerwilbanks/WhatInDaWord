@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -32,25 +35,30 @@ import com.minutesock.dawordgame.feature.game.presentation.GameViewModelState
 import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 import com.minutesock.dawordgame.feature.game.presentation.ui.component.FalseKeyboard
 import com.minutesock.dawordgame.feature.game.presentation.ui.component.WordRow
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import whatindaword.composeapp.generated.resources.Res
+import whatindaword.composeapp.generated.resources.bar_chart
+import whatindaword.composeapp.generated.resources.dark_mode
+import whatindaword.composeapp.generated.resources.light_mode
+import whatindaword.composeapp.generated.resources.question_mark
 import whatindaword.composeapp.generated.resources.what_in_da_word
 
 @Composable
 fun PlayGameScreen(
     state: GameViewModelState,
-//    isDarkTheme: Boolean,
+    isDarkTheme: Boolean,
     onEvent: (WordGameEvent) -> Unit
 ) {
-//    val themeIconId by remember(isDarkTheme) {
-//        mutableStateOf(
-//            when (isDarkTheme) {
-//                false -> R.drawable.baseline_wb_sunny_24
-//                true -> R.drawable.baseline_moon_24
-//            }
-//        )
-//    }
+    val themeIconId by remember(isDarkTheme) {
+        mutableStateOf(
+            when (isDarkTheme) {
+                false -> Res.drawable.light_mode
+                true -> Res.drawable.dark_mode
+            }
+        )
+    }
 
     val defaultMessageDelay by remember {
         mutableStateOf(1000L)
@@ -111,40 +119,38 @@ fun PlayGameScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-//        Row(
-//            modifier = Modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.SpaceBetween
-//        ) {
-//            IconButton(onClick = { navController.navigate("how") }) {
-//                Icon(
-//                    modifier = Modifier
-//                        .size(45.dp)
-//                        .padding(10.dp),
-//                    painter = painterResource(
-//                        id = R.drawable.baseline_question_mark_24
-//                    ),
-//                    contentDescription = null
-//                )
-//            }
-//
-//            IconButton(
-//                onClick = { onDarkThemeToggled(!isDarkTheme) }
-//            ) {
-//                Icon(
-//                    modifier = Modifier
-//                        .size(45.dp)
-//                        .padding(10.dp),
-//                    painter = painterResource(id = themeIconId),
-//                    contentDescription = null
-//                )
-//            }
-//            IconButton(onClick = { onEvent(WordEventGame.OnStatsPress) }) {
-//                Icon(
-//                    painterResource(id = R.drawable.baseline_bar_chart_24),
-//                    contentDescription = "Stats"
-//                )
-//            }
-//        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            IconButton(onClick = { /* navController.navigate("how") */ }) {
+                Icon(
+                    modifier = Modifier
+                        .size(45.dp)
+                        .padding(10.dp),
+                    painter = painterResource(Res.drawable.question_mark),
+                    contentDescription = "How to play"
+                )
+            }
+
+            IconButton(
+                onClick = { onEvent(WordGameEvent.OnDarkThemeToggle) }
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .size(45.dp)
+                        .padding(10.dp),
+                    painter = painterResource(resource = themeIconId),
+                    contentDescription = "Toggle dark theme"
+                )
+            }
+            IconButton(onClick = { onEvent(WordGameEvent.OnStatsPress) }) {
+                Icon(
+                    painterResource(resource = Res.drawable.bar_chart),
+                    contentDescription = "Stats"
+                )
+            }
+        }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -204,6 +210,7 @@ private fun PlayGameScreenPreview() {
 //                        )
 //                    )
                 ),
+                isDarkTheme = true,
                 onEvent = {}
             )
         }

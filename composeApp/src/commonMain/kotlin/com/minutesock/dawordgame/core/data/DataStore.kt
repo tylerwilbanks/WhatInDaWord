@@ -71,13 +71,13 @@ object DataStoreManager : KoinComponent {
         key = booleanPreferencesKey("dark_mode_enabled"),
         defaultValue = true
     )
-    val darkMode by darkModeDelegate
+    var darkMode by darkModeDelegate
 
     val useSystemThemeDelegate = DataStoreDelegate(
         key = booleanPreferencesKey("use_system_theme"),
         defaultValue = false
     )
-    val useSystemTheme by useSystemThemeDelegate
+    var useSystemTheme by useSystemThemeDelegate
 }
 
 
