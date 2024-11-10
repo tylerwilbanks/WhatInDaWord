@@ -2,6 +2,8 @@ package com.minutesock.dawordgame.core.domain
 
 import androidx.compose.ui.graphics.Color
 import com.minutesock.dawordgame.core.data.DbEntity
+import com.minutesock.dawordgame.core.theme.guessLetterAbsentDark
+import com.minutesock.dawordgame.core.theme.guessLetterAbsentLight
 import com.minutesock.dawordgame.core.theme.guessLetterGreen
 import com.minutesock.dawordgame.core.theme.guessLetterYellow
 
@@ -15,9 +17,9 @@ data class GuessLetter(
     val availableForInput get() = character == AVAILABLE_CHAR
     val answered get() = character != AVAILABLE_CHAR
 
-    fun displayColor(absentBackgroundColor: Color) = when (state) {
+    fun displayColor(isDarkMode: Boolean, absentBackgroundColor: Color) = when (state) {
         GuessLetterState.Unknown -> absentBackgroundColor
-        GuessLetterState.Absent -> absentBackgroundColor
+        GuessLetterState.Absent -> if (isDarkMode) guessLetterAbsentDark else guessLetterAbsentLight
         GuessLetterState.Present -> guessLetterYellow
         GuessLetterState.Correct -> guessLetterGreen
     }

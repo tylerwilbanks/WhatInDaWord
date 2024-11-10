@@ -47,13 +47,13 @@ import whatindaword.composeapp.generated.resources.what_in_da_word
 
 @Composable
 fun PlayGameScreen(
+    isDarkMode: Boolean,
     state: GameViewModelState,
-    isDarkTheme: Boolean,
     onEvent: (WordGameEvent) -> Unit
 ) {
-    val themeIconId by remember(isDarkTheme) {
+    val themeIconId by remember(isDarkMode) {
         mutableStateOf(
-            when (isDarkTheme) {
+            when (isDarkMode) {
                 false -> Res.drawable.light_mode
                 true -> Res.drawable.dark_mode
             }
@@ -172,6 +172,7 @@ fun PlayGameScreen(
 
         state.wordSession?.guesses?.forEach {
             WordRow(
+                isDarkMode = isDarkMode,
                 guessWord = it,
                 guessLetters = it.letters,
                 message = state.gameTitleMessage.message.asString(),
@@ -181,6 +182,7 @@ fun PlayGameScreen(
         }
 
         FalseKeyboard(
+            isDarkMode = isDarkMode,
             modifier = Modifier.fillMaxSize(),
             onEvent = onEvent,
             falseKeyboardKeys = state.falseKeyboardKeys,
@@ -210,7 +212,7 @@ private fun PlayGameScreenPreview() {
 //                        )
 //                    )
                 ),
-                isDarkTheme = true,
+                isDarkMode = true,
                 onEvent = {}
             )
         }

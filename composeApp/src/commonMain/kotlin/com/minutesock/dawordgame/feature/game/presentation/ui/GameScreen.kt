@@ -9,13 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.minutesock.dawordgame.core.domain.GameMode
-import com.minutesock.dawordgame.core.theme.rememberDarkTheme
 import com.minutesock.dawordgame.feature.game.data.GameRepository
 import com.minutesock.dawordgame.feature.game.domain.GuessWordValidator
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModel
 
 @Composable
 fun GameScreen(
+    isDarkMode: Boolean,
     gameViewModel: GameViewModel = viewModel {
         GameViewModel(
             gameRepository = GameRepository(),
@@ -24,7 +24,6 @@ fun GameScreen(
     }
 ) {
     val state by gameViewModel.state.collectAsStateWithLifecycle()
-    val isDarkTheme by rememberDarkTheme()
 
     LaunchedEffect(Unit) {
         gameViewModel.setupGame(GameMode.Daily)
@@ -34,8 +33,8 @@ fun GameScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         PlayGameScreen(
+            isDarkMode = isDarkMode,
             state = state,
-            isDarkTheme = isDarkTheme,
             onEvent = gameViewModel::onEvent
         )
     }

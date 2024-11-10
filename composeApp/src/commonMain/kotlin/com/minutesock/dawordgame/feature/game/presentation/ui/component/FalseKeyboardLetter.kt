@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.minutesock.dawordgame.core.theme.md_theme_dark_onSecondary
 import com.minutesock.dawordgame.core.theme.md_theme_light_onSecondary
-import com.minutesock.dawordgame.core.theme.rememberDarkTheme
 import com.minutesock.dawordgame.core.uiutil.bounceClick
 import com.minutesock.dawordgame.feature.game.presentation.GuessKeyboardLetter
 import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
@@ -32,11 +31,11 @@ import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 
 @Composable
 fun FalseKeyboardLetter(
-    onEvent: (WordGameEvent) -> Unit,
+    isDarkMode: Boolean,
     guessKeyboardLetter: GuessKeyboardLetter,
     isWordRowAnimating: Boolean = false,
+    onEvent: (WordGameEvent) -> Unit,
 ) {
-    val darkTheme by rememberDarkTheme()
     val isLetter by remember { mutableStateOf(guessKeyboardLetter.keyName.length == 1) }
     val sizeX by remember {
         mutableStateOf(
@@ -47,8 +46,8 @@ fun FalseKeyboardLetter(
     val backgroundColor by animateColorAsState(
         targetValue = guessKeyboardLetter
             .displayColor(
-                darkTheme = darkTheme,
-                defaultColor = if (darkTheme) {
+                darkTheme = isDarkMode,
+                defaultColor = if (isDarkMode) {
                     md_theme_dark_onSecondary
                 } else {
                     md_theme_light_onSecondary
@@ -100,13 +99,13 @@ fun FalseKeyboardLetter(
             "remove" -> Icon(
                 imageVector = Icons.Default.Close,
                 contentDescription = "remove",
-                tint = if (darkTheme) Color.White else Color.Black
+                tint = if (isDarkMode) Color.White else Color.Black
             )
 
             else -> Text(
                 textAlign = TextAlign.Center,
                 text = guessKeyboardLetter.character.toString(),
-                color = if (darkTheme) Color.White else Color.Black,
+                color = if (isDarkMode) Color.White else Color.Black,
                 fontSize = 16.sp
             )
         }

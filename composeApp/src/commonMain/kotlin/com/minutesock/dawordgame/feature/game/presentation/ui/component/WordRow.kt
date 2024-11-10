@@ -24,6 +24,7 @@ import whatindaword.composeapp.generated.resources.what_in_da_word
 
 @Composable
 fun WordRow(
+    isDarkMode: Boolean,
     guessWord: GuessWord,
     guessLetters: ImmutableList<GuessLetter>,
     message: String?,
@@ -62,6 +63,7 @@ fun WordRow(
     ) {
         guessLetters.forEachIndexed { index: Int, guessLetter: GuessLetter ->
             LetterBox(
+                isDarkMode = isDarkMode,
                 letter = guessLetter,
                 guessWordState = guessWord.state,
                 onEvent = onEvent,

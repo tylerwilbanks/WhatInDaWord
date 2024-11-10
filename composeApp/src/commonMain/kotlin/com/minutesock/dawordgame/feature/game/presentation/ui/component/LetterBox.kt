@@ -31,6 +31,7 @@ import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 
 @Composable
 fun LetterBox(
+    isDarkMode: Boolean,
     letter: GuessLetter,
     guessWordState: GuessWordState,
     onEvent: (WordGameEvent) -> Unit,
@@ -39,7 +40,10 @@ fun LetterBox(
 ) {
 
     val animateColor by animateColorAsState(
-        targetValue = if (letter.answered) letter.displayColor(MaterialTheme.colors.background) else MaterialTheme.colors.background,
+        targetValue = if (letter.answered) letter.displayColor(
+            isDarkMode,
+            MaterialTheme.colors.background
+        ) else MaterialTheme.colors.background,
         animationSpec = tween(
             durationMillis = 1250 / 2 + flipAnimDelay,
             delayMillis = 750 + flipAnimDelay

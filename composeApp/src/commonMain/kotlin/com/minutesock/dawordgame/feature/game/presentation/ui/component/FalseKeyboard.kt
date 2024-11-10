@@ -16,6 +16,7 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun FalseKeyboard(
+    isDarkMode: Boolean,
     falseKeyboardKeys: FalseKeyboardKeys,
     onEvent: (WordGameEvent) -> Unit,
     modifier: Modifier = Modifier,
@@ -26,9 +27,10 @@ fun FalseKeyboard(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        FalseKeyboardRow(row = falseKeyboardKeys.row1, onEvent = onEvent)
-        FalseKeyboardRow(row = falseKeyboardKeys.row2, onEvent = onEvent)
+        FalseKeyboardRow(isDarkMode = isDarkMode, row = falseKeyboardKeys.row1, onEvent = onEvent)
+        FalseKeyboardRow(isDarkMode = isDarkMode, row = falseKeyboardKeys.row2, onEvent = onEvent)
         FalseKeyboardRow(
+            isDarkMode = isDarkMode,
             row = falseKeyboardKeys.row3,
             onEvent = onEvent,
             isWordRowAnimating = isWordRowAnimating
@@ -38,6 +40,7 @@ fun FalseKeyboard(
 
 @Composable
 fun FalseKeyboardRow(
+    isDarkMode: Boolean,
     row: ImmutableList<GuessKeyboardLetter>,
     onEvent: (WordGameEvent) -> Unit,
     isWordRowAnimating: Boolean = false
@@ -45,6 +48,7 @@ fun FalseKeyboardRow(
     Row {
         row.forEach {
             FalseKeyboardLetter(
+                isDarkMode = isDarkMode,
                 onEvent = onEvent,
                 guessKeyboardLetter = it,
                 isWordRowAnimating = isWordRowAnimating

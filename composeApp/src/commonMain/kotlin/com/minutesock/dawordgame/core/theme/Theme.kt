@@ -57,23 +57,16 @@ fun rememberDarkTheme(): State<Boolean> {
 
 @Composable
 fun AppTheme(
-    content: @Composable() () -> Unit
+    isDarkMode: Boolean = rememberDarkTheme().value,
+    content: @Composable (Boolean) -> Unit
 ) {
-    val darkTheme by rememberPreference(DataStoreManager.darkModeDelegate)
-    val useSystemTheme by rememberPreference(DataStoreManager.useSystemThemeDelegate)
-
-    val darkMode = if (useSystemTheme) {
-        isSystemInDarkTheme()
-    } else {
-        darkTheme
-    }
 
     MaterialTheme(
-        colors = if (darkMode) {
+        colors = if (isDarkMode) {
             darkColors
         } else {
             lightColors
         },
-        content = content
+        content = { content(isDarkMode) }
     )
 }
