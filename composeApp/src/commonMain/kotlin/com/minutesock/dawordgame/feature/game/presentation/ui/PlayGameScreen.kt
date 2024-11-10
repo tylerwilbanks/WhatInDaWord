@@ -26,7 +26,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.minutesock.dawordgame.core.domain.WordSessionState
+import com.minutesock.dawordgame.core.navigation.NavDestination
 import com.minutesock.dawordgame.core.theme.AppTheme
 import com.minutesock.dawordgame.core.uiutil.ShakeConfig
 import com.minutesock.dawordgame.core.uiutil.rememberShakeController
@@ -47,6 +50,7 @@ import whatindaword.composeapp.generated.resources.what_in_da_word
 
 @Composable
 fun PlayGameScreen(
+    navController: NavController,
     isDarkMode: Boolean,
     state: GameViewModelState,
     onEvent: (WordGameEvent) -> Unit
@@ -123,7 +127,7 @@ fun PlayGameScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            IconButton(onClick = { /* navController.navigate("how") */ }) {
+            IconButton(onClick = { navController.navigate(NavDestination.HowToPlay) }) {
                 Icon(
                     modifier = Modifier
                         .size(45.dp)
@@ -199,6 +203,7 @@ private fun PlayGameScreenPreview() {
             modifier = Modifier.fillMaxSize()
         ) {
             PlayGameScreen(
+                navController = rememberNavController(),
                 state = GameViewModelState(
 //                    guessWordItems = persistentListOf(
 //                        GuessWordItem(

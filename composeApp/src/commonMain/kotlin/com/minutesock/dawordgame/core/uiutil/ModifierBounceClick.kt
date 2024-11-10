@@ -18,7 +18,8 @@ private enum class ButtonState { Pressed, Idle }
 
 fun Modifier.bounceClick(
     pressedScale: Float = 0.7f,
-    idleScale: Float = 1.0f
+    idleScale: Float = 1.0f,
+    onClick: () -> Unit = {}
 ) = composed {
     var buttonState by remember { mutableStateOf(ButtonState.Idle) }
     val scale by animateFloatAsState(if (buttonState == ButtonState.Pressed) pressedScale else idleScale)
@@ -31,7 +32,7 @@ fun Modifier.bounceClick(
         .clickable(
             interactionSource = remember { MutableInteractionSource() },
             indication = null,
-            onClick = { }
+            onClick = onClick
         )
         .pointerInput(buttonState) {
             awaitPointerEventScope {
