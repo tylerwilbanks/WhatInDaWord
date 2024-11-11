@@ -24,7 +24,8 @@ fun GameScreen(
             gameRepository = GameRepository(),
             guessWordValidator = GuessWordValidator()
         )
-    }
+    },
+    modifier: Modifier = Modifier
 ) {
     val state by gameViewModel.state.collectAsStateWithLifecycle()
 
@@ -33,7 +34,7 @@ fun GameScreen(
     }
 
     Surface(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         PlayGameScreen(
             navController = navController,

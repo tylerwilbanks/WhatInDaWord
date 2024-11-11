@@ -14,6 +14,8 @@ import whatindaword.composeapp.generated.resources.person
 @Serializable
 sealed class NavigationDestination {
 
+    val route get() = this::class.simpleName
+
     /* ------- daily destinations ------- */
 
     @Serializable
@@ -45,7 +47,7 @@ sealed class NavigationDestination {
     data object Profile : NavigationDestination()
 
     fun isDestination(destination: NavDestination?): Boolean {
-        return this::class.simpleName == destination?.toString()?.substringAfterLast(".")
+        return route == destination?.specifiedRoute()
     }
 
     companion object {
@@ -69,8 +71,13 @@ sealed class NavigationDestination {
     }
 }
 
+fun NavDestination.specifiedRoute() = toString().substringAfterLast(".")
+fun NavDestination.navGraphRoute() = parent?.route?.substringAfterLast(".")
+
 @Serializable
 sealed class NavigationGraph {
+
+    val route get() = this::class.simpleName
 
     @Serializable
     data object DailyGraph : NavigationGraph()
@@ -85,7 +92,7 @@ sealed class NavigationGraph {
     data object ProfileGraph : NavigationGraph()
 
     fun isDestination(destination: NavDestination?): Boolean {
-        return this::class.simpleName == destination?.toString()?.substringAfterLast(".")
+        return route == destination?.specifiedRoute()
     }
 }
 
