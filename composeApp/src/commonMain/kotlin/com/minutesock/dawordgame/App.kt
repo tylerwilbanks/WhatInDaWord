@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.minutesock.dawordgame.core.navigation.NavigationDestination
+import com.minutesock.dawordgame.core.navigation.NavigationGraph
 import com.minutesock.dawordgame.core.navigation.dailyGraph
 import com.minutesock.dawordgame.core.navigation.dictionaryGraph
 import com.minutesock.dawordgame.core.navigation.infinityGraph
@@ -55,12 +56,13 @@ fun App() {
                     }
 
                     NavigationDestination.bottomNavigationItems.forEach { item ->
-                        val selected = item.navigationItem.startDestination.isDestination(currentDestination)
+                        val selected =
+                            currentDestination?.parent?.route?.substringAfterLast(".") == item.navigationItem.graph::class.simpleName
                         BottomNavigationItem(
                             selected = selected,
                             onClick = {
-                                if (!item.navigationItem.startDestination.isDestination(currentDestination) && currentRouteIsBottomBarDestination) {
-                                    navController.navigate(item.navigationItem.startDestination) {
+                                if (!item.navigationItem.graph.isDestination(currentDestination)) {
+                                    navController.navigate(item.navigationItem.graph) {
                                         popUpTo(navController.graph.findStartDestination().id) {
                                             saveState = true
                                         }
@@ -95,7 +97,7 @@ fun App() {
         ) {
             NavHost(
                 navController = navController,
-                startDestination = NavigationDestination.Daily
+                startDestination = NavigationGraph.DailyGraph
             ) {
                 dailyGraph(
                     navController = navController,

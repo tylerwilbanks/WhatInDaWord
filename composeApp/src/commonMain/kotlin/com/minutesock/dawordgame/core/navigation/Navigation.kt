@@ -69,9 +69,29 @@ sealed class NavigationDestination {
     }
 }
 
+@Serializable
+sealed class NavigationGraph {
+
+    @Serializable
+    data object DailyGraph : NavigationGraph()
+
+    @Serializable
+    data object InfinityGraph : NavigationGraph()
+
+    @Serializable
+    data object DictionaryGraph : NavigationGraph()
+
+    @Serializable
+    data object ProfileGraph : NavigationGraph()
+
+    fun isDestination(destination: NavDestination?): Boolean {
+        return this::class.simpleName == destination?.toString()?.substringAfterLast(".")
+    }
+}
+
 class NavigationItem(
     val icon: DrawableResource,
-    val startDestination: NavigationDestination,
+    val graph: NavigationGraph,
     val title: String
 )
 
@@ -81,7 +101,7 @@ sealed class BottomNavigationDestination(
     data object Daily : BottomNavigationDestination(
         NavigationItem(
             icon = Res.drawable.calendar_today,
-            startDestination = NavigationDestination.Daily,
+            graph = NavigationGraph.DailyGraph,
             title = "Daily" // todo extract string resource
         )
     )
@@ -89,7 +109,7 @@ sealed class BottomNavigationDestination(
     data object Infinity : BottomNavigationDestination(
         NavigationItem(
             icon = Res.drawable.infinity,
-            startDestination = NavigationDestination.Infinity,
+            graph = NavigationGraph.InfinityGraph,
             title = "Infinity" // todo extract string resource
         )
     )
@@ -97,7 +117,7 @@ sealed class BottomNavigationDestination(
     data object Dictionary : BottomNavigationDestination(
         NavigationItem(
             icon = Res.drawable.book,
-            startDestination = NavigationDestination.Dictionary,
+            graph = NavigationGraph.DictionaryGraph,
             title = "Dictionary" // todo extract string resource
         )
     )
@@ -105,7 +125,7 @@ sealed class BottomNavigationDestination(
     data object Profile : BottomNavigationDestination(
         NavigationItem(
             icon = Res.drawable.person,
-            startDestination = NavigationDestination.Profile,
+            graph = NavigationGraph.ProfileGraph,
             title = "Profile" // todo extract string resource
         )
     )
