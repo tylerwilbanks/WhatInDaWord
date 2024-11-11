@@ -14,8 +14,7 @@ fun NavGraphBuilder.profileGraph(
     isDarkMode: Boolean,
     modifier: Modifier = Modifier
 ) {
-    composable<NavDestination.Profile> {
-
+    composable<NavigationDestination.Profile> {
         Box(
             modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center

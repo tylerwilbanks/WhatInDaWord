@@ -17,7 +17,7 @@ fun NavGraphBuilder.infinityGraph(
     modifier: Modifier = Modifier
 ) {
 
-    composable<NavDestination.Infinity> {
+    composable<NavigationDestination.Infinity> {
         WordGameNotStartedScreen(
             navController = navController,
             gameMode = GameMode.Infinity,
@@ -25,19 +25,19 @@ fun NavGraphBuilder.infinityGraph(
         )
     }
 
-    composable<NavDestination.HowToPlay> {
+    composable<NavigationDestination.HowToPlay> {
         HowToPlayScreen(
             navController = navController,
             isDarkMode = isDarkMode,
         )
     }
 
-    composable<NavDestination.PlayGame>(
+    composable<NavigationDestination.PlayGame>(
         typeMap = mapOf(
-            typeOf<GameMode>() to GameMode.GameModeNavType
+            typeOf<GameMode>() to GameMode.NavType
         )
     ) {
-        val args = it.toRoute<NavDestination.PlayGame>()
+        val args = it.toRoute<NavigationDestination.PlayGame>()
 
         GameScreen(
             navController = navController,

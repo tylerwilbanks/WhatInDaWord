@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.minutesock.dawordgame.core.domain.WordSessionState
-import com.minutesock.dawordgame.core.navigation.NavDestination
+import com.minutesock.dawordgame.core.navigation.NavigationDestination
 import com.minutesock.dawordgame.core.theme.AppTheme
 import com.minutesock.dawordgame.core.uiutil.ShakeConfig
 import com.minutesock.dawordgame.core.uiutil.rememberShakeController
@@ -127,7 +127,7 @@ fun PlayGameScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            IconButton(onClick = { navController.navigate(NavDestination.HowToPlay) }) {
+            IconButton(onClick = { navController.navigate(NavigationDestination.HowToPlay) }) {
                 Icon(
                     modifier = Modifier
                         .size(45.dp)

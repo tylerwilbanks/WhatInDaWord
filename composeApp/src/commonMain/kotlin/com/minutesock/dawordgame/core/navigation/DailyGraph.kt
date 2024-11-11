@@ -17,7 +17,7 @@ fun NavGraphBuilder.dailyGraph(
     modifier: Modifier = Modifier
 ) {
 
-    composable<NavDestination.Daily> {
+    composable<NavigationDestination.Daily> {
         WordGameNotStartedScreen(
             navController = navController,
             gameMode = GameMode.Daily,
@@ -25,19 +25,19 @@ fun NavGraphBuilder.dailyGraph(
         )
     }
 
-    composable<NavDestination.HowToPlay> {
+    composable<NavigationDestination.HowToPlay> {
         HowToPlayScreen(
             navController = navController,
             isDarkMode = isDarkMode,
         )
     }
 
-    composable<NavDestination.PlayGame>(
+    composable<NavigationDestination.PlayGame>(
         typeMap = mapOf(
-            typeOf<GameMode>() to GameMode.GameModeNavType
+            typeOf<GameMode>() to GameMode.NavType
         )
     ) {
-        val args = it.toRoute<NavDestination.PlayGame>()
+        val args = it.toRoute<NavigationDestination.PlayGame>()
 
         GameScreen(
             navController = navController,

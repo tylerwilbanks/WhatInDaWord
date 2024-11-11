@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.minutesock.dawordgame.core.domain.GameMode
-import com.minutesock.dawordgame.core.navigation.NavDestination
+import com.minutesock.dawordgame.core.navigation.NavigationDestination
 import com.minutesock.dawordgame.core.theme.AppTheme
 import com.minutesock.dawordgame.core.uiutil.bounceClick
 import org.jetbrains.compose.resources.painterResource
@@ -91,7 +91,7 @@ fun WordGameNotStartedScreen(
                 Button(
                     modifier = Modifier.bounceClick(),
                     onClick = {
-                        navController.navigate(NavDestination.HowToPlay)
+                        navController.navigate(NavigationDestination.HowToPlay)
                     }
                 ) {
                     Text(

@@ -15,7 +15,7 @@ fun NavGraphBuilder.dictionaryGraph(
     modifier: Modifier = Modifier
 ) {
 
-    composable<NavDestination.Dictionary> {
+    composable<NavigationDestination.Dictionary> {
         Box(
             modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center

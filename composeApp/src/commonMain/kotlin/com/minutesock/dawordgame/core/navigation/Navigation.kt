@@ -1,6 +1,8 @@
 package com.minutesock.dawordgame.core.navigation
 
+import androidx.navigation.NavDestination
 import com.minutesock.dawordgame.core.domain.GameMode
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.DrawableResource
 import whatindaword.composeapp.generated.resources.Res
@@ -9,42 +11,67 @@ import whatindaword.composeapp.generated.resources.calendar_today
 import whatindaword.composeapp.generated.resources.infinity
 import whatindaword.composeapp.generated.resources.person
 
-sealed class NavDestination {
+@Serializable
+sealed class NavigationDestination {
 
     /* ------- daily destinations ------- */
 
     @Serializable
-    data object Daily : NavDestination()
+    data object Daily : NavigationDestination()
 
     /* ------- infinity destinations ------- */
 
     @Serializable
-    data object Infinity : NavDestination()
+    data object Infinity : NavigationDestination()
 
     /* ------- daily and infinity destinations ------- */
 
     @Serializable
-    data object HowToPlay : NavDestination()
+    data object HowToPlay : NavigationDestination()
 
     @Serializable
     data class PlayGame(
         val gameMode: GameMode
-    ) : NavDestination()
+    ) : NavigationDestination()
 
     /* ------- dictionary destinations ------- */
 
     @Serializable
-    data object Dictionary : NavDestination()
+    data object Dictionary : NavigationDestination()
 
     /* ------- profile destinations ------- */
 
     @Serializable
-    data object Profile : NavDestination()
+    data object Profile : NavigationDestination()
+
+    fun isDestination(destination: NavDestination?): Boolean {
+        return this::class.simpleName == destination?.toString()?.substringAfterLast(".")
+    }
+
+    companion object {
+        fun isBottomDestination(destination: NavDestination?): Boolean {
+            val destinationName = destination?.toString()?.substringAfterLast(".")
+            return when (destinationName) {
+                Daily::class.simpleName -> true
+                Infinity::class.simpleName -> true
+                Dictionary::class.simpleName -> true
+                Profile::class.simpleName -> true
+                else -> false
+            }
+        }
+
+        val bottomNavigationItems = persistentListOf(
+            BottomNavigationDestination.Daily,
+            BottomNavigationDestination.Infinity,
+            BottomNavigationDestination.Dictionary,
+            BottomNavigationDestination.Profile
+        )
+    }
 }
 
 class NavigationItem(
     val icon: DrawableResource,
-    val startDestination: NavDestination,
+    val startDestination: NavigationDestination,
     val title: String
 )
 
@@ -54,7 +81,7 @@ sealed class BottomNavigationDestination(
     data object Daily : BottomNavigationDestination(
         NavigationItem(
             icon = Res.drawable.calendar_today,
-            startDestination = NavDestination.Daily,
+            startDestination = NavigationDestination.Daily,
             title = "Daily" // todo extract string resource
         )
     )
@@ -62,7 +89,7 @@ sealed class BottomNavigationDestination(
     data object Infinity : BottomNavigationDestination(
         NavigationItem(
             icon = Res.drawable.infinity,
-            startDestination = NavDestination.Infinity,
+            startDestination = NavigationDestination.Infinity,
             title = "Infinity" // todo extract string resource
         )
     )
@@ -70,7 +97,7 @@ sealed class BottomNavigationDestination(
     data object Dictionary : BottomNavigationDestination(
         NavigationItem(
             icon = Res.drawable.book,
-            startDestination = NavDestination.Dictionary,
+            startDestination = NavigationDestination.Dictionary,
             title = "Dictionary" // todo extract string resource
         )
     )
@@ -78,7 +105,7 @@ sealed class BottomNavigationDestination(
     data object Profile : BottomNavigationDestination(
         NavigationItem(
             icon = Res.drawable.person,
-            startDestination = NavDestination.Profile,
+            startDestination = NavigationDestination.Profile,
             title = "Profile" // todo extract string resource
         )
     )

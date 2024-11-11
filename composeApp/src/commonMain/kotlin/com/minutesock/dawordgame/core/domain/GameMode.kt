@@ -20,7 +20,7 @@ enum class GameMode {
             return GameMode.entries.first { it.dbName == dbName }
         }
 
-        val GameModeNavType = object : NavType<GameMode>(isNullableAllowed = false) {
+        val NavType = object : NavType<GameMode>(isNullableAllowed = false) {
             override fun serializeAsValue(value: GameMode) = value.dbName
             override fun parseValue(value: String) = GameMode.fromDb(value)
             override fun get(bundle: Bundle, key: String) = bundle.getString(key)?.let { GameMode.fromDb(it) }
