@@ -14,11 +14,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,8 +53,8 @@ fun WordGameNotStartedScreen(
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val textColor by infiniteTransition.animateColor(
-        initialValue = MaterialTheme.colors.onSurface,
-        targetValue = MaterialTheme.colors.primary,
+        initialValue = MaterialTheme.colorScheme.onSurface,
+        targetValue = MaterialTheme.colorScheme.primary,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 1000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
@@ -71,7 +71,7 @@ fun WordGameNotStartedScreen(
     }
 
     Column(
-        modifier = modifier.fillMaxSize().background(color = MaterialTheme.colors.background),
+        modifier = modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -96,7 +96,7 @@ fun WordGameNotStartedScreen(
                 ) {
                     Text(
                         text = "How To Play?",
-                        color = MaterialTheme.colors.background,
+                        color = MaterialTheme.colorScheme.background,
                         fontSize = 20.sp
                     )
                 }
@@ -117,20 +117,20 @@ fun WordGameNotStartedScreen(
                 Icon(
                     modifier = Modifier.size(20.dp),
                     painter = painterResource(resource = gameModeIconId),
-                    tint = MaterialTheme.colors.background,
+                    tint = MaterialTheme.colorScheme.background,
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "Play",
-                    color = MaterialTheme.colors.background,
+                    color = MaterialTheme.colorScheme.background,
                     fontSize = 20.sp
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Icon(
                     modifier = Modifier.size(20.dp),
                     painter = painterResource(resource = gameModeIconId),
-                    tint = MaterialTheme.colors.background,
+                    tint = MaterialTheme.colorScheme.background,
                     contentDescription = null
                 )
             }

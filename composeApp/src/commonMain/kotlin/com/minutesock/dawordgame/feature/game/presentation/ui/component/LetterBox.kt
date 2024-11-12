@@ -9,9 +9,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -42,8 +43,8 @@ fun LetterBox(
     val animateColor by animateColorAsState(
         targetValue = if (letter.answered) letter.displayColor(
             isDarkMode,
-            MaterialTheme.colors.background
-        ) else MaterialTheme.colors.background,
+            MaterialTheme.colorScheme.background
+        ) else MaterialTheme.colorScheme.background,
         animationSpec = tween(
             durationMillis = 1250 / 2 + flipAnimDelay,
             delayMillis = 750 + flipAnimDelay
@@ -108,14 +109,14 @@ fun LetterBox(
                 .graphicsLayer {
                     rotationX = flipRotation
                 },
-            border = BorderStroke(2.dp, MaterialTheme.colors.onBackground), // .outline),
+            border = BorderStroke(2.dp, MaterialTheme.colorScheme.outline),
             shape = RoundedCornerShape(5.dp),
-            backgroundColor = animateColor
+            colors = CardDefaults.cardColors(containerColor = animateColor),
         ) {}
         Text(
             textAlign = TextAlign.Center,
             text = letter.displayCharacter,
-            color = MaterialTheme.colors.onBackground,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 32.sp
         )
     }

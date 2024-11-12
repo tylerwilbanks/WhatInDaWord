@@ -1,12 +1,17 @@
 package com.minutesock.dawordgame.app.presentation
 
-import androidx.compose.material.BottomAppBar
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -24,35 +29,43 @@ fun BottomNavBar(
         mutableStateOf(NavigationDestination.isBottomDestination(currentDestination))
     }
 
-    BottomAppBar(
-        backgroundColor = MaterialTheme.colors.background,
-        contentColor = MaterialTheme.colors.primary
-    ) {
+    Column {
+        HorizontalDivider(
+            modifier = Modifier.fillMaxWidth(),
+            thickness = 1.dp,
+            color = MaterialTheme.colorScheme.outlineVariant
+        )
 
-        NavigationDestination.bottomNavigationItems.forEach { item ->
-            val selected = currentDestination?.navGraphRoute() == item.navigationItem.graph.route
-            BottomNavigationItem(
-                selected = selected,
-                onClick = {
-                    if (!item.navigationItem.graph.isDestination(currentDestination)) {
-                        navController.navigate(item.navigationItem.graph) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
+        BottomAppBar(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.primary
+        ) {
+
+            NavigationDestination.bottomNavigationItems.forEach { item ->
+                val selected = currentDestination?.navGraphRoute() == item.navigationItem.graph.route
+                NavigationBarItem(
+                    selected = selected,
+                    onClick = {
+                        if (!item.navigationItem.graph.isDestination(currentDestination)) {
+                            navController.navigate(item.navigationItem.graph) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                            launchSingleTop = true
-                            restoreState = true
                         }
-                    }
-                },
-                icon = {
-                    NavigationItem(
-                        selected = selected,
-                        icon = item.navigationItem.icon,
-                        title = item.navigationItem.title
-                    )
-                },
-                alwaysShowLabel = false
-            )
+                    },
+                    icon = {
+                        NavigationItem(
+                            selected = selected,
+                            icon = item.navigationItem.icon,
+                            title = item.navigationItem.title
+                        )
+                    },
+                    alwaysShowLabel = false
+                )
+            }
         }
     }
 }

@@ -11,11 +11,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -73,9 +73,9 @@ fun PlayGameScreen(
             state.gameTitleMessage.message.asString() != stringResource(Res.string.what_in_da_word) &&
             (state.gameTitleMessage.isError || state.gameState == WordSessionState.Failure)
         ) {
-            MaterialTheme.colors.error
+            MaterialTheme.colorScheme.error
         } else {
-            MaterialTheme.colors.primary
+            MaterialTheme.colorScheme.primary
         },
         animationSpec = tween(
             durationMillis = if (state.gameTitleMessage.isError) 200 else 1000,
@@ -167,7 +167,7 @@ fun PlayGameScreen(
                     .animateContentSize(),
 
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.h3,
+                style = MaterialTheme.typography.headlineLarge,
                 fontSize = TextUnit(28f, TextUnitType.Sp),
                 text = state.gameTitleMessage.message.asString(),
                 color = messageColor

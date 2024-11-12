@@ -12,12 +12,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -118,9 +118,9 @@ internal fun HowToPlayScreenContent(
             .background(
                 brush = Brush.verticalGradient(
                     listOf(
-                        MaterialTheme.colors.background,
-                        MaterialTheme.colors.onSecondary,
-                        MaterialTheme.colors.background
+                        MaterialTheme.colorScheme.background,
+                        MaterialTheme.colorScheme.onSecondary,
+                        MaterialTheme.colorScheme.background
                     )
                 )
             )
@@ -139,7 +139,7 @@ internal fun HowToPlayScreenContent(
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    tint = MaterialTheme.colors.onBackground,
+                    tint = MaterialTheme.colorScheme.onBackground,
                     contentDescription = "close",
                 )
             }
@@ -147,34 +147,34 @@ internal fun HowToPlayScreenContent(
 
         Text(
             text = "How To Play",
-            color = MaterialTheme.colors.primary,
+            color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp
         )
         Text(
             text = "Guess the word in $maxAttempts tries.",
-            color = MaterialTheme.colors.onBackground,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Normal,
             fontSize = 20.sp
         )
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "\u2022 Each guess must be a valid $wordLength letter word.",
-            color = MaterialTheme.colors.onBackground,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp
         )
         Spacer(modifier = Modifier.height(5.dp))
         Text(
             text = "\u2022 The color of the tiles will change to show how close your guess was to the word.",
-            color = MaterialTheme.colors.onBackground,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp
         )
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "Example:",
-            color = MaterialTheme.colors.onBackground,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp
         )
@@ -200,7 +200,7 @@ internal fun HowToPlayScreenContent(
                     }
                     append("of these letters are found in the word.")
                 },
-                color = MaterialTheme.colors.onBackground,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 16.sp
             )
 
@@ -226,7 +226,7 @@ internal fun HowToPlayScreenContent(
                     }
                     append("are found in the word, but not in the right spot.")
                 },
-                color = MaterialTheme.colors.onBackground,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 16.sp
             )
 
@@ -252,7 +252,7 @@ internal fun HowToPlayScreenContent(
                     }
                     append("are found in the word, and are in the correct spot.")
                 },
-                color = MaterialTheme.colors.onBackground,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 16.sp
             )
 
@@ -272,7 +272,7 @@ internal fun HowToPlayScreenContent(
                     }
                     append("letters are found in the word, and are in the correct spot. Well done!")
                 },
-                color = MaterialTheme.colors.onBackground,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 16.sp
             )
         }

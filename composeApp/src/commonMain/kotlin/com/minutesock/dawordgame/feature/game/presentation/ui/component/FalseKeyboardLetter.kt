@@ -5,14 +5,14 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -66,7 +66,7 @@ fun FalseKeyboardLetter(
             .bounceClick()
             .padding(2.dp),
 
-        colors = ButtonDefaults.buttonColors(backgroundColor = backgroundColor),
+        colors = ButtonDefaults.buttonColors(containerColor = backgroundColor),
         shape = RoundedCornerShape(10),
         onClick = {
             when (guessKeyboardLetter.keyName) {
@@ -93,7 +93,7 @@ fun FalseKeyboardLetter(
             "enter" -> Icon(
                 imageVector = Icons.Default.CheckCircle,
                 contentDescription = "enter",
-                tint = MaterialTheme.colors.primary
+                tint = MaterialTheme.colorScheme.primary
             )
 
             "remove" -> Icon(

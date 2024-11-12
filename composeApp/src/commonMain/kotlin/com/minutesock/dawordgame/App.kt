@@ -10,8 +10,8 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,7 +54,8 @@ fun App() {
         val navController = rememberNavController()
 
         Row(
-            modifier = Modifier.background(color = MaterialTheme.colors.background)
+            modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.background)
         ) {
             AnimatedVisibility(
                 visible = showNavigationRail,
