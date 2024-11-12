@@ -25,7 +25,6 @@ fun NavGraphBuilder.dailyGraph(
                 modifier = modifier,
                 navController = navController,
                 gameMode = GameMode.Daily,
-                onEvent = {}
             )
         }
 

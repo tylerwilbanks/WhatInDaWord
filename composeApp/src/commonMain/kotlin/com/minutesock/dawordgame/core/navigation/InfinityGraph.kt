@@ -25,7 +25,6 @@ fun NavGraphBuilder.infinityGraph(
                 modifier = modifier,
                 navController = navController,
                 gameMode = GameMode.Infinity,
-                onEvent = {}
             )
         }
 

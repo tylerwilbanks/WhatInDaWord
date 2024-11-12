@@ -49,7 +49,6 @@ fun WordGameNotStartedScreen(
     completedGameCount: Int = 0,
     navController: NavController,
     gameMode: GameMode,
-    onEvent: () -> Unit
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val textColor by infiniteTransition.animateColor(
@@ -107,11 +106,7 @@ fun WordGameNotStartedScreen(
             Button(
                 modifier = Modifier.bounceClick(),
                 onClick = {
-                    onEvent(
-//                        WordGameNotStartedEvent.OnGameBegin(
-//                            gameMode = gameMode
-//                        )
-                    )
+                    navController.navigate(NavigationDestination.PlayGame(gameMode))
                 }
             ) {
                 Icon(
@@ -147,7 +142,6 @@ fun WordGameNotStartedScreenPreview() {
             WordGameNotStartedScreen(
                 gameMode = GameMode.Infinity,
                 navController = rememberNavController(),
-                onEvent = {}
             )
         }
     }
