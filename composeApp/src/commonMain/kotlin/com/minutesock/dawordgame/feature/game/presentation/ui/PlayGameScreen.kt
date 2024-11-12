@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -174,20 +176,29 @@ fun PlayGameScreen(
             )
         }
 
-        state.wordSession?.guesses?.forEach {
-            WordRow(
-                isDarkMode = isDarkMode,
-                guessWord = it,
-                guessLetters = it.letters,
-                message = state.gameTitleMessage.message.asString(),
-                wordRowAnimating = state.wordRowAnimating,
-                onEvent = onEvent
-            )
+        val lazyListState = rememberLazyListState()
+
+        LazyColumn(
+            modifier = Modifier.weight(1f),
+            state = lazyListState
+        ) {
+            item {
+                state.wordSession?.guesses?.forEach {
+                    WordRow(
+                        isDarkMode = isDarkMode,
+                        guessWord = it,
+                        guessLetters = it.letters,
+                        message = state.gameTitleMessage.message.asString(),
+                        wordRowAnimating = state.wordRowAnimating,
+                        onEvent = onEvent
+                    )
+                }
+            }
         }
 
         FalseKeyboard(
             isDarkMode = isDarkMode,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
             onEvent = onEvent,
             falseKeyboardKeys = state.falseKeyboardKeys,
             isWordRowAnimating = state.wordRowAnimating

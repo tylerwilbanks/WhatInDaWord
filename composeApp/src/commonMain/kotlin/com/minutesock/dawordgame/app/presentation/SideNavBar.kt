@@ -36,7 +36,8 @@ import com.minutesock.dawordgame.core.navigation.navGraphRoute
 
 @Composable
 fun SideNavBar(
-    navController: NavController
+    navController: NavController,
+    isDarkMode: Boolean
 ) {
     val navStackBackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navStackBackEntry?.destination
@@ -49,7 +50,7 @@ fun SideNavBar(
 
     val openBackgroundColor = MaterialTheme.colorScheme.secondaryContainer
     val closedBackgroundColor = openBackgroundColor.copy(alpha = 0.0f)
-    val backgroundColor by remember(openDrawer) {
+    val backgroundColor by remember(openDrawer, isDarkMode) {
         mutableStateOf(
             if (openDrawer) openBackgroundColor else closedBackgroundColor
         )

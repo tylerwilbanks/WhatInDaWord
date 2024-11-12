@@ -62,7 +62,7 @@ fun App() {
                 enter = fadeIn() + expandHorizontally(),
                 exit = fadeOut() + shrinkHorizontally()
             ) {
-                SideNavBar(navController)
+                SideNavBar(navController, isDarkMode)
             }
             Scaffold(
                 bottomBar = {

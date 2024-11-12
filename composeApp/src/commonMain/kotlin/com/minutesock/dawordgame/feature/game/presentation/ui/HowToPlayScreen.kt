@@ -1,8 +1,6 @@
 package com.minutesock.dawordgame.feature.game.presentation.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,7 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
@@ -106,13 +105,14 @@ internal fun HowToPlayScreenContent(
     maxAttempts: Int = 6,
     exampleWords: ImmutableList<GuessWord>
 ) {
-    val scroll = rememberScrollState()
+    val lazyListState = rememberLazyListState()
 
     val onCloseButtonClick = debouncedAction {
         navController.navigateUp()
     }
 
-    Column(
+    LazyColumn(
+        state = lazyListState,
         modifier = modifier
             .fillMaxSize()
             .background(
@@ -124,157 +124,155 @@ internal fun HowToPlayScreenContent(
                     )
                 )
             )
-            .padding(10.dp)
-            .scrollable(
-                state = scroll,
-                orientation = Orientation.Vertical
-            ),
+            .padding(10.dp),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
-        ) {
-            IconButton(
-                onClick = onCloseButtonClick
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
             ) {
-                Icon(
-                    imageVector = Icons.Default.Close,
-                    tint = MaterialTheme.colorScheme.onBackground,
-                    contentDescription = "close",
+                IconButton(
+                    onClick = onCloseButtonClick
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        tint = MaterialTheme.colorScheme.onBackground,
+                        contentDescription = "close",
+                    )
+                }
+            }
+
+            Text(
+                text = "How To Play",
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp
+            )
+            Text(
+                text = "Guess the word in $maxAttempts tries.",
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.Normal,
+                fontSize = 20.sp
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = "\u2022 Each guess must be a valid $wordLength letter word.",
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp
+            )
+            Spacer(modifier = Modifier.height(5.dp))
+            Text(
+                text = "\u2022 The color of the tiles will change to show how close your guess was to the word.",
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = "Example:",
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            )
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                WordRow(
+                    isDarkMode = isDarkMode,
+                    guessWord = exampleWords[0],
+                    guessLetters = exampleWords[0].letters,
+                    message = "",
+                    wordRowAnimating = false,
+                    onEvent = {}
+                )
+
+                Text(
+                    buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append("None ")
+                        }
+                        append("of these letters are found in the word.")
+                    },
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontSize = 16.sp
+                )
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+                WordRow(
+                    isDarkMode = isDarkMode,
+                    guessWord = exampleWords[1],
+                    guessLetters = exampleWords[1].letters,
+                    message = "",
+                    wordRowAnimating = false,
+                    onEvent = {}
+                )
+
+                Text(
+                    buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append("I ")
+                        }
+                        append("and ")
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append("H ")
+                        }
+                        append("are found in the word, but not in the right spot.")
+                    },
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontSize = 16.sp
+                )
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+                WordRow(
+                    isDarkMode = isDarkMode,
+                    guessWord = exampleWords[2],
+                    guessLetters = exampleWords[2].letters,
+                    message = "",
+                    wordRowAnimating = false,
+                    onEvent = {}
+                )
+
+                Text(
+                    buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append("H ")
+                        }
+                        append("and ")
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append("R ")
+                        }
+                        append("are found in the word, and are in the correct spot.")
+                    },
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontSize = 16.sp
+                )
+
+                WordRow(
+                    isDarkMode = isDarkMode,
+                    guessWord = exampleWords[3],
+                    guessLetters = exampleWords[3].letters,
+                    message = "",
+                    wordRowAnimating = false,
+                    onEvent = {}
+                )
+
+                Text(
+                    buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append("All ")
+                        }
+                        append("letters are found in the word, and are in the correct spot. Well done!")
+                    },
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontSize = 16.sp
                 )
             }
-        }
-
-        Text(
-            text = "How To Play",
-            color = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp
-        )
-        Text(
-            text = "Guess the word in $maxAttempts tries.",
-            color = MaterialTheme.colorScheme.onBackground,
-            fontWeight = FontWeight.Normal,
-            fontSize = 20.sp
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = "\u2022 Each guess must be a valid $wordLength letter word.",
-            color = MaterialTheme.colorScheme.onBackground,
-            fontWeight = FontWeight.Normal,
-            fontSize = 16.sp
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-        Text(
-            text = "\u2022 The color of the tiles will change to show how close your guess was to the word.",
-            color = MaterialTheme.colorScheme.onBackground,
-            fontWeight = FontWeight.Normal,
-            fontSize = 16.sp
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = "Example:",
-            color = MaterialTheme.colorScheme.onBackground,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
-        )
-
-        Spacer(modifier = Modifier.height(5.dp))
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            WordRow(
-                isDarkMode = isDarkMode,
-                guessWord = exampleWords[0],
-                guessLetters = exampleWords[0].letters,
-                message = "",
-                wordRowAnimating = false,
-                onEvent = {}
-            )
-
-            Text(
-                buildAnnotatedString {
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("None ")
-                    }
-                    append("of these letters are found in the word.")
-                },
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 16.sp
-            )
-
-            Spacer(modifier = Modifier.height(5.dp))
-
-            WordRow(
-                isDarkMode = isDarkMode,
-                guessWord = exampleWords[1],
-                guessLetters = exampleWords[1].letters,
-                message = "",
-                wordRowAnimating = false,
-                onEvent = {}
-            )
-
-            Text(
-                buildAnnotatedString {
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("I ")
-                    }
-                    append("and ")
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("H ")
-                    }
-                    append("are found in the word, but not in the right spot.")
-                },
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 16.sp
-            )
-
-            Spacer(modifier = Modifier.height(5.dp))
-
-            WordRow(
-                isDarkMode = isDarkMode,
-                guessWord = exampleWords[2],
-                guessLetters = exampleWords[2].letters,
-                message = "",
-                wordRowAnimating = false,
-                onEvent = {}
-            )
-
-            Text(
-                buildAnnotatedString {
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("H ")
-                    }
-                    append("and ")
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("R ")
-                    }
-                    append("are found in the word, and are in the correct spot.")
-                },
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 16.sp
-            )
-
-            WordRow(
-                isDarkMode = isDarkMode,
-                guessWord = exampleWords[3],
-                guessLetters = exampleWords[3].letters,
-                message = "",
-                wordRowAnimating = false,
-                onEvent = {}
-            )
-
-            Text(
-                buildAnnotatedString {
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("All ")
-                    }
-                    append("letters are found in the word, and are in the correct spot. Well done!")
-                },
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 16.sp
-            )
         }
     }
 }
