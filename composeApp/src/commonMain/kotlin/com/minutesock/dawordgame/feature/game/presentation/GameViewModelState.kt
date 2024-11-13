@@ -23,6 +23,7 @@ data class GameViewModelState(
     val gameState: WordSessionState = wordSession?.state ?: WordSessionState.NotStarted,
     val wordRowAnimating: Boolean = false,
     val falseKeyboardKeys: FalseKeyboardKeys = FalseKeyboardKeys(),
+    val screenState: GameScreenState = GameScreenState.Game
 ) {
     fun copyWithWordSession(
         wordSession: WordSession?,
@@ -55,4 +56,9 @@ enum class GameLoadingState {
     Idle,
     Loading,
     Loaded
+}
+
+enum class GameScreenState {
+    Game,
+    Stats
 }

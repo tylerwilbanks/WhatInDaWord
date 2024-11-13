@@ -1,6 +1,8 @@
 package com.minutesock.dawordgame
 
 import android.os.Build
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalConfiguration
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import java.util.Locale
 
@@ -19,3 +21,11 @@ actual fun readFile(filename: String): String {
 actual fun getSystemLanguage(): GameLanguage {
     return GameLanguage.fromSystem(Locale.getDefault().language)
 }
+
+@Composable
+actual fun getScreenWidth() = LocalConfiguration.current.screenWidthDp
+
+//@Composable
+//fun SystemUiController() {
+//    val systemUiController = rememberSystemUi
+//}

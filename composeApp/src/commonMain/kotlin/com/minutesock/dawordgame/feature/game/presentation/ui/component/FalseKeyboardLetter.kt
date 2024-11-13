@@ -32,6 +32,7 @@ import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 @Composable
 fun FalseKeyboardLetter(
     isDarkMode: Boolean,
+    enabled: Boolean,
     guessKeyboardLetter: GuessKeyboardLetter,
     isWordRowAnimating: Boolean = false,
     onEvent: (WordGameEvent) -> Unit,
@@ -63,12 +64,16 @@ fun FalseKeyboardLetter(
     TextButton(
         modifier = Modifier
             .size(sizeX, 55.dp)
-            .bounceClick()
-            .padding(2.dp),
+            .padding(2.dp)
+            .bounceClick(),
 
         colors = ButtonDefaults.buttonColors(containerColor = backgroundColor),
         shape = RoundedCornerShape(10),
         onClick = {
+            if (!buttonEnabled || !enabled) {
+                return@TextButton
+            }
+
             when (guessKeyboardLetter.keyName) {
                 "enter" -> {
                     onEvent.invoke(WordGameEvent.OnEnterPress)
@@ -87,7 +92,6 @@ fun FalseKeyboardLetter(
                 }
             }
         },
-        enabled = buttonEnabled
     ) {
         when (guessKeyboardLetter.keyName) {
             "enter" -> Icon(
@@ -103,10 +107,10 @@ fun FalseKeyboardLetter(
             )
 
             else -> Text(
-                textAlign = TextAlign.Center,
                 text = guessKeyboardLetter.character.toString(),
                 color = if (isDarkMode) Color.White else Color.Black,
-                fontSize = 16.sp
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
             )
         }
     }

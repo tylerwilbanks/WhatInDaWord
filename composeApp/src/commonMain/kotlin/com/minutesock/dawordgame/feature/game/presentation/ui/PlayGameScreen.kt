@@ -36,6 +36,7 @@ import com.minutesock.dawordgame.core.theme.AppTheme
 import com.minutesock.dawordgame.core.uiutil.ShakeConfig
 import com.minutesock.dawordgame.core.uiutil.rememberShakeController
 import com.minutesock.dawordgame.core.uiutil.shake
+import com.minutesock.dawordgame.feature.game.presentation.GameLoadingState
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModelState
 import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 import com.minutesock.dawordgame.feature.game.presentation.ui.component.FalseKeyboard
@@ -198,6 +199,9 @@ fun PlayGameScreen(
 
         FalseKeyboard(
             isDarkMode = isDarkMode,
+            enabled = state.loadingState != GameLoadingState.Loading &&
+                    (state.gameState == WordSessionState.NotStarted ||
+                            state.gameState == WordSessionState.InProgress),
             modifier = Modifier.fillMaxWidth(),
             onEvent = onEvent,
             falseKeyboardKeys = state.falseKeyboardKeys,

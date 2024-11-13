@@ -1,5 +1,8 @@
 package com.minutesock.dawordgame
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.platform.LocalWindowInfo
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import java.io.File
 import java.util.Locale
@@ -17,3 +20,7 @@ actual fun readFile(filename: String): String {
 actual fun getSystemLanguage(): GameLanguage {
     return GameLanguage.fromSystem(Locale.getDefault().language)
 }
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+actual fun getScreenWidth() = LocalWindowInfo.current.containerSize.width

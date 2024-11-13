@@ -37,6 +37,7 @@ class GameViewModel(
     val state = _state.asStateFlow()
 
     private val requireWordSession get() = state.value.wordSession!!
+    private var gameHasAlreadyBeenPlayed = false
 
     fun setupGame(gameMode: GameMode, wordLength: Int = 5, attempts: Int = 6): Job {
         return viewModelScope.launch {
@@ -69,6 +70,12 @@ class GameViewModel(
                 )
             }
 
+            if (wordSession.state.isGameOver) {
+                gameHasAlreadyBeenPlayed = true
+            }
+
+            println("mystery word: ${selectedWord.word}")
+
             _state.update {
                 it.copyWithWordSession(
                     wordSession = wordSession,
@@ -76,7 +83,7 @@ class GameViewModel(
                     mysteryWord = selectedWord,
                     falseKeyboardKeys = getUpdatedFalseKeyboardKeys(
                         guessWords = wordSession.guesses,
-                        falseKeyboardKeys = state.value.falseKeyboardKeys
+                        falseKeyboardKeys = FalseKeyboardKeys()
                     )
                 )
             }
@@ -126,12 +133,12 @@ class GameViewModel(
             when (event) {
                 is WordGameEvent.OnAnsweredWordRowAnimationFinished -> event.onEvent()
                 is WordGameEvent.OnCharacterPress -> event.onEvent()
-                is WordGameEvent.OnCompleteAnimationFinished -> TODO()
+                is WordGameEvent.OnCompleteAnimationFinished -> event.onEvent()
                 is WordGameEvent.OnDeletePress -> event.onEvent()
                 is WordGameEvent.OnEnterPress -> event.onEvent()
                 is WordGameEvent.OnErrorAnimationFinished -> event.onEvent()
-                is WordGameEvent.OnStatsPress -> TODO()
-                is WordGameEvent.OnDarkThemeToggle -> DataStoreManager.darkMode = !DataStoreManager.darkMode
+                WordGameEvent.OnStatsPress -> _state.update { it.copy(screenState = GameScreenState.Stats) }
+                WordGameEvent.OnDarkThemeToggle -> DataStoreManager.darkMode = !DataStoreManager.darkMode
             }
         }
     }
@@ -157,6 +164,7 @@ class GameViewModel(
 
             _state.update {
                 it.copy(
+                    wordRowAnimating = false,
                     wordSession = newWordSession
                 )
             }
@@ -186,7 +194,15 @@ class GameViewModel(
                         gameTitleMessage = GameTitleMessage(
                             message = result.textRes,
                             isError = true
-                        )
+                        ),
+                        wordSession = it.wordSession?.let { wordSession ->
+                            wordSession.copy(
+                                guesses = getUpdatedWordRows(
+                                    index,
+                                    wordSession.guesses[index].copy(errorState = GuessWordError.entries[result.errorCode])
+                                )
+                            )
+                        }
                     )
                 }
 
@@ -200,6 +216,17 @@ class GameViewModel(
                     }
                 }
             }
+        }
+    }
+
+    private fun WordGameEvent.OnCompleteAnimationFinished.onEvent() {
+        if (gameHasAlreadyBeenPlayed) {
+            return
+        }
+        _state.update {
+            it.copy(
+                screenState = GameScreenState.Stats
+            )
         }
     }
 
@@ -343,7 +370,15 @@ class GameViewModel(
                         gameTitleMessage = GameTitleMessage(
                             message = result.textRes,
                             isError = true
-                        )
+                        ),
+                        wordSession = it.wordSession?.let { wordSession ->
+                            wordSession.copy(
+                                guesses = getUpdatedWordRows(
+                                    index,
+                                    wordSession.guesses[index].copy(errorState = GuessWordError.entries[result.errorCode])
+                                )
+                            )
+                        }
                     )
                 }
             }

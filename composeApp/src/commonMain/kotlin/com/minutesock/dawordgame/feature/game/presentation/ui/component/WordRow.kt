@@ -37,6 +37,7 @@ fun WordRow(
         if (wordRowAnimating) {
             return@LaunchedEffect
         }
+
         if (
             message != defaultMessage &&
             guessWord.state == GuessWordState.Editing &&

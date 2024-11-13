@@ -4,8 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.platform.LocalWindowInfo
+import com.minutesock.dawordgame.getScreenWidth
 
 enum class WindowSizeBreakpoint {
     ExtraSmall,
@@ -28,17 +27,13 @@ enum class WindowSizeBreakpoint {
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun rememberWindowSizeBreakpoint(): State<WindowSizeBreakpoint> {
-    val windowSize = LocalWindowInfo.current.containerSize
+    val windowWidth = getScreenWidth()
 
-    return remember(windowSize) {
+    return remember(windowWidth) {
         derivedStateOf {
-            val width = windowSize.width
-            val height = windowSize.height
-
-            WindowSizeBreakpoint.fromPx(width)
+            WindowSizeBreakpoint.fromPx(windowWidth)
         }
     }
 }
