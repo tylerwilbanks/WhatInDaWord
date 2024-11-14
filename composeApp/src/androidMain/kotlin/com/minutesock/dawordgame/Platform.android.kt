@@ -1,7 +1,12 @@
 package com.minutesock.dawordgame
 
 import android.os.Build
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalConfiguration
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import java.util.Locale
@@ -25,7 +30,17 @@ actual fun getSystemLanguage(): GameLanguage {
 @Composable
 actual fun getScreenWidth() = LocalConfiguration.current.screenWidthDp
 
-//@Composable
-//fun SystemUiController() {
-//    val systemUiController = rememberSystemUi
-//}
+class AndroidSystemUiController(private val activity: ComponentActivity) : SystemUiController {
+    override fun setStatusBarStyles(statusBarColor: Color, navigationBarColor: Color, darkMode: Boolean) {
+        activity.enableEdgeToEdge(
+            statusBarStyle = when (darkMode) {
+                true -> SystemBarStyle.dark(statusBarColor.toArgb())
+                false -> SystemBarStyle.light(statusBarColor.toArgb(), 0)
+            },
+            navigationBarStyle = when (darkMode) {
+                true -> SystemBarStyle.dark(navigationBarColor.toArgb())
+                false -> SystemBarStyle.light(navigationBarColor.toArgb(), 0)
+            }
+        )
+    }
+}

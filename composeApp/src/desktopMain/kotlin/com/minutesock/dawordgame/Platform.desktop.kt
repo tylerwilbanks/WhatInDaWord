@@ -2,6 +2,7 @@ package com.minutesock.dawordgame
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import java.io.File
@@ -24,3 +25,7 @@ actual fun getSystemLanguage(): GameLanguage {
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 actual fun getScreenWidth() = LocalWindowInfo.current.containerSize.width
+
+class DesktopSystemUiController : SystemUiController {
+    override fun setStatusBarStyles(statusBarColor: Color, navigationBarColor: Color, darkMode: Boolean) = Unit
+}

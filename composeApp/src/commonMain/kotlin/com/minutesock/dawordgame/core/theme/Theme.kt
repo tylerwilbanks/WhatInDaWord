@@ -9,8 +9,10 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import com.minutesock.dawordgame.StatefulSystemUiController
 import com.minutesock.dawordgame.core.data.DataStoreManager
 import com.minutesock.dawordgame.core.data.rememberPreference
+import org.koin.compose.koinInject
 
 private val lightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -77,7 +79,7 @@ private val darkColors = darkColorScheme(
 )
 
 @Composable
-fun rememberDarkTheme(): State<Boolean> {
+fun rememberDarkTheme(statefulSystemUiController: StatefulSystemUiController = koinInject()): State<Boolean> {
     val darkTheme by rememberPreference(DataStoreManager.darkModeDelegate)
     val useSystemTheme by rememberPreference(DataStoreManager.useSystemThemeDelegate)
     val isSystemInDarkTheme = isSystemInDarkTheme()
@@ -89,6 +91,8 @@ fun rememberDarkTheme(): State<Boolean> {
             } else {
                 darkTheme
             }
+        }.also {
+            statefulSystemUiController.setStatusBarStyles(darkMode = it.value)
         }
     }
 }

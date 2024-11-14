@@ -9,6 +9,7 @@ class AndroidApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         AndroidContextProvider.init(this)
+        // todo add a ui module for SystemUiController
         initKoin {
             androidContext(this@AndroidApplication)
             modules(androidModule)

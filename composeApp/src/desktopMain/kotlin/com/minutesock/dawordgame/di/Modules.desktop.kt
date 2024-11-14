@@ -1,5 +1,7 @@
 package com.minutesock.dawordgame.di
 
+import com.minutesock.dawordgame.DesktopSystemUiController
+import com.minutesock.dawordgame.SystemUiController
 import com.minutesock.dawordgame.core.data.DataStoreProvider
 import com.minutesock.dawordgame.core.data.DatabaseDriverFactory
 import com.minutesock.dawordgame.core.data.DesktopDataStoreProvider
@@ -10,4 +12,5 @@ import org.koin.dsl.module
 val desktopModule = module {
     single { DesktopDataStoreProvider() }.bind<DataStoreProvider>()
     single { ProductionDatabaseDriverFactory() }.bind<DatabaseDriverFactory>()
+    single { DesktopSystemUiController() }.bind<SystemUiController>()
 }

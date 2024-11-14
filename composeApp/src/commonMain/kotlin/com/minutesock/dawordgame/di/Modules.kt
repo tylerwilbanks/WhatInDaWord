@@ -1,5 +1,6 @@
 package com.minutesock.dawordgame.di
 
+import com.minutesock.dawordgame.StatefulSystemUiController
 import com.minutesock.dawordgame.core.data.DatabaseDriverFactory
 import com.minutesock.dawordgame.core.data.DbClient
 import com.minutesock.dawordgame.core.data.SqlDelightDbClient
@@ -25,6 +26,7 @@ import org.koin.dsl.module
 val appModule = module {
     single { get<DatabaseDriverFactory>().createDriver() }
     single { SqlDelightDbClient(get(), Dispatchers.IO) }.bind<DbClient>()
+    single { StatefulSystemUiController(get()) }
     singleOf(::SqlDelightValidWordDataSource).bind<ValidWordDataSource>()
     singleOf(::SqlDelightWordSelectionDataSource).bind<WordSelectionDataSource>()
     singleOf(::SqlDelightGuessLetterDataSource).bind<GuessLetterDataSource>()
