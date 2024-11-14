@@ -26,6 +26,12 @@ actual fun getSystemLanguage(): GameLanguage {
 @Composable
 actual fun getScreenWidth() = LocalWindowInfo.current.containerSize.width
 
+@Composable
+actual fun getScreenOrientation() = ScreenOrientation.Portrait
+
+@Composable
+actual fun ToggleSystemStatusBar(hide: Boolean) = Unit
+
 class DesktopSystemUiController : SystemUiController {
     override fun setStatusBarStyles(statusBarColor: Color, navigationBarColor: Color, darkMode: Boolean) = Unit
 }

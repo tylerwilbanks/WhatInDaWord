@@ -37,18 +37,22 @@ fun App() {
     AppTheme { isDarkMode: Boolean ->
 
         val windowSizeBreakpoint by rememberWindowSizeBreakpoint()
+        val screenOrientation = getScreenOrientation()
 
-        val showNavigationRail by remember(windowSizeBreakpoint) {
-            mutableStateOf(
-                when (windowSizeBreakpoint) {
-                    WindowSizeBreakpoint.ExtraSmall,
-                    WindowSizeBreakpoint.Small -> false
-                    WindowSizeBreakpoint.Medium,
-                    WindowSizeBreakpoint.Large,
-                    WindowSizeBreakpoint.ExtraLarge -> true
-                }
-            )
+        val showNavigationRail by remember(windowSizeBreakpoint, screenOrientation) {
+            val windowIsWideEnough = when (windowSizeBreakpoint) {
+                WindowSizeBreakpoint.ExtraSmall,
+                WindowSizeBreakpoint.Small -> false
+
+                WindowSizeBreakpoint.Medium,
+                WindowSizeBreakpoint.Large,
+                WindowSizeBreakpoint.ExtraLarge -> true
+            }
+            val showRail = windowIsWideEnough || screenOrientation == ScreenOrientation.Landscape
+            mutableStateOf(showRail)
         }
+
+        ToggleSystemStatusBar(showNavigationRail)
 
         val navController = rememberNavController()
 

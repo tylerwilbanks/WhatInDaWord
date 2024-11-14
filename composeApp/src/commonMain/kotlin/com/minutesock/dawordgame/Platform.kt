@@ -19,6 +19,17 @@ expect fun getSystemLanguage(): GameLanguage
 @Composable
 expect fun getScreenWidth(): Int
 
+@Composable
+expect fun getScreenOrientation(): ScreenOrientation
+
+@Composable
+expect fun ToggleSystemStatusBar(hide: Boolean)
+
+enum class ScreenOrientation {
+    Portrait,
+    Landscape;
+}
+
 interface SystemUiController {
     fun setStatusBarStyles(
         statusBarColor: Color,

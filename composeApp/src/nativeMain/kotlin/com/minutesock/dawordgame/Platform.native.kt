@@ -19,6 +19,19 @@ actual fun getSystemLanguage(): GameLanguage {
 @Composable
 actual fun getScreenWidth() = LocalWindowInfo.current.containerSize.width
 
+@Composable
+actual fun ToggleSystemStatusBar(hide: Boolean) = Unit
+
+@Composable
+actual fun getScreenOrientation(): ScreenOrientation {
+    val screenSize = UIScreen.mainScreen.bounds
+    return if (screenSize.width > screenSize.height) {
+        ScreenOrientation.Landscape
+    } else {
+        ScreenOrientation.Portrait
+    }
+}
+
 class NativeSystemUiController : SystemUiController {
     override fun setStatusBarStyles(statusBarColor: Color, navigationBarColor: Color, darkMode: Boolean) {
         val style =
