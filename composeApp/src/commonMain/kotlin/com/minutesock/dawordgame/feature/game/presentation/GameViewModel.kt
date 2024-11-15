@@ -189,17 +189,17 @@ class GameViewModel(
             )
 
             when (result) {
-                is Option.Error -> _state.update {
+                is Option.Issue -> _state.update {
                     it.copy(
                         gameTitleMessage = GameTitleMessage(
-                            message = result.textRes,
+                            message = result.issue.textRes,
                             isError = true
                         ),
                         wordSession = it.wordSession?.let { wordSession ->
                             wordSession.copy(
                                 guesses = getUpdatedWordRows(
                                     index,
-                                    wordSession.guesses[index].copy(errorState = GuessWordError.entries[result.errorCode])
+                                    wordSession.guesses[index].copy(errorState = GuessWordError.entries[result.issue.errorCode])
                                 )
                             )
                         }
@@ -364,18 +364,18 @@ class GameViewModel(
 
     private fun eraseLetter(index: Int) {
         when (val result = requireWordSession.guesses[index].eraseLetter()) {
-            is Option.Error -> {
+            is Option.Issue -> {
                 _state.update {
                     it.copy(
                         gameTitleMessage = GameTitleMessage(
-                            message = result.textRes,
+                            message = result.issue.textRes,
                             isError = true
                         ),
                         wordSession = it.wordSession?.let { wordSession ->
                             wordSession.copy(
                                 guesses = getUpdatedWordRows(
                                     index,
-                                    wordSession.guesses[index].copy(errorState = GuessWordError.entries[result.errorCode])
+                                    wordSession.guesses[index].copy(errorState = GuessWordError.entries[result.issue.errorCode])
                                 )
                             )
                         }

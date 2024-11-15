@@ -1,6 +1,7 @@
 package com.minutesock.dawordgame.core.domain
 
 import com.minutesock.dawordgame.core.data.DbEntity
+import com.minutesock.dawordgame.core.util.GeneralIssue
 import com.minutesock.dawordgame.core.util.Option
 import com.minutesock.dawordgame.feature.game.presentation.GuessWordError
 import kotlinx.collections.immutable.ImmutableList
@@ -20,14 +21,16 @@ data class GuessWord(
     val displayWord: String get() = letters.joinToString("") { it.displayCharacter }.uppercase()
     val isIncomplete: Boolean get() = letters.any { it.availableForInput }
 
-    fun addGuessLetter(newCharacter: Char, newState: GuessLetterState): Option<GuessWord> {
+    fun addGuessLetter(newCharacter: Char, newState: GuessLetterState): Option<GuessWord, GeneralIssue> {
         val newGuessLetterList = this.letters.toMutableList()
         newGuessLetterList.indexOfFirst { it.availableForInput }.let { index ->
             if (index == -1) {
                 val customError = GuessWordError.NoLettersAvailableForInput
-                return Option.Error(
-                    textRes = customError.message,
-                    errorCode = customError.ordinal
+                return Option.Issue(
+                    GeneralIssue(
+                        textRes = customError.message,
+                        errorCode = customError.ordinal
+                    )
                 )
             }
             newGuessLetterList[index] = newGuessLetterList[index].copy(
@@ -43,14 +46,16 @@ data class GuessWord(
         )
     }
 
-    fun eraseLetter(): Option<GuessWord> {
+    fun eraseLetter(): Option<GuessWord, GeneralIssue> {
         val newGuessLetterList = this.letters.toMutableList()
         newGuessLetterList.indexOfLast { it.answered }.let { index ->
             if (index == -1) {
                 val customError = GuessWordError.NoLettersToRemove
-                return Option.Error(
-                    textRes = customError.message,
-                    errorCode = customError.ordinal
+                return Option.Issue(
+                    GeneralIssue(
+                        textRes = customError.message,
+                        errorCode = customError.ordinal
+                    )
                 )
             }
             newGuessLetterList[index] = newGuessLetterList[index].erase()

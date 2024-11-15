@@ -15,6 +15,8 @@ import com.minutesock.dawordgame.core.data.guessword.GuessWordDataSource
 import com.minutesock.dawordgame.core.data.guessword.SqlDelightGuessWordDataSource
 import com.minutesock.dawordgame.core.data.wordsession.SqlDelightWordSessionDataSource
 import com.minutesock.dawordgame.core.data.wordsession.WordSessionDataSource
+import com.minutesock.dawordgame.core.remote.createHttpClient
+import com.minutesock.dawordgame.core.remote.createHttpClientEngine
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -32,6 +34,7 @@ val appModule = module {
     singleOf(::SqlDelightGuessLetterDataSource).bind<GuessLetterDataSource>()
     singleOf(::SqlDelightGuessWordDataSource).bind<GuessWordDataSource>()
     singleOf(::SqlDelightWordSessionDataSource).bind<WordSessionDataSource>()
+    single { createHttpClient(createHttpClientEngine()) }
 }
 
 fun testDbModule(coroutineDispatcher: CoroutineDispatcher): Module {
