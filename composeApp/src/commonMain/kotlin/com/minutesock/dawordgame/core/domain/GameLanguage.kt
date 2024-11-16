@@ -7,9 +7,9 @@ enum class GameLanguage {
 
     val dbName: String get() {
         return when (this) {
-            English -> "EN"
-            German -> "DE"
-            Spanish -> "ES"
+            English -> "en"
+            German -> "de"
+            Spanish -> "es"
         }
     }
 
