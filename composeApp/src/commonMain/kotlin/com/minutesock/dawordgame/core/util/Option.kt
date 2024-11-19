@@ -25,3 +25,10 @@ class GeneralIssue(
     override val textRes: TextRes,
     override val errorCode: Int = 1_000
 ) : IssueInfo
+
+inline fun <D, E> Option<D, E>.onSuccess(successBlock: (data: D) -> Unit) {
+    when (this) {
+        is Option.Issue -> Unit
+        is Option.Success -> successBlock(data)
+    }
+}

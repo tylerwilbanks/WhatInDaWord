@@ -4,3 +4,5 @@ DELETE FROM WordSelectionEntity;
 DELETE FROM GuessWordEntity;
 DELETE FROM GuessLetterEntity;
 DELETE FROM ValidWordEntity;
+DELETE FROM WordEntryEntity;
+DELETE FROM WordDefinitionEntity;

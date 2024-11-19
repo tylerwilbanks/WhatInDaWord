@@ -1,4 +1,4 @@
-package com.minutesock.dawordgame.core.data.wordsession
+package com.minutesock.dawordgame.core.data.source
 
 import com.minutesock.dawordgame.core.data.SqlDelightDbClient
 import com.minutesock.dawordgame.core.data.toGuessLetter

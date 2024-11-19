@@ -1,4 +1,4 @@
-CREATE TABLE WordSelectionEntity (
+CREATE TABLE IF NOT EXISTS WordSelectionEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     word TEXT NOT NULL,
     language TEXT NOT NULL,

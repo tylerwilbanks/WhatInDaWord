@@ -1,6 +1,6 @@
 package com.minutesock.dawordgame.core.data
 
-import com.minutesock.dawordgame.core.data.guessletter.GuessLetterDataSource
+import com.minutesock.dawordgame.core.data.source.GuessLetterDataSource
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.GuessLetter
@@ -11,9 +11,15 @@ import com.minutesock.dawordgame.core.domain.ValidWord
 import com.minutesock.dawordgame.core.domain.WordSelection
 import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
+import com.minutesock.dawordgame.core.domain.definition.WordDefinition
+import com.minutesock.dawordgame.core.domain.definition.WordEntry
+import com.minutesock.dawordgame.core.remote.definition.DefinitionDto
+import com.minutesock.dawordgame.core.remote.definition.WordEntryDto
 import com.minutesock.dawordgame.sqldelight.GuessLetterEntity
 import com.minutesock.dawordgame.sqldelight.GuessWordEntity
 import com.minutesock.dawordgame.sqldelight.ValidWordEntity
+import com.minutesock.dawordgame.sqldelight.WordDefinitionEntity
+import com.minutesock.dawordgame.sqldelight.WordEntryEntity
 import com.minutesock.dawordgame.sqldelight.WordSelectionEntity
 import com.minutesock.dawordgame.sqldelight.WordSessionEntity
 import kotlinx.collections.immutable.persistentListOf
@@ -91,5 +97,59 @@ fun GuessLetterEntity.toGuessLetter(): GuessLetter {
         guessWordId = guess_word_id,
         character = character.first(),
         state = GuessLetterState.entries[state.toInt()]
+    )
+}
+
+fun WordEntryEntity.toWordEntry(definitions: List<WordDefinition>): WordEntry {
+    return WordEntry(
+        id = id,
+        language = GameLanguage.fromDb(language),
+        word = word,
+        fetchDate = fetch_date.letFromDb { LocalDate.parse(it) }
+            ?: Clock.System.todayIn(TimeZone.currentSystemDefault()),
+        definitions = definitions.toImmutableList(),
+        phonetic = phonetic,
+        origin = origin
+    )
+}
+
+fun WordDefinitionEntity.toWordDefinition(): WordDefinition {
+    return WordDefinition(
+        id = 0,
+        language = GameLanguage.fromDb(language),
+        word = word,
+        partOfSpeech = part_of_speech ?: "",
+        definition = definition,
+        example = example.letFromDb { example }
+    )
+}
+
+fun DefinitionDto.toWordDefinition(word: String, language: GameLanguage, partOfSpeech: String): WordDefinition {
+    return WordDefinition(
+        id = 0,
+        language = language,
+        word = word,
+        partOfSpeech = partOfSpeech,
+        definition = definition,
+        example = example
+    )
+}
+
+fun WordEntryDto.toWordEntry(language: GameLanguage): WordEntry {
+    return WordEntry(
+        language = language,
+        word = word,
+        fetchDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+        definitions = meanings.map { meaning ->
+            meaning.definitions.map {
+                it.toWordDefinition(
+                    word = word,
+                    language = language,
+                    partOfSpeech = meaning.partOfSpeech
+                )
+            }
+        }
+            .flatten()
+            .toImmutableList()
     )
 }

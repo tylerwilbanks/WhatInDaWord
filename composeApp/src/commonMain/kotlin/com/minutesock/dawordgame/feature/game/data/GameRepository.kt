@@ -2,9 +2,9 @@ package com.minutesock.dawordgame.feature.game.data
 
 import com.minutesock.dawordgame.core.data.ValidWordDataSource
 import com.minutesock.dawordgame.core.data.WordSelectionDataSource
-import com.minutesock.dawordgame.core.data.guessletter.GuessLetterDataSource
-import com.minutesock.dawordgame.core.data.guessword.GuessWordDataSource
-import com.minutesock.dawordgame.core.data.wordsession.WordSessionDataSource
+import com.minutesock.dawordgame.core.data.source.GuessLetterDataSource
+import com.minutesock.dawordgame.core.data.source.GuessWordDataSource
+import com.minutesock.dawordgame.core.data.source.WordSessionDataSource
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.GuessLetter

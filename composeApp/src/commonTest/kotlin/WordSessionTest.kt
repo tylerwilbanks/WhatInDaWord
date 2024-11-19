@@ -1,5 +1,5 @@
 import com.minutesock.dawordgame.core.data.DbClient
-import com.minutesock.dawordgame.core.data.wordsession.WordSessionDataSource
+import com.minutesock.dawordgame.core.data.source.WordSessionDataSource
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.GuessLetter

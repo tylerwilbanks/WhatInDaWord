@@ -1,4 +1,4 @@
-CREATE TABLE GuessLetterEntity(
+CREATE TABLE IF NOT EXISTS GuessLetterEntity(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     guess_word_id INTEGER NOT NULL,
     character TEXT NOT NULL CHECK(length(character) = 1),

@@ -31,8 +31,8 @@ class WordHttpClient(
             val response = client.request {
                 method = HttpMethod.Get
                 url {
-                    protocol = URLProtocol.HTTPS
-                    host = "api.dictionaryapi.dev"
+                    protocol = WordHttpClient.urlProtocol
+                    host = WordHttpClient.host
                     appendPathSegments("api", "v2", "entries", gameLanguage.dbName, word)
                 }
             }
@@ -53,5 +53,11 @@ class WordHttpClient(
                 }
             }
         }
+    }
+
+    companion object {
+        val urlProtocol = URLProtocol.HTTPS
+        val host = "api.dictionaryapi.dev"
+        val baseUrl = "${urlProtocol.name}://$host/"
     }
 }

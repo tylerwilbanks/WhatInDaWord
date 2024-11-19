@@ -5,6 +5,8 @@ import com.minutesock.dawordgame.sqldelight.AppDatabase
 import com.minutesock.dawordgame.sqldelight.GuessLetterEntityQueries
 import com.minutesock.dawordgame.sqldelight.GuessWordEntityQueries
 import com.minutesock.dawordgame.sqldelight.ValidWordEntityQueries
+import com.minutesock.dawordgame.sqldelight.WordDefinitionEntityQueries
+import com.minutesock.dawordgame.sqldelight.WordEntryEntityQueries
 import com.minutesock.dawordgame.sqldelight.WordSelectionEntityQueries
 import com.minutesock.dawordgame.sqldelight.WordSessionEntityQueries
 import kotlinx.coroutines.CoroutineDispatcher
@@ -39,6 +41,12 @@ class SqlDelightDbClient(
 
     val guessLetterEntityQueries: GuessLetterEntityQueries
         get() = database.guessLetterEntityQueries
+
+    val wordEntryEntityQueries: WordEntryEntityQueries
+        get() = database.wordEntryEntityQueries
+
+    val wordDefinitionEntityQueries: WordDefinitionEntityQueries
+        get() = database.wordDefinitionEntityQueries
 
     override fun <T> transaction(block:() -> T): T {
         return database.transactionWithResult { block() }

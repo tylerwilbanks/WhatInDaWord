@@ -9,12 +9,14 @@ import com.minutesock.dawordgame.core.data.SqlDelightWordSelectionDataSource
 import com.minutesock.dawordgame.core.data.TestDatabaseDriverFactory
 import com.minutesock.dawordgame.core.data.ValidWordDataSource
 import com.minutesock.dawordgame.core.data.WordSelectionDataSource
-import com.minutesock.dawordgame.core.data.guessletter.GuessLetterDataSource
-import com.minutesock.dawordgame.core.data.guessletter.SqlDelightGuessLetterDataSource
-import com.minutesock.dawordgame.core.data.guessword.GuessWordDataSource
-import com.minutesock.dawordgame.core.data.guessword.SqlDelightGuessWordDataSource
-import com.minutesock.dawordgame.core.data.wordsession.SqlDelightWordSessionDataSource
-import com.minutesock.dawordgame.core.data.wordsession.WordSessionDataSource
+import com.minutesock.dawordgame.core.data.source.GuessLetterDataSource
+import com.minutesock.dawordgame.core.data.source.GuessWordDataSource
+import com.minutesock.dawordgame.core.data.source.SqlDelightGuessLetterDataSource
+import com.minutesock.dawordgame.core.data.source.SqlDelightGuessWordDataSource
+import com.minutesock.dawordgame.core.data.source.SqlDelightWordEntryDataSource
+import com.minutesock.dawordgame.core.data.source.SqlDelightWordSessionDataSource
+import com.minutesock.dawordgame.core.data.source.WordEntryDataSource
+import com.minutesock.dawordgame.core.data.source.WordSessionDataSource
 import com.minutesock.dawordgame.core.remote.createHttpClient
 import com.minutesock.dawordgame.core.remote.createHttpClientEngine
 import kotlinx.coroutines.CoroutineDispatcher
@@ -34,6 +36,7 @@ val appModule = module {
     singleOf(::SqlDelightGuessLetterDataSource).bind<GuessLetterDataSource>()
     singleOf(::SqlDelightGuessWordDataSource).bind<GuessWordDataSource>()
     singleOf(::SqlDelightWordSessionDataSource).bind<WordSessionDataSource>()
+    singleOf(::SqlDelightWordEntryDataSource).bind<WordEntryDataSource>()
     single { createHttpClient(createHttpClientEngine()) }
 }
 
@@ -47,5 +50,6 @@ fun testDbModule(coroutineDispatcher: CoroutineDispatcher): Module {
         singleOf(::SqlDelightGuessLetterDataSource).bind<GuessLetterDataSource>()
         singleOf(::SqlDelightGuessWordDataSource).bind<GuessWordDataSource>()
         singleOf(::SqlDelightWordSessionDataSource).bind<WordSessionDataSource>()
+        singleOf(::SqlDelightWordEntryDataSource).bind<WordEntryDataSource>()
     }
 }

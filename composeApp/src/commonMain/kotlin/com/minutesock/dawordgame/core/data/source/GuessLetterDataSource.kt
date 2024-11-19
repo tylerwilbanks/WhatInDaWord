@@ -1,8 +1,9 @@
-package com.minutesock.dawordgame.core.data.guessletter
+package com.minutesock.dawordgame.core.data.source
 
 import com.minutesock.dawordgame.core.data.SqlDelightDbClient
 import com.minutesock.dawordgame.core.data.toGuessLetter
 import com.minutesock.dawordgame.core.domain.GuessLetter
+import com.minutesock.dawordgame.sqldelight.GuessLetterEntity
 
 interface GuessLetterDataSource {
     suspend fun upsert(vararg guessLetters: GuessLetter)
@@ -33,7 +34,7 @@ class SqlDelightGuessLetterDataSource(
         return dbClient.suspendingTransaction {
             queries.selectGuessLetterEntitiesByGuessWordId(guessWordId)
                 .executeAsList()
-                .map { it.toGuessLetter() }
+                .map(GuessLetterEntity::toGuessLetter)
         }
     }
 

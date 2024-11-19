@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS WordDefinitionEntity (
+    language TEXT NOT NULL,
+    word TEXT NOT NULL,
+    part_of_speech TEXT,
+    definition TEXT NOT NULL,
+    example TEXT
+);
+
+insert:
+INSERT INTO WordDefinitionEntity(
+    language, word, part_of_speech, definition, example
+) VALUES (:language, :word, :part_of_speech, :definition, :example);
+
+deleteAll:
+DELETE FROM WordDefinitionEntity
+WHERE word = ? AND language = ?;
+
+selectByWord:
+SELECT * FROM WordDefinitionEntity
+WHERE word = ?;

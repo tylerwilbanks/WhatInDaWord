@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS WordEntryEntity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    language TEXT NOT NULL,
+    word TEXT NOT NULL,
+    fetch_date TEXT NOT NULL,
+    phonetic TEXT,
+    origin TEXT,
+    UNIQUE (word, language)
+);
+
+upsert:
+INSERT OR REPLACE INTO WordEntryEntity(
+    language, word, fetch_date, phonetic, origin
+) VALUES (:language, :word, :fetch_date, :phonetic, :origin);
+
+selectById:
+SELECT * FROM WordEntryEntity
+WHERE id = ?;
+
+selectByWord:
+SELECT * FROM WordEntryEntity
+WHERE word = ? AND language = ?;
