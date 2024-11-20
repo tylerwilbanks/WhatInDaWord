@@ -37,4 +37,8 @@ sealed class TextRes {
     }
 
     fun empty() = Raw("")
+
+    companion object {
+        fun empty() = TextRes.Raw("")
+    }
 }

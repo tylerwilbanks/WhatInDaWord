@@ -13,7 +13,7 @@ sealed class ContinuousOption<out D, out E> {
         val continuousStatus: ContinuousStatus
     ) : ContinuousOption<D, Nothing>()
 
-    class Issue<out E : IssueInfo>(val issue: E) : ContinuousOption<Nothing, E>()
+    class Issue<out D, out E : IssueInfo>(val issue: E, val data: D? = null) : ContinuousOption<D, E>()
     class Success<out D>(val data: D) : ContinuousOption<D, Nothing>()
 }
 
@@ -43,7 +43,13 @@ inline fun <D, E> ContinuousOption<D, E>.onSuccess(successBlock: (data: D) -> Un
 }
 
 sealed class ContinuousStatus {
-    data class Indefinite(val textRes: TextRes) : ContinuousStatus()
+    data class Indefinite(val textRes: TextRes) : ContinuousStatus() {
+        companion object {
+            fun empty(): ContinuousStatus.Indefinite {
+                return ContinuousStatus.Indefinite(TextRes.empty())
+            }
+        }
+    }
     data class Progress(
         val textRes: TextRes,
         val currentProgress: Double = 0.0,
