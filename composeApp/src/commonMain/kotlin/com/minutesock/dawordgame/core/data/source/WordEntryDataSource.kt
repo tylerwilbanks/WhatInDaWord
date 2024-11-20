@@ -13,6 +13,7 @@ interface WordEntryDataSource {
     suspend fun upsertEntriesAndDefinitions(wordEntry: WordEntry)
     suspend fun selectById(id: Long): WordEntry?
     suspend fun selectByWord(language: GameLanguage, word: String): WordEntry?
+    suspend fun selectCountByWord(language: GameLanguage, word: String): Int
 }
 
 class SqlDelightWordEntryDataSource(
@@ -45,8 +46,9 @@ class SqlDelightWordEntryDataSource(
         }
     }
 
-    private fun WordEntryEntity.selectDefinitions(): List<WordDefinition> {
+    private fun WordEntryEntity.selectDefinitions(language: GameLanguage): List<WordDefinition> {
         return wordDefinitionQueries.selectByWord(
+            language = language.dbName,
             word = word
         )
             .executeAsList()
@@ -59,7 +61,7 @@ class SqlDelightWordEntryDataSource(
                 .executeAsOneOrNull()
                 ?.let {
                     it.toWordEntry(
-                        definitions = it.selectDefinitions()
+                        definitions = it.selectDefinitions(GameLanguage.fromDb(it.language))
                     )
                 }
         }
@@ -71,9 +73,15 @@ class SqlDelightWordEntryDataSource(
                 .executeAsOneOrNull()
                 ?.let {
                     it.toWordEntry(
-                        definitions = it.selectDefinitions()
+                        definitions = it.selectDefinitions(language)
                     )
                 }
+        }
+    }
+
+    override suspend fun selectCountByWord(language: GameLanguage, word: String): Int {
+        return dbClient.suspendingTransaction {
+            wordEntryQueries.selectCountByWord(word, language.dbName).executeAsOne().toInt()
         }
     }
 }

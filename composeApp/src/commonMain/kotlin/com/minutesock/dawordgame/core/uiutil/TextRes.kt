@@ -35,4 +35,6 @@ sealed class TextRes {
             }
         }
     }
+
+    fun empty() = Raw("")
 }

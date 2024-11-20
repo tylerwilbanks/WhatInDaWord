@@ -47,7 +47,6 @@ class WordHttpClient(
                         Option.Issue(GeneralIssue(TextRes.Raw(e.message ?: "who knows")))
                     }
                 }
-
                 else -> {
                     Option.Issue(GeneralIssue(TextRes.Raw(response.status.description)))
                 }

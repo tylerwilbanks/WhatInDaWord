@@ -7,13 +7,16 @@ import com.minutesock.dawordgame.core.remote.createHttpClientEngine
 import com.minutesock.dawordgame.core.remote.definition.DefinitionDto
 import com.minutesock.dawordgame.core.remote.definition.MeaningDto
 import com.minutesock.dawordgame.core.remote.definition.WordEntryDto
+import com.minutesock.dawordgame.core.util.ContinuousOption
 import com.minutesock.dawordgame.core.util.onSuccess
 import com.minutesock.dawordgame.di.initKoinForTesting
 import com.minutesock.dawordgame.di.testDbModule
+import com.minutesock.dawordgame.feature.game.data.GameRepository
 import com.minutesock.dawordgame.feature.game.remote.WordHttpClient
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
@@ -26,6 +29,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import kotlin.test.fail
 
 class DefinitionFetchTest {
     private val testDispatcher = StandardTestDispatcher()
@@ -127,4 +131,36 @@ class DefinitionFetchTest {
             }
         }
     }
+
+    @Test
+    fun `english gameRepository GetOrFetchWordEntry no throttle`() = runTest(testDispatcher) {
+        val testWord = "flame"
+        val language = GameLanguage.English
+        assertEquals(0, wordEntryDataSource.selectCountByWord(language, testWord))
+        val gameRepository = GameRepository(
+            wordHttpClient = wordHttpClient
+        )
+
+        val results = gameRepository.getOrFetchWordEntry(
+            language = language,
+            word = testWord,
+            throttle = null
+        ).toList()
+
+        when (val lastResult = results.last()) {
+            is ContinuousOption.Issue -> fail("last result was an issue: ${lastResult.issue.textRes.asRawString()}")
+            is ContinuousOption.Loading -> fail("last result was ${lastResult::class.simpleName}")
+            is ContinuousOption.Success -> {
+                assertEquals(1, wordEntryDataSource.selectCountByWord(language, testWord))
+                val data = lastResult.data
+                assertNotNull(data)
+                assertEquals(testWord, data.word)
+                assertEquals(Clock.System.todayIn(TimeZone.currentSystemDefault()), data.fetchDate)
+                assertTrue(data.definitions.isNotEmpty())
+                assertTrue(data.definitions.first().definition.isNotBlank())
+            }
+        }
+    }
+
+    // todo add a throttled test
 }

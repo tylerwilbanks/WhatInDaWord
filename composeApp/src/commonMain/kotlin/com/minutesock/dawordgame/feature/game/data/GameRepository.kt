@@ -4,7 +4,9 @@ import com.minutesock.dawordgame.core.data.ValidWordDataSource
 import com.minutesock.dawordgame.core.data.WordSelectionDataSource
 import com.minutesock.dawordgame.core.data.source.GuessLetterDataSource
 import com.minutesock.dawordgame.core.data.source.GuessWordDataSource
+import com.minutesock.dawordgame.core.data.source.WordEntryDataSource
 import com.minutesock.dawordgame.core.data.source.WordSessionDataSource
+import com.minutesock.dawordgame.core.data.toWordEntry
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.GuessLetter
@@ -14,18 +16,28 @@ import com.minutesock.dawordgame.core.domain.GuessWordState
 import com.minutesock.dawordgame.core.domain.WordSelection
 import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
+import com.minutesock.dawordgame.core.domain.definition.WordEntry
+import com.minutesock.dawordgame.core.uiutil.TextRes
+import com.minutesock.dawordgame.core.util.ContinuousOption
+import com.minutesock.dawordgame.core.util.ContinuousStatus
+import com.minutesock.dawordgame.core.util.GeneralIssue
+import com.minutesock.dawordgame.core.util.Option
 import com.minutesock.dawordgame.di.KoinProvider
 import com.minutesock.dawordgame.feature.game.GameSetupHelper
+import com.minutesock.dawordgame.feature.game.remote.WordHttpClient
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
+import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atTime
+import kotlinx.datetime.plus
 import kotlinx.datetime.todayIn
 import kotlin.random.Random
 
@@ -35,7 +47,9 @@ class GameRepository(
     private val wordSessionDataSource: WordSessionDataSource = KoinProvider.instance.get(),
     private val guessWordDataSource: GuessWordDataSource = KoinProvider.instance.get(),
     private val guessLetterDataSource: GuessLetterDataSource = KoinProvider.instance.get(),
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val wordEntryDataSource: WordEntryDataSource = KoinProvider.instance.get(),
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val wordHttpClient: WordHttpClient = WordHttpClient(defaultDispatcher = defaultDispatcher)
 ) {
     suspend fun setupWords(gameLanguage: GameLanguage) {
         withContext(defaultDispatcher) {
@@ -174,4 +188,53 @@ class GameRepository(
             ws!!
         }
     }
+
+    fun getOrFetchWordEntry(language: GameLanguage, word: String, throttle: DatePeriod? = DatePeriod(days = 14)) =
+        flow<ContinuousOption<WordEntry?, GeneralIssue>> {
+            emit(
+                ContinuousOption.Loading(
+                    data = null,
+                    continuousStatus = ContinuousStatus.Indefinite(textRes = TextRes.Raw("Loading word entry from database..."))
+                )
+            ) // todo translate loading message
+            val wordEntryFromDatabase = wordEntryDataSource.selectByWord(language, word)
+            val todayDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
+            val shouldFetch = when {
+                wordEntryFromDatabase == null -> true
+                throttle == null -> true
+                wordEntryFromDatabase.fetchDate.plus(throttle) <= todayDate -> true
+                else -> false
+            }
+
+            if (shouldFetch) {
+                emit(
+                    ContinuousOption.Loading(
+                        data = wordEntryFromDatabase,
+                        continuousStatus = ContinuousStatus.Indefinite(
+                            textRes = TextRes.Raw("Fetching word entry...")
+                        )
+                    )
+                )
+                val response = wordHttpClient.fetchWordDefinition(
+                    gameLanguage = language,
+                    word = word
+                )
+                when (response) {
+                    is Option.Issue -> emit(
+                        ContinuousOption.Issue(response.issue)
+                    )
+
+                    is Option.Success -> {
+                        response.data.map { it.toWordEntry(language) }.first().let {
+                            wordEntryDataSource.upsertEntriesAndDefinitions(it)
+                        }
+                        emit(
+                            ContinuousOption.Success(
+                                data = wordEntryDataSource.selectByWord(language, word)
+                            )
+                        )
+                    }
+                }
+            }
+        }
 }

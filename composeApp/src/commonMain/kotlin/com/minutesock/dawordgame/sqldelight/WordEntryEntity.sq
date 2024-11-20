@@ -20,3 +20,7 @@ WHERE id = ?;
 selectByWord:
 SELECT * FROM WordEntryEntity
 WHERE word = ? AND language = ?;
+
+selectCountByWord:
+SELECT COUNT(*) FROM WordEntryEntity
+WHERE word = ? AND language = ?;

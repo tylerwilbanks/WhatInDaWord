@@ -17,4 +17,8 @@ WHERE word = ? AND language = ?;
 
 selectByWord:
 SELECT * FROM WordDefinitionEntity
-WHERE word = ?;
+WHERE word = ? AND language = ?;
+
+selectCountByWord:
+SELECT COUNT(*) FROM WordDefinitionEntity
+WHERE language = ? AND word = ?;

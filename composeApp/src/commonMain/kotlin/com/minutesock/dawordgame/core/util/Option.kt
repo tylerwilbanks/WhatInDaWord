@@ -8,11 +8,12 @@ sealed class Option<out D, out E> {
 }
 
 sealed class ContinuousOption<out D, out E> {
-    class Loading(
-        val textRes: TextRes,
-    ) : ContinuousOption<Nothing, Nothing>()
+    class Loading<out D>(
+        val data: D,
+        val continuousStatus: ContinuousStatus
+    ) : ContinuousOption<D, Nothing>()
 
-    class Issue<out E> : ContinuousOption<Nothing, E>()
+    class Issue<out E : IssueInfo>(val issue: E) : ContinuousOption<Nothing, E>()
     class Success<out D>(val data: D) : ContinuousOption<D, Nothing>()
 }
 
@@ -30,5 +31,16 @@ inline fun <D, E> Option<D, E>.onSuccess(successBlock: (data: D) -> Unit) {
     when (this) {
         is Option.Issue -> Unit
         is Option.Success -> successBlock(data)
+    }
+}
+
+sealed class ContinuousStatus {
+    data class Indefinite(val textRes: TextRes) : ContinuousStatus()
+    data class Progress(
+        val textRes: TextRes,
+        val currentProgress: Double = 0.0,
+        val maxProgress: Double = 1.0
+    ) : ContinuousStatus() {
+        val displayPercentage: Int get() = (currentProgress / maxProgress).toInt() * 100
     }
 }
