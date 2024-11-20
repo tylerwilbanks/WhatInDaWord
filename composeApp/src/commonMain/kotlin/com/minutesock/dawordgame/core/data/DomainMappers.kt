@@ -135,11 +135,14 @@ fun DefinitionDto.toWordDefinition(word: String, language: GameLanguage, partOfS
     )
 }
 
-fun WordEntryDto.toWordEntry(language: GameLanguage): WordEntry {
+fun WordEntryDto.toWordEntry(
+    language: GameLanguage,
+    fetchDate: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
+): WordEntry {
     return WordEntry(
         language = language,
         word = word,
-        fetchDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+        fetchDate = fetchDate,
         definitions = meanings.map { meaning ->
             meaning.definitions.map {
                 it.toWordDefinition(

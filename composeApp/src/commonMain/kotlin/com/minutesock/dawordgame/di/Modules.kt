@@ -51,5 +51,6 @@ fun testDbModule(coroutineDispatcher: CoroutineDispatcher): Module {
         singleOf(::SqlDelightGuessWordDataSource).bind<GuessWordDataSource>()
         singleOf(::SqlDelightWordSessionDataSource).bind<WordSessionDataSource>()
         singleOf(::SqlDelightWordEntryDataSource).bind<WordEntryDataSource>()
+        single { createHttpClient(createHttpClientEngine()) }
     }
 }

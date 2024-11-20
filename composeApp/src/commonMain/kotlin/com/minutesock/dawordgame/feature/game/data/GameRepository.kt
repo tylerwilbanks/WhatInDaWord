@@ -199,6 +199,14 @@ class GameRepository(
             ) // todo translate loading message
             val wordEntryFromDatabase = wordEntryDataSource.selectByWord(language, word)
             val todayDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
+
+            emit(
+                ContinuousOption.Loading(
+                    data = wordEntryFromDatabase,
+                    continuousStatus = ContinuousStatus.Indefinite(textRes = TextRes.Raw("Loaded word entry"))
+                )
+            )
+
             val shouldFetch = when {
                 wordEntryFromDatabase == null -> true
                 throttle == null -> true
@@ -235,6 +243,8 @@ class GameRepository(
                         )
                     }
                 }
+            } else {
+                emit(ContinuousOption.Success(data = wordEntryFromDatabase))
             }
         }
 }

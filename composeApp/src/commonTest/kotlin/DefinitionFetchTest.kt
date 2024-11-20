@@ -2,8 +2,6 @@ import com.minutesock.dawordgame.core.data.DbClient
 import com.minutesock.dawordgame.core.data.source.WordEntryDataSource
 import com.minutesock.dawordgame.core.data.toWordEntry
 import com.minutesock.dawordgame.core.domain.GameLanguage
-import com.minutesock.dawordgame.core.remote.createHttpClient
-import com.minutesock.dawordgame.core.remote.createHttpClientEngine
 import com.minutesock.dawordgame.core.remote.definition.DefinitionDto
 import com.minutesock.dawordgame.core.remote.definition.MeaningDto
 import com.minutesock.dawordgame.core.remote.definition.WordEntryDto
@@ -20,14 +18,17 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
+import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.minus
 import kotlinx.datetime.todayIn
 import org.koin.core.context.stopKoin
-import org.koin.dsl.module
 import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
@@ -35,12 +36,7 @@ class DefinitionFetchTest {
     private val testDispatcher = StandardTestDispatcher()
 
     private val koin = initKoinForTesting {
-        modules(
-            testDbModule(testDispatcher),
-            module {
-                single { createHttpClient(createHttpClientEngine()) }
-            }
-        )
+        modules(testDbModule(testDispatcher))
     }.koin
 
     private val dbClient: DbClient = koin.get()
@@ -133,7 +129,7 @@ class DefinitionFetchTest {
     }
 
     @Test
-    fun `english gameRepository GetOrFetchWordEntry no throttle`() = runTest(testDispatcher) {
+    fun en_shouldFetchEmptyDatabase() = runTest(testDispatcher) {
         val testWord = "flame"
         val language = GameLanguage.English
         assertEquals(0, wordEntryDataSource.selectCountByWord(language, testWord))
@@ -146,6 +142,8 @@ class DefinitionFetchTest {
             word = testWord,
             throttle = null
         ).toList()
+
+        assertEquals(4, results.size)
 
         when (val lastResult = results.last()) {
             is ContinuousOption.Issue -> fail("last result was an issue: ${lastResult.issue.textRes.asRawString()}")
@@ -162,5 +160,84 @@ class DefinitionFetchTest {
         }
     }
 
-    // todo add a throttled test
+    @Test
+    fun en_noFetchUseExistingWordEntry() = runTest(testDispatcher) {
+        val firstDefinition = "sneeze"
+        val language = GameLanguage.English
+        val mockWordEntry = mockWordEntryDto.copy(
+            meanings = mockWordEntryDto.meanings.toMutableList().apply {
+                this[0] = this[0].copy(
+                    definitions = this[0].definitions.toMutableList().apply {
+                        this[0] = this[0].copy(definition = firstDefinition)
+                    }
+                )
+            }
+        ).toWordEntry(language)
+        val testWord = mockWordEntry.word
+
+        assertNull(wordEntryDataSource.selectByWord(language, testWord))
+        wordEntryDataSource.upsertEntriesAndDefinitions(mockWordEntry)
+        assertEquals(1, wordEntryDataSource.selectCountByWord(language, testWord))
+
+        val gameRepository = GameRepository(
+            wordHttpClient = wordHttpClient,
+            defaultDispatcher = testDispatcher
+        )
+
+        val results = gameRepository.getOrFetchWordEntry(
+            language = language,
+            word = testWord,
+        ).toList()
+
+        // the 3 here means that 3 ContinuousOptions were emitted, meaning that the fetch block was skipped.
+        assertEquals(3, results.size)
+        assertTrue { results.last() is ContinuousOption.Success }
+        results.last().onSuccess {
+            val data = it
+            assertNotNull(data)
+            assertEquals(firstDefinition, data.definitions.first().definition)
+        }
+    }
+
+    @Test
+    fun en_shouldFetchWordEntryPassThrottleCheck() = runTest(testDispatcher) {
+        val firstDefinition = "sneeze"
+        val language = GameLanguage.English
+        val mockWordEntry = mockWordEntryDto.copy(
+            meanings = mockWordEntryDto.meanings.toMutableList().apply {
+                this[0] = this[0].copy(
+                    definitions = this[0].definitions.toMutableList().apply {
+                        this[0] = this[0].copy(definition = firstDefinition)
+                    }
+                )
+            }
+        ).toWordEntry(
+            language = language,
+            fetchDate = Clock.System.todayIn(TimeZone.currentSystemDefault()).minus(DatePeriod(days = 15))
+        )
+        val testWord = mockWordEntry.word
+
+        assertNull(wordEntryDataSource.selectByWord(language, testWord))
+        wordEntryDataSource.upsertEntriesAndDefinitions(mockWordEntry)
+        assertEquals(1, wordEntryDataSource.selectCountByWord(language, testWord))
+
+        val gameRepository = GameRepository(
+            wordHttpClient = wordHttpClient,
+            defaultDispatcher = testDispatcher
+        )
+
+        val results = gameRepository.getOrFetchWordEntry(
+            language = language,
+            word = testWord,
+        ).toList()
+
+        // the 4 here means there were 4 ContinuousOptions emitted, meaning that it hit the fetch block
+        assertEquals(4, results.size)
+        assertTrue { results.last() is ContinuousOption.Success }
+        results.last().onSuccess {
+            val data = it
+            assertNotNull(data)
+            assertNotEquals(firstDefinition, data.definitions.first().definition)
+        }
+    }
 }

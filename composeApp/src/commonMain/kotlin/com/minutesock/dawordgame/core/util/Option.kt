@@ -34,6 +34,14 @@ inline fun <D, E> Option<D, E>.onSuccess(successBlock: (data: D) -> Unit) {
     }
 }
 
+inline fun <D, E> ContinuousOption<D, E>.onSuccess(successBlock: (data: D) -> Unit) {
+    when (this) {
+        is ContinuousOption.Loading -> Unit
+        is ContinuousOption.Issue -> Unit
+        is ContinuousOption.Success -> successBlock(data)
+    }
+}
+
 sealed class ContinuousStatus {
     data class Indefinite(val textRes: TextRes) : ContinuousStatus()
     data class Progress(
