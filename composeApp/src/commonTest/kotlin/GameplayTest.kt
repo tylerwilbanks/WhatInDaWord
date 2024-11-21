@@ -57,7 +57,8 @@ class GameplayTest {
         gameViewModel.setupGame(
             gameMode = GameMode.Daily,
             wordLength = wordLength,
-            attempts = attempts
+            attempts = attempts,
+            fetchWordEntry = false
         ).join()
 
         val wordSession = wordSessionDataSource.selectById(1)
@@ -80,7 +81,8 @@ class GameplayTest {
         gameViewModel.setupGame(
             gameMode = GameMode.Daily,
             wordLength = wordLength,
-            attempts = attempts
+            attempts = attempts,
+            fetchWordEntry = false
         ).join()
 
         val word = "green"

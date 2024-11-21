@@ -36,10 +36,18 @@ class GameViewModel(
     private val _state = MutableStateFlow(GameViewModelState())
     val state = _state.asStateFlow()
 
+    private val _statsState = MutableStateFlow(GameStatsState())
+    val statsState = _statsState.asStateFlow()
+
     private val requireWordSession get() = state.value.wordSession!!
     private var gameHasAlreadyBeenPlayed = false
 
-    fun setupGame(gameMode: GameMode, wordLength: Int = 5, attempts: Int = 6): Job {
+    fun setupGame(
+        gameMode: GameMode,
+        wordLength: Int = 5,
+        attempts: Int = 6,
+        fetchWordEntry: Boolean = true
+    ): Job {
         return viewModelScope.launch {
             _state.update {
                 it.copy(
@@ -51,6 +59,21 @@ class GameViewModel(
             val selectedWord = when (gameMode) {
                 GameMode.Daily -> gameRepository.selectMysteryWordByDate(gameLanguage)
                 GameMode.Infinity -> gameRepository.selectMysteryWord(gameLanguage)
+            }
+
+            if (fetchWordEntry) {
+                viewModelScope.launch {
+                    gameRepository.getOrFetchWordEntry(
+                        language = gameLanguage,
+                        word = selectedWord.word
+                    ).collect { continuousOption ->
+                        _statsState.update {
+                            it.copy(
+                                fetchState = continuousOption
+                            )
+                        }
+                    }
+                }
             }
 
             val wordSession = when (gameMode) {
