@@ -27,6 +27,7 @@ interface WordSessionDataSource {
         state: WordSessionState
     ): WordSession?
     suspend fun selectHighestId(): Long
+    suspend fun deleteByDate(date: LocalDate, language: GameLanguage)
     suspend fun clearTable()
 }
 
@@ -124,6 +125,12 @@ class SqlDelightWordSessionDataSource(
     override suspend fun selectHighestId(): Long {
         return dbClient.suspendingTransaction {
             wordSessionQueries.selectHighestId().executeAsOneOrNull()?.max_id ?: 0L
+        }
+    }
+
+    override suspend fun deleteByDate(date: LocalDate, language: GameLanguage) {
+        dbClient.suspendingTransaction {
+            wordSessionQueries.deleteByDate(date.toString(), language.dbName)
         }
     }
 

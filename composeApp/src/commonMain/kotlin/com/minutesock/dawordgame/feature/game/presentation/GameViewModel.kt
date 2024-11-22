@@ -463,4 +463,47 @@ class GameViewModel(
             )
         }
     }
+
+    fun onStatsEvent(event: WordGameStatsEvent) {
+        viewModelScope.launch {
+            when (event) {
+                WordGameStatsEvent.DeleteAndRestartDailyGame -> {
+                    gameHasAlreadyBeenPlayed = false
+                    val wordLength = requireWordSession.mysteryWord.length
+                    val maxAttempts = requireWordSession.maxAttempts
+                    gameRepository.deleteDailyWordSession(
+                        date = requireWordSession.date,
+                        language = requireWordSession.language
+                    )
+                    _state.update {
+                        GameViewModelState(
+                            gameMode = GameMode.Daily,
+                            gameState = WordSessionState.NotStarted
+                        )
+                    }
+                    setupGame(GameMode.Daily, wordLength, maxAttempts)
+                }
+
+                WordGameStatsEvent.PressExit -> _state.update {
+                    it.copy(
+                        screenState = GameScreenState.Game
+                    )
+                }
+
+                WordGameStatsEvent.PressShare -> Unit
+                WordGameStatsEvent.NextInfinitySession -> {
+                    gameHasAlreadyBeenPlayed = false
+                    val wordLength = requireWordSession.mysteryWord.length
+                    val maxAttempts = requireWordSession.maxAttempts
+                    _state.update {
+                        GameViewModelState(
+                            gameMode = GameMode.Infinity,
+                            gameState = WordSessionState.NotStarted
+                        )
+                    }
+                    setupGame(GameMode.Infinity, wordLength, maxAttempts)
+                }
+            }
+        }
+    }
 }

@@ -247,4 +247,10 @@ class GameRepository(
                 emit(ContinuousOption.Success(data = wordEntryFromDatabase))
             }
         }
+
+    suspend fun deleteDailyWordSession(date: LocalDate, language: GameLanguage) {
+        withContext(defaultDispatcher) {
+            wordSessionDataSource.deleteByDate(date, language)
+        }
+    }
 }
