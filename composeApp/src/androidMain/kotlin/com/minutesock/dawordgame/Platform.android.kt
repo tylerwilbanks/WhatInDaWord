@@ -89,6 +89,9 @@ actual fun shareText(text: String) {
         putExtra(Intent.EXTRA_TEXT, text)
         type = "text/plain"
     }
-    val intent = Intent.createChooser(sendIntent, null)
+    val intent = Intent.createChooser(sendIntent, null).apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+
     AndroidContextProvider.applicationContext.startActivity(intent)
 }
