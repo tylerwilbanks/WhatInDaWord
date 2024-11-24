@@ -6,8 +6,15 @@ import com.minutesock.dawordgame.core.domain.GameLanguage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
+enum class PlatformType {
+    Android,
+    Desktop,
+    Native
+}
+
 interface Platform {
     val name: String
+    val type: PlatformType
 }
 
 expect fun getPlatform(): Platform
@@ -59,3 +66,5 @@ class StatefulSystemUiController(
         platformSystemUiController.setStatusBarStyles(_statusBarColor.value, _navigationBarColor.value, _darkMode.value)
     }
 }
+
+expect fun shareText(text: String)

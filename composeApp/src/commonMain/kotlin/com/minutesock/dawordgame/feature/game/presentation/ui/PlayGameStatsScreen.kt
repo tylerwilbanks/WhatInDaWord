@@ -27,6 +27,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
@@ -34,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +44,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.minutesock.dawordgame.PlatformType
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.WordSelection
@@ -54,6 +58,8 @@ import com.minutesock.dawordgame.feature.game.presentation.GameTitleMessage
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModelState
 import com.minutesock.dawordgame.feature.game.presentation.WordGameStatsEvent
 import com.minutesock.dawordgame.feature.game.presentation.ui.component.WordDefinitionItem
+import com.minutesock.dawordgame.getPlatform
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
@@ -74,7 +80,13 @@ fun PlayGameStatsScreen(
     onEvent: (WordGameStatsEvent) -> Unit,
 ) {
 
-    var shareEnabled by remember(gameState.gameState) { mutableStateOf(gameState.gameState.isGameOver) }
+    var shareEnabled by remember(gameState.gameState) {
+        println("isGameOver: ${gameState.gameState.isGameOver}")
+        mutableStateOf(gameState.gameState.isGameOver)
+    }
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
 //    val launcher =
 //        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -146,6 +158,9 @@ fun PlayGameStatsScreen(
             )
 
             Scaffold(
+                snackbarHost = {
+                    SnackbarHost(snackbarHostState)
+                },
                 topBar = {
                     Box(
                         modifier = Modifier
@@ -202,6 +217,19 @@ fun PlayGameStatsScreen(
                             onClick = {
                                 shareEnabled = false
                                 onEvent(WordGameStatsEvent.PressShare)
+                                scope.launch {
+                                    when (getPlatform().type) {
+                                        PlatformType.Android -> Unit
+                                        PlatformType.Desktop -> {
+                                            snackbarHostState.showSnackbar(
+                                                message = "✅ Copied to clipboard!" // todo extract
+                                            )
+                                        }
+
+                                        PlatformType.Native -> Unit
+                                    }
+                                    shareEnabled = true
+                                }
                             },
                             enabled = shareEnabled,
                         ) {

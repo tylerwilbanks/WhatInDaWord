@@ -15,6 +15,14 @@ enum class GameMode {
             }
         }
 
+    val emoji: String
+        get() {
+            return when (this) {
+                Daily -> "\uD83D\uDCC6"
+                Infinity -> "♾\uFE0F"
+            }
+        }
+
     companion object {
         fun fromDb(dbName: String): GameMode {
             return GameMode.entries.first { it.dbName == dbName }

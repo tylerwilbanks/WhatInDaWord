@@ -9,7 +9,7 @@ data class GameStatsState(
     val fetchState: ContinuousOption<WordEntry?, GeneralIssue> = ContinuousOption.Loading(
         data = null,
         continuousStatus = ContinuousStatus.Indefinite.empty()
-    )
+    ),
 ) {
     val wordEntry: WordEntry?
         get() {

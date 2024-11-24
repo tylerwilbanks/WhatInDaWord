@@ -1,6 +1,7 @@
 package com.minutesock.dawordgame
 
 import android.app.Activity
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.view.View
@@ -19,6 +20,7 @@ import java.util.Locale
 
 class AndroidPlatform : Platform {
     override val name: String = "Android ${Build.VERSION.SDK_INT}"
+    override val type: PlatformType = PlatformType.Android
 }
 
 actual fun getPlatform(): Platform = AndroidPlatform()
@@ -79,4 +81,14 @@ class AndroidSystemUiController(private val activity: ComponentActivity) : Syste
             }
         )
     }
+}
+
+actual fun shareText(text: String) {
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, text)
+        type = "text/plain"
+    }
+    val intent = Intent.createChooser(sendIntent, null)
+    AndroidContextProvider.applicationContext.startActivity(intent)
 }

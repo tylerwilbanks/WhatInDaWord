@@ -7,6 +7,13 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.intl.Locale
 import com.minutesock.dawordgame.core.domain.GameLanguage
 
+class NativePlatform : Platform {
+    override val name: String = UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
+    override val type: PlatformType = PlatformType.Native
+}
+
+actual fun getPlatform(): Platform = NativePlatform()
+
 actual fun readFile(filename: String): String {
     TODO("Not yet implemented")
 }
@@ -39,3 +46,5 @@ class NativeSystemUiController : SystemUiController {
         UIApplication.sharedApplication.setStatusBarStyle(style, animated = true)
     }
 }
+
+actual fun shareText(text: String) = Unit

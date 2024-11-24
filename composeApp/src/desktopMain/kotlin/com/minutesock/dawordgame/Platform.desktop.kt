@@ -10,6 +10,7 @@ import java.util.Locale
 
 class JVMPlatform: Platform {
     override val name: String = "Java ${System.getProperty("java.version")}"
+    override val type: PlatformType = PlatformType.Desktop
 }
 
 actual fun getPlatform(): Platform = JVMPlatform()
@@ -34,4 +35,10 @@ actual fun ToggleSystemStatusBar(hide: Boolean) = Unit
 
 class DesktopSystemUiController : SystemUiController {
     override fun setStatusBarStyles(statusBarColor: Color, navigationBarColor: Color, darkMode: Boolean) = Unit
+}
+
+actual fun shareText(text: String) {
+    val clipboard = java.awt.Toolkit.getDefaultToolkit().systemClipboard
+    val selection = java.awt.datatransfer.StringSelection(text)
+    clipboard.setContents(selection, selection)
 }

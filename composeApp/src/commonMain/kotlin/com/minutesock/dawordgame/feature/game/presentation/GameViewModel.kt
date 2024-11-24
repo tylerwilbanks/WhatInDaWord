@@ -15,6 +15,7 @@ import com.minutesock.dawordgame.feature.game.data.GameRepository
 import com.minutesock.dawordgame.feature.game.domain.GuessWordValidator
 import com.minutesock.dawordgame.feature.game.domain.WordGameValidationResultType
 import com.minutesock.dawordgame.getSystemLanguage
+import com.minutesock.dawordgame.shareText
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
@@ -491,8 +492,7 @@ class GameViewModel(
                         screenState = GameScreenState.Game
                     )
                 }
-
-                WordGameStatsEvent.PressShare -> Unit
+                WordGameStatsEvent.PressShare -> shareText(requireWordSession.shareText)
                 WordGameStatsEvent.NextInfinitySession -> {
                     gameHasAlreadyBeenPlayed = false
                     val wordLength = requireWordSession.mysteryWord.length
