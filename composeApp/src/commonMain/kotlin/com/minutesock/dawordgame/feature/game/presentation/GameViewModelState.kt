@@ -26,26 +26,6 @@ data class GameViewModelState(
 ) {
 
     val gameState get() = wordSession?.state ?: WordSessionState.NotStarted
-
-    fun copyWithWordSession(
-        wordSession: WordSession?,
-        gameTitleMessage: GameTitleMessage = this.gameTitleMessage,
-        loadingState: GameLoadingState = this.loadingState,
-        mysteryWord: WordSelection = this.mysteryWord,
-        wordRowAnimating: Boolean = this.wordRowAnimating,
-        falseKeyboardKeys: FalseKeyboardKeys = this.falseKeyboardKeys
-    ): GameViewModelState {
-        return copy(
-            wordSession = wordSession,
-            gameTitleMessage = gameTitleMessage,
-            loadingState = loadingState,
-            mysteryWord = mysteryWord,
-            wordRowAnimating = wordRowAnimating,
-            falseKeyboardKeys = falseKeyboardKeys,
-            gameMode = wordSession?.gameMode ?: GameMode.Daily,
-            language = wordSession?.language ?: GameLanguage.English,
-        )
-    }
 }
 
 data class GameTitleMessage(

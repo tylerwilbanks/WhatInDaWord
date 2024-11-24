@@ -20,7 +20,7 @@ class SqlDelightWordSelectionDataSource(
     override suspend fun upsert(vararg wordSelections: WordSelection) {
         dbClient.suspendingTransaction {
             wordSelections.forEach {
-                queries.upsertWordSelectionEntity(it.word, it.language.dbName)
+                queries.upsertWordSelectionEntity(it.idForDbInsertion, it.word, it.language.dbName)
             }
         }
     }
@@ -37,7 +37,7 @@ class SqlDelightWordSelectionDataSource(
     override suspend fun selectById(id: Long): WordSelection? {
         return dbClient.suspendingTransaction {
             queries
-                .selectWordSelectionEntityById(id)
+                .selectWordSelectionEntityById(id = id)
                 .executeAsOneOrNull()
                 ?.toWordSelection()
         }

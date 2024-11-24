@@ -4,8 +4,7 @@ CREATE TABLE IF NOT EXISTS WordEntryEntity (
     word TEXT NOT NULL,
     fetch_date TEXT NOT NULL,
     phonetic TEXT,
-    origin TEXT,
-    UNIQUE (word, language)
+    origin TEXT
 );
 
 upsert:

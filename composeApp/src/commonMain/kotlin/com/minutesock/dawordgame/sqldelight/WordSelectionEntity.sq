@@ -1,14 +1,13 @@
 CREATE TABLE IF NOT EXISTS WordSelectionEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     word TEXT NOT NULL,
-    language TEXT NOT NULL,
-    UNIQUE (word, language)
+    language TEXT NOT NULL
 );
 
 upsertWordSelectionEntity:
 INSERT OR REPLACE INTO WordSelectionEntity(
-    word, language
-) VALUES (:word, :language);
+    id, word, language
+) VALUES (:id, :word, :language);
 
 selectWordSelectionEntity:
 SELECT * FROM WordSelectionEntity

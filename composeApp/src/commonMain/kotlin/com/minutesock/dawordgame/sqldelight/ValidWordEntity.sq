@@ -1,14 +1,13 @@
 CREATE TABLE IF NOT EXISTS ValidWordEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     word TEXT NOT NULL,
-    language TEXT NOT NULL,
-    UNIQUE(word, language)
+    language TEXT NOT NULL
 );
 
 upsertValidWordEntity:
 INSERT OR REPLACE INTO ValidWordEntity(
-    word, language
-) VALUES (:word, :language);
+    id, word, language
+) VALUES (:id, :word, :language);
 
 selectValidWordEntities:
 SELECT *

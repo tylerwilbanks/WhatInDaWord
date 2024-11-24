@@ -7,6 +7,7 @@ import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.GuessLetterState
 import com.minutesock.dawordgame.core.domain.GuessWord
 import com.minutesock.dawordgame.core.domain.GuessWordState
+import com.minutesock.dawordgame.core.domain.WordSelection
 import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.core.uiutil.TextRes
@@ -57,7 +58,7 @@ class GameViewModel(
             }
             val gameLanguage = getSystemLanguage()
             gameRepository.setupWords(gameLanguage)
-            val selectedWord = when (gameMode) {
+            val proposedMysteryWord = when (gameMode) {
                 GameMode.Daily -> gameRepository.selectMysteryWordByDate(gameLanguage)
                 GameMode.Infinity -> gameRepository.selectMysteryWord(gameLanguage)
             }
@@ -66,7 +67,7 @@ class GameViewModel(
                 viewModelScope.launch {
                     gameRepository.getOrFetchWordEntry(
                         language = gameLanguage,
-                        word = selectedWord.word
+                        word = proposedMysteryWord.word
                     ).collect { continuousOption ->
                         _statsState.update {
                             it.copy(
@@ -81,14 +82,14 @@ class GameViewModel(
                 GameMode.Daily -> gameRepository.getOrCreateWordSessionByDate(
                     language = gameLanguage,
                     gameMode = gameMode,
-                    mysteryWord = selectedWord.word,
+                    mysteryWord = proposedMysteryWord.word,
                     wordLength = wordLength,
                     maxAttempts = attempts
                 )
 
                 GameMode.Infinity -> gameRepository.getOrCreateWordSessionInfinityMode(
                     language = gameLanguage,
-                    mysteryWord = selectedWord.word,
+                    mysteryWord = proposedMysteryWord.word,
                     wordLength = wordLength,
                     maxAttempts = attempts
                 )
@@ -98,13 +99,13 @@ class GameViewModel(
                 gameHasAlreadyBeenPlayed = true
             }
 
-            println("mystery word: ${selectedWord.word}")
+            println("mystery word: ${wordSession.mysteryWord}")
 
             _state.update {
-                it.copyWithWordSession(
+                it.copy(
                     wordSession = wordSession,
                     loadingState = GameLoadingState.Loaded,
-                    mysteryWord = selectedWord,
+                    mysteryWord = WordSelection(word = wordSession.mysteryWord, language = gameLanguage),
                     falseKeyboardKeys = getUpdatedFalseKeyboardKeys(
                         guessWords = wordSession.guesses,
                         falseKeyboardKeys = FalseKeyboardKeys()

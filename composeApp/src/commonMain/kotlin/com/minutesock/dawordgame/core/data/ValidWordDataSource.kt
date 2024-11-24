@@ -25,7 +25,7 @@ class SqlDelightValidWordDataSource(
     override suspend fun upsert(validWords: List<ValidWord>) {
         dbClient.suspendingTransaction {
             validWords.forEach {
-                validWordQueries.upsertValidWordEntity(it.word, it.language.dbName)
+                validWordQueries.upsertValidWordEntity(it.idForDbInsertion, it.word, it.language.dbName)
             }
         }
     }
