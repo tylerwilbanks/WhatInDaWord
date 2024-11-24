@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.WordSelection
+import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.core.theme.AppTheme
 import com.minutesock.dawordgame.core.uiutil.TextRes
@@ -53,6 +54,9 @@ import com.minutesock.dawordgame.feature.game.presentation.GameTitleMessage
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModelState
 import com.minutesock.dawordgame.feature.game.presentation.WordGameStatsEvent
 import com.minutesock.dawordgame.feature.game.presentation.ui.component.WordDefinitionItem
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.todayIn
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import whatindaword.composeapp.generated.resources.Res
@@ -116,7 +120,7 @@ fun PlayGameStatsScreen(
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.End
             ) {
                 IconButton(onClick = { onEvent(WordGameStatsEvent.PressExit) }) {
                     Icon(imageVector = Icons.Default.Close, contentDescription = "close")
@@ -265,6 +269,7 @@ fun PlayGameStatsScreen(
                             }
                             WordDefinitionItem(
                                 wordDefinition = definition,
+                                phonetic = wordEntry.phonetic,
                                 index = i,
                                 wordColor = if (gameState.gameState == WordSessionState.Failure) {
                                     MaterialTheme.colorScheme.error
@@ -289,7 +294,14 @@ private fun PlayGameStatsScreenPreview() {
         Surface {
             PlayGameStatsScreen(
                 gameState = GameViewModelState(
-                    gameState = WordSessionState.Success,
+                    wordSession = WordSession(
+                        date = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+                        mysteryWord = "Jumby",
+                        language = GameLanguage.English,
+                        maxAttempts = 6,
+                        gameMode = GameMode.Daily,
+                        state = WordSessionState.Success
+                    ),
                     screenState = GameScreenState.Stats,
                     gameTitleMessage = GameTitleMessage(
                         message = TextRes.Raw(

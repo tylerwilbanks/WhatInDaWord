@@ -478,7 +478,9 @@ class GameViewModel(
                     _state.update {
                         GameViewModelState(
                             gameMode = GameMode.Daily,
-                            gameState = WordSessionState.NotStarted
+                            wordSession = requireWordSession.copy(
+                                state = WordSessionState.NotStarted
+                            ),
                         )
                     }
                     setupGame(GameMode.Daily, wordLength, maxAttempts)
@@ -498,7 +500,9 @@ class GameViewModel(
                     _state.update {
                         GameViewModelState(
                             gameMode = GameMode.Infinity,
-                            gameState = WordSessionState.NotStarted
+                            wordSession = requireWordSession.copy(
+                                state = WordSessionState.NotStarted
+                            ),
                         )
                     }
                     setupGame(GameMode.Infinity, wordLength, maxAttempts)

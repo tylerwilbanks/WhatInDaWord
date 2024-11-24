@@ -20,11 +20,13 @@ data class GameViewModelState(
     val wordSession: WordSession? = null,
     val gameMode: GameMode = wordSession?.gameMode ?: GameMode.Daily,
     val language: GameLanguage = wordSession?.language ?: GameLanguage.English,
-    val gameState: WordSessionState = wordSession?.state ?: WordSessionState.NotStarted,
     val wordRowAnimating: Boolean = false,
     val falseKeyboardKeys: FalseKeyboardKeys = FalseKeyboardKeys(),
     val screenState: GameScreenState = GameScreenState.Game
 ) {
+
+    val gameState get() = wordSession?.state ?: WordSessionState.NotStarted
+
     fun copyWithWordSession(
         wordSession: WordSession?,
         gameTitleMessage: GameTitleMessage = this.gameTitleMessage,
@@ -42,7 +44,6 @@ data class GameViewModelState(
             falseKeyboardKeys = falseKeyboardKeys,
             gameMode = wordSession?.gameMode ?: GameMode.Daily,
             language = wordSession?.language ?: GameLanguage.English,
-            gameState = wordSession?.state ?: WordSessionState.NotStarted
         )
     }
 }

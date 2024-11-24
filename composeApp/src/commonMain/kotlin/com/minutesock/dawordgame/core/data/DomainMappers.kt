@@ -143,6 +143,7 @@ fun WordEntryDto.toWordEntry(
         language = language,
         word = word,
         fetchDate = fetchDate,
+        phonetic = phonetic,
         definitions = meanings.map { meaning ->
             meaning.definitions.map {
                 it.toWordDefinition(
