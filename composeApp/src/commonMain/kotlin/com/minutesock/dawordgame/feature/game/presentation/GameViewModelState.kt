@@ -18,7 +18,6 @@ data class GameViewModelState(
         language = GameLanguage.English
     ),
     val wordSession: WordSession? = null,
-    val gameMode: GameMode = wordSession?.gameMode ?: GameMode.Daily,
     val language: GameLanguage = wordSession?.language ?: GameLanguage.English,
     val wordRowAnimating: Boolean = false,
     val falseKeyboardKeys: FalseKeyboardKeys = FalseKeyboardKeys(),
@@ -26,6 +25,7 @@ data class GameViewModelState(
 ) {
 
     val gameState get() = wordSession?.state ?: WordSessionState.NotStarted
+    val gameMode get() = wordSession?.gameMode ?: GameMode.Daily
 }
 
 data class GameTitleMessage(

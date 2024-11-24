@@ -17,7 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Share
@@ -87,19 +87,7 @@ fun PlayGameStatsScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
-//    val launcher =
-//        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-//            shareEnabled = true
-//            onEvent(WordEventStats.OnShareChooserPresented)
-//        }
-
     val title = stringResource(Res.string.what_in_da_word)
-
-//    LaunchedEffect(state.shareText) {
-//        state.shareText?.let { shareText ->
-//            launcher.launch("${title}\n$shareText".shareExternal())
-//        }
-//    }
 
     var revealSpoiler by remember(gameState.gameState) {
         mutableStateOf(gameState.gameState == WordSessionState.Success)
@@ -239,7 +227,7 @@ fun PlayGameStatsScreen(
                             )
                         }
 
-                        val debug = true // todo check for debug build here
+                        val debug = false
                         if (debug && gameState.gameMode == GameMode.Daily) {
                             Button(
                                 onClick = {
@@ -261,16 +249,16 @@ fun PlayGameStatsScreen(
                                 onClick = {
                                     onEvent(WordGameStatsEvent.NextInfinitySession)
                                 },
-                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
+                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                                 enabled = gameState.gameState.isGameOver
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.ArrowForward,
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                                     contentDescription = "Next"
                                 )
                                 Spacer(modifier = Modifier.size(2.dp))
                                 Text(
-                                    text = "Next"
+                                    text = "Next" // todo extract
                                 )
                             }
                         }

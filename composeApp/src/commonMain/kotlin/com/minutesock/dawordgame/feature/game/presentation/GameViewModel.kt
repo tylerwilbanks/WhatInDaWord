@@ -482,9 +482,9 @@ class GameViewModel(
                     )
                     _state.update {
                         GameViewModelState(
-                            gameMode = GameMode.Daily,
                             wordSession = requireWordSession.copy(
-                                state = WordSessionState.NotStarted
+                                state = WordSessionState.NotStarted,
+                                gameMode = GameMode.Daily,
                             ),
                         )
                     }
@@ -503,9 +503,9 @@ class GameViewModel(
                     val maxAttempts = requireWordSession.maxAttempts
                     _state.update {
                         GameViewModelState(
-                            gameMode = GameMode.Infinity,
                             wordSession = requireWordSession.copy(
-                                state = WordSessionState.NotStarted
+                                state = WordSessionState.NotStarted,
+                                gameMode = GameMode.Infinity
                             ),
                         )
                     }
