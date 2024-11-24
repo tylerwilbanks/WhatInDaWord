@@ -98,6 +98,12 @@ class GameRepository(
         }
     }
 
+    suspend fun loadWordSessionById(id: Long): WordSession? {
+        return withContext(defaultDispatcher) {
+            wordSessionDataSource.selectById(id)
+        }
+    }
+
     suspend fun getOrCreateWordSessionInfinityMode(
         language: GameLanguage,
         mysteryWord: String,

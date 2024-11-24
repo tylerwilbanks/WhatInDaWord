@@ -248,6 +248,7 @@ class GameViewModel(
         if (gameHasAlreadyBeenPlayed) {
             return
         }
+        gameHasAlreadyBeenPlayed = requireWordSession.state.isGameOver
         _state.update {
             it.copy(
                 screenState = GameScreenState.Stats
@@ -283,7 +284,15 @@ class GameViewModel(
                             gameTitleMessage = GameTitleMessage(
                                 message = result.textRes,
                                 isError = true
-                            )
+                            ),
+                            wordSession = it.wordSession?.let { wordSession ->
+                                wordSession.copy(
+                                    guesses = getUpdatedWordRows(
+                                        index,
+                                        wordSession.guesses[index].copy(errorState = GuessWordError.Unknown)
+                                    )
+                                )
+                            }
                         )
                     }
                 }
@@ -456,13 +465,7 @@ class GameViewModel(
                 wordLength = wordSession.mysteryWord.length,
                 maxAttempts = wordSession.maxAttempts
             )
-
-            GameMode.Infinity -> gameRepository.getOrCreateWordSessionInfinityMode(
-                language = wordSession.language,
-                mysteryWord = wordSession.mysteryWord,
-                wordLength = wordSession.mysteryWord.length,
-                maxAttempts = wordSession.maxAttempts
-            )
+            GameMode.Infinity -> gameRepository.loadWordSessionById(wordSession.id)!!
         }
     }
 
