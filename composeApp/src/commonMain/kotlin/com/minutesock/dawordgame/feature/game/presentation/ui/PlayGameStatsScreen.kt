@@ -81,7 +81,6 @@ fun PlayGameStatsScreen(
 ) {
 
     var shareEnabled by remember(gameState.gameState) {
-        println("isGameOver: ${gameState.gameState.isGameOver}")
         mutableStateOf(gameState.gameState.isGameOver)
     }
 

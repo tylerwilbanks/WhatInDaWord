@@ -34,7 +34,6 @@ import androidx.navigation.compose.rememberNavController
 import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.navigation.NavigationDestination
 import com.minutesock.dawordgame.core.theme.AppTheme
-import com.minutesock.dawordgame.core.uiutil.bounceClick
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -88,7 +87,6 @@ fun WordGameNotStartedScreen(
 
             if (completedGameCount < 5) {
                 Button(
-                    modifier = Modifier.bounceClick(),
                     onClick = {
                         navController.navigate(NavigationDestination.HowToPlay)
                     }
@@ -104,7 +102,6 @@ fun WordGameNotStartedScreen(
             }
 
             Button(
-                modifier = Modifier.bounceClick(),
                 onClick = {
                     navController.navigate(NavigationDestination.PlayGame(gameMode))
                 }
