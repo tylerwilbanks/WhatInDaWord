@@ -48,3 +48,4 @@ class NativeSystemUiController : SystemUiController {
 }
 
 actual fun shareText(text: String) = Unit
+actual fun openWebsite(url: String) = Unit

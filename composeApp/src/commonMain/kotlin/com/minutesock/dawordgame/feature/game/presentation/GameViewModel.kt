@@ -163,7 +163,10 @@ class GameViewModel(
                 is WordGameEvent.OnEnterPress -> event.onEvent()
                 is WordGameEvent.OnErrorAnimationFinished -> event.onEvent()
                 WordGameEvent.OnStatsPress -> _state.update { it.copy(screenState = GameScreenState.Stats) }
-                WordGameEvent.OnDarkThemeToggle -> DataStoreManager.darkMode = !DataStoreManager.darkMode
+                WordGameEvent.OnDarkThemeToggle -> {
+                    DataStoreManager.useSystemTheme = false
+                    DataStoreManager.darkMode = !DataStoreManager.darkMode
+                }
             }
         }
     }

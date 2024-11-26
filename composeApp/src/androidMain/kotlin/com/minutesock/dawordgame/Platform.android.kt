@@ -3,6 +3,7 @@ package com.minutesock.dawordgame
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Build
 import android.view.View
 import android.view.WindowInsets
@@ -94,4 +95,11 @@ actual fun shareText(text: String) {
     }
 
     AndroidContextProvider.applicationContext.startActivity(intent)
+}
+
+actual fun openWebsite(url: String) {
+    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+    AndroidContextProvider.applicationContext.startActivity(browserIntent)
 }

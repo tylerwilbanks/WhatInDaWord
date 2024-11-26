@@ -71,7 +71,6 @@ import whatindaword.composeapp.generated.resources.reveal
 import whatindaword.composeapp.generated.resources.share
 import whatindaword.composeapp.generated.resources.visibility
 import whatindaword.composeapp.generated.resources.visibility_off
-import whatindaword.composeapp.generated.resources.what_in_da_word
 
 @Composable
 fun PlayGameStatsScreen(
@@ -86,8 +85,6 @@ fun PlayGameStatsScreen(
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-
-    val title = stringResource(Res.string.what_in_da_word)
 
     var revealSpoiler by remember(gameState.gameState) {
         mutableStateOf(gameState.gameState == WordSessionState.Success)

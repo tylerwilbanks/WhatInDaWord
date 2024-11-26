@@ -5,7 +5,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.minutesock.dawordgame.core.domain.GameLanguage
+import java.awt.Desktop
 import java.io.File
+import java.net.URI
 import java.util.Locale
 
 class JVMPlatform: Platform {
@@ -41,4 +43,23 @@ actual fun shareText(text: String) {
     val clipboard = java.awt.Toolkit.getDefaultToolkit().systemClipboard
     val selection = java.awt.datatransfer.StringSelection(text)
     clipboard.setContents(selection, selection)
+}
+
+actual fun openWebsite(url: String) {
+    if (!Desktop.isDesktopSupported()) {
+        println("Failed to open url: $url | Desktop is not supported on this system.")
+        return
+    }
+    Desktop.getDesktop().apply {
+        if (!isSupported(Desktop.Action.BROWSE)) {
+            println("Failed to open url: $url | Browsing is not supported on this desktop.")
+            return
+        }
+        try {
+            browse(URI(url))
+        } catch (e: Exception) {
+            println("Failed to open url: $url")
+            e.printStackTrace()
+        }
+    }
 }

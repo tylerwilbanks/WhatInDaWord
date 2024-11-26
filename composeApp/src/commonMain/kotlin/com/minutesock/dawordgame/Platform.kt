@@ -68,3 +68,5 @@ class StatefulSystemUiController(
 }
 
 expect fun shareText(text: String)
+
+expect fun openWebsite(url: String)
