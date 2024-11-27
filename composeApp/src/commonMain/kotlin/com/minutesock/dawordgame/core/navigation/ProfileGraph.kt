@@ -16,7 +16,9 @@ fun NavGraphBuilder.profileGraph(
         startDestination = NavigationDestination.Profile
     ) {
         composable<NavigationDestination.Profile> {
-            ProfileScreenHost()
+            ProfileScreenHost(
+                modifier = modifier
+            )
         }
     }
 }

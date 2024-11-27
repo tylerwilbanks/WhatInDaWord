@@ -30,27 +30,29 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ProfileScreenHost(
+    modifier: Modifier,
     viewModel: ProfileViewModel = viewModel {
         ProfileViewModel()
     },
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     ProfileScreen(
+        modifier = modifier,
         state = state,
         onEvent = viewModel::onEvent
     )
-
 }
 
 @Composable
 fun ProfileScreen(
     state: ProfileState,
-    onEvent: (ProfileEvent) -> Unit
+    onEvent: (ProfileEvent) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
     Column(
-        modifier = Modifier
-            .padding(32.dp)
+        modifier = modifier
+            .padding(top = 16.dp)
             .verticalScroll(scrollState)
     ) {
         Text(
@@ -60,7 +62,11 @@ fun ProfileScreen(
             fontSize = 26.sp
         )
         HorizontalDivider(modifier = Modifier.padding(10.dp), thickness = 2.dp)
+
+        Spacer(Modifier.size(10.dp))
+
         Row(
+            modifier = Modifier.padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Switch(
@@ -75,6 +81,7 @@ fun ProfileScreen(
         }
 
         Row(
+            modifier = Modifier.padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Switch(
