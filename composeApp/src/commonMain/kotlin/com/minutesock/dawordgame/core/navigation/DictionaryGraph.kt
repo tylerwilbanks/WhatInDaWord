@@ -8,7 +8,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import com.minutesock.dawordgame.feature.dictionary.presentation.ui.DictionaryDetailScreen
+import com.minutesock.dawordgame.feature.dictionary.presentation.ui.DictionaryDetailHost
 import com.minutesock.dawordgame.feature.dictionary.presentation.ui.DictionaryScreenHost
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -32,11 +32,10 @@ fun NavGraphBuilder.dictionaryGraph(
 
         composable<NavigationDestination.DictionaryDetail> {
             val args = it.toRoute<NavigationDestination.DictionaryDetail>()
-            DictionaryDetailScreen(
+            DictionaryDetailHost(
                 modifier = modifier,
                 navController = navController,
-                word = args.word,
-                language = args.language,
+                args = args,
                 sharedTransitionScope = sharedTransitionScope,
                 animatedContentScope = this@composable
             )

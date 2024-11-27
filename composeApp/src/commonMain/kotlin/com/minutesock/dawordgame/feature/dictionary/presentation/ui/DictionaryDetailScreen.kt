@@ -29,29 +29,50 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.definition.WordEntry
+import com.minutesock.dawordgame.core.navigation.NavigationDestination
 import com.minutesock.dawordgame.core.presentation.ui.component.WordDefinitionContent
 import com.minutesock.dawordgame.core.util.ContinuousOption
 import com.minutesock.dawordgame.core.util.capitalize
+import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryDetailState
 import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryDetailViewModel
 import com.minutesock.dawordgame.feature.dictionary.presentation.ui.component.DictionaryDetailSessionScreen
 import kotlin.enums.EnumEntries
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun DictionaryDetailScreen(
-    word: String,
-    language: GameLanguage,
+fun DictionaryDetailHost(
+    args: NavigationDestination.DictionaryDetail,
     navController: NavController,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
-    viewModel: DictionaryDetailViewModel = viewModel { DictionaryDetailViewModel(word, language) },
-    modifier: Modifier = Modifier,
-    tabs: EnumEntries<DictionaryDetailTab> = DictionaryDetailTab.entries
+    viewModel: DictionaryDetailViewModel = viewModel { DictionaryDetailViewModel(args.word, args.language) },
+    modifier: Modifier = Modifier
 ) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    DictionaryDetailScreen(
+        modifier = modifier,
+        word = args.word,
+        state = state,
+        navController = navController,
+        sharedTransitionScope = sharedTransitionScope,
+        animatedContentScope = animatedContentScope
+    )
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+fun DictionaryDetailScreen(
+    word: String,
+    state: DictionaryDetailState,
+    navController: NavController,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
+    modifier: Modifier = Modifier,
+    tabs: EnumEntries<DictionaryDetailTab> = DictionaryDetailTab.entries
+) {
 
     val displayWord by remember(word) {
         mutableStateOf(word.capitalize())
