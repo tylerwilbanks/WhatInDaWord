@@ -54,7 +54,7 @@ class DictionaryViewModel(
     fun onEvent(event: DictionaryScreenEvent) {
         viewModelScope.launch {
             when (event) {
-                is DictionaryScreenEvent.WordEntryClick -> Unit
+                is DictionaryScreenEvent.WordEntryClick -> event.navController.navigate(event.args)
             }
         }
     }

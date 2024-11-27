@@ -24,8 +24,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.minutesock.dawordgame.core.domain.GameLanguage
+import com.minutesock.dawordgame.core.navigation.NavigationDestination
 import com.minutesock.dawordgame.core.uiutil.blendColors
 import com.minutesock.dawordgame.core.uiutil.shimmerEffect
+import com.minutesock.dawordgame.core.util.capitalize
 import com.minutesock.dawordgame.core.util.formatDecimalSeparator
 import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryScreenEvent
 import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryState
@@ -100,6 +103,7 @@ fun DictionaryScreen(
                 items(dictionaryHeaderItem.listItems.size) { index: Int ->
                     CategoryItem(
                         item = dictionaryHeaderItem.listItems[index],
+                        language = state.language,
                         navController = navController,
                         onEvent = onEvent
                     )
@@ -129,12 +133,13 @@ private fun CategoryHeader(
 @Composable
 private fun CategoryItem(
     item: DictionaryWordEntryListItem,
+    language: GameLanguage,
     modifier: Modifier = Modifier,
     navController: NavController,
     onEvent: (DictionaryScreenEvent) -> Unit,
 ) {
     Text(
-        text = item.word.uppercase(),
+        text = item.word.capitalize(),
         fontSize = 16.sp,
         modifier = modifier
             .fillMaxWidth()
@@ -143,7 +148,10 @@ private fun CategoryItem(
                 onEvent(
                     DictionaryScreenEvent.WordEntryClick(
                         navController = navController,
-                        word = item.word
+                        args = NavigationDestination.DictionaryDetail(
+                            word = item.word.lowercase(),
+                            language = language
+                        )
                     )
                 )
             }

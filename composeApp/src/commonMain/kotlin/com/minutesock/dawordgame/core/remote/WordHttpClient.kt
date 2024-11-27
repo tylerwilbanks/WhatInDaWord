@@ -1,4 +1,4 @@
-package com.minutesock.dawordgame.feature.game.remote
+package com.minutesock.dawordgame.core.remote
 
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.remote.definition.WordEntryDto
@@ -31,8 +31,8 @@ class WordHttpClient(
             val response = client.request {
                 method = HttpMethod.Get
                 url {
-                    protocol = WordHttpClient.urlProtocol
-                    host = WordHttpClient.host
+                    protocol = urlProtocol
+                    host = Companion.host
                     appendPathSegments("api", "v2", "entries", gameLanguage.dbName, word)
                 }
             }

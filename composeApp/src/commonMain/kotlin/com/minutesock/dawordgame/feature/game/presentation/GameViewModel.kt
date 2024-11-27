@@ -3,6 +3,7 @@ package com.minutesock.dawordgame.feature.game.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.minutesock.dawordgame.core.data.DataStoreManager
+import com.minutesock.dawordgame.core.data.repository.GameRepository
 import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.GuessLetterState
 import com.minutesock.dawordgame.core.domain.GuessWord
@@ -12,7 +13,6 @@ import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.core.uiutil.TextRes
 import com.minutesock.dawordgame.core.util.Option
-import com.minutesock.dawordgame.feature.game.data.GameRepository
 import com.minutesock.dawordgame.feature.game.domain.GuessWordValidator
 import com.minutesock.dawordgame.feature.game.domain.WordGameValidationResultType
 import com.minutesock.dawordgame.getSystemLanguage

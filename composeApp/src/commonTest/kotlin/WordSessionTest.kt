@@ -1,4 +1,5 @@
 import com.minutesock.dawordgame.core.data.DbClient
+import com.minutesock.dawordgame.core.data.repository.GameRepository
 import com.minutesock.dawordgame.core.data.source.WordSessionDataSource
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
@@ -10,7 +11,6 @@ import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.di.initKoinForTesting
 import com.minutesock.dawordgame.di.testDbModule
-import com.minutesock.dawordgame.feature.game.data.GameRepository
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest

@@ -1,4 +1,4 @@
-package com.minutesock.dawordgame.feature.game.data
+package com.minutesock.dawordgame.core.data.repository
 
 import com.minutesock.dawordgame.core.data.ValidWordDataSource
 import com.minutesock.dawordgame.core.data.WordSelectionDataSource
@@ -17,6 +17,7 @@ import com.minutesock.dawordgame.core.domain.WordSelection
 import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.core.domain.definition.WordEntry
+import com.minutesock.dawordgame.core.remote.WordHttpClient
 import com.minutesock.dawordgame.core.uiutil.TextRes
 import com.minutesock.dawordgame.core.util.ContinuousOption
 import com.minutesock.dawordgame.core.util.ContinuousStatus
@@ -24,7 +25,6 @@ import com.minutesock.dawordgame.core.util.GeneralIssue
 import com.minutesock.dawordgame.core.util.Option
 import com.minutesock.dawordgame.di.KoinProvider
 import com.minutesock.dawordgame.feature.game.GameSetupHelper
-import com.minutesock.dawordgame.feature.game.remote.WordHttpClient
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

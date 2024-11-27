@@ -1,6 +1,7 @@
 package com.minutesock.dawordgame.core.navigation
 
 import androidx.navigation.NavDestination
+import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.serialization.Serializable
@@ -40,6 +41,9 @@ sealed class NavigationDestination {
 
     @Serializable
     data object Dictionary : NavigationDestination()
+
+    @Serializable
+    data class DictionaryDetail(val word: String, val language: GameLanguage) : NavigationDestination()
 
     /* ------- profile destinations ------- */
 

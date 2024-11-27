@@ -1,4 +1,5 @@
 import com.minutesock.dawordgame.core.data.DbClient
+import com.minutesock.dawordgame.core.data.repository.GameRepository
 import com.minutesock.dawordgame.core.data.source.GuessLetterDataSource
 import com.minutesock.dawordgame.core.data.source.GuessWordDataSource
 import com.minutesock.dawordgame.core.data.source.WordSessionDataSource
@@ -7,7 +8,6 @@ import com.minutesock.dawordgame.core.domain.GuessLetter
 import com.minutesock.dawordgame.di.KoinProvider
 import com.minutesock.dawordgame.di.initKoinForTesting
 import com.minutesock.dawordgame.di.testDbModule
-import com.minutesock.dawordgame.feature.game.data.GameRepository
 import com.minutesock.dawordgame.feature.game.domain.GuessWordValidator
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModel
 import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent

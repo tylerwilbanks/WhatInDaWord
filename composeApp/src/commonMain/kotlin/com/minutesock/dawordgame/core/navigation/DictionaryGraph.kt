@@ -5,6 +5,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import androidx.navigation.toRoute
+import com.minutesock.dawordgame.feature.dictionary.presentation.ui.DictionaryDetailScreen
 import com.minutesock.dawordgame.feature.dictionary.presentation.ui.DictionaryScreenHost
 
 fun NavGraphBuilder.dictionaryGraph(
@@ -20,6 +22,16 @@ fun NavGraphBuilder.dictionaryGraph(
             DictionaryScreenHost(
                 navController = navController,
                 modifier = modifier
+            )
+        }
+
+        composable<NavigationDestination.DictionaryDetail> {
+            val args = it.toRoute<NavigationDestination.DictionaryDetail>()
+            DictionaryDetailScreen(
+                modifier = modifier,
+                navController = navController,
+                word = args.word,
+                language = args.language
             )
         }
     }

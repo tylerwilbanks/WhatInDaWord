@@ -7,3 +7,9 @@ fun Int.formatDecimalSeparator(): String {
         .joinToString(",")
         .reversed()
 }
+
+fun String.capitalize(): String {
+    return replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase() else it.toString()
+    }
+}

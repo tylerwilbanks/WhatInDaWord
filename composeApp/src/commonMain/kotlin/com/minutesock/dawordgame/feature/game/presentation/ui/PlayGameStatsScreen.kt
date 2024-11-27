@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,7 +30,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,6 +48,8 @@ import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.WordSelection
 import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
+import com.minutesock.dawordgame.core.domain.definition.WordEntry
+import com.minutesock.dawordgame.core.presentation.ui.component.WordDefinitionContent
 import com.minutesock.dawordgame.core.theme.AppTheme
 import com.minutesock.dawordgame.core.uiutil.TextRes
 import com.minutesock.dawordgame.feature.game.presentation.GameScreenState
@@ -57,7 +57,6 @@ import com.minutesock.dawordgame.feature.game.presentation.GameStatsState
 import com.minutesock.dawordgame.feature.game.presentation.GameTitleMessage
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModelState
 import com.minutesock.dawordgame.feature.game.presentation.WordGameStatsEvent
-import com.minutesock.dawordgame.feature.game.presentation.ui.component.WordDefinitionItem
 import com.minutesock.dawordgame.getPlatform
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -262,37 +261,18 @@ fun PlayGameStatsScreen(
                     }
                 },
                 content = { padding ->
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .blur(spoilerBlur)
-                            .padding(
-                                bottom = padding.calculateBottomPadding(),
+                    statsState.wordEntry?.let { wordEntry: WordEntry ->
+                        WordDefinitionContent(
+                            modifier = Modifier.padding(
                                 top = padding.calculateTopPadding(),
+                                bottom = padding.calculateBottomPadding(),
                                 start = 20.dp,
                                 end = 20.dp
-                            )
-                    ) {
-                        items(statsState.wordEntry?.definitions?.size ?: 0) { i ->
-                            val wordEntry = statsState.wordEntry!!
-                            val definition = wordEntry.definitions[i]
-                            if (i > 0) {
-                                Spacer(modifier = Modifier.height(8.dp))
-                            }
-                            WordDefinitionItem(
-                                wordDefinition = definition,
-                                phonetic = wordEntry.phonetic,
-                                index = i,
-                                wordColor = if (gameState.gameState == WordSessionState.Failure) {
-                                    MaterialTheme.colorScheme.error
-                                } else {
-                                    MaterialTheme.colorScheme.primary
-                                }
-                            )
-                            if (i < statsState.wordEntry!!.definitions.size - 1) {
-                                VerticalDivider()
-                            }
-                        }
+                            ),
+                            wordEntry = wordEntry,
+                            wordSessionState = gameState.gameState,
+                            spoilerBlur = spoilerBlur
+                        )
                     }
                 }
             )

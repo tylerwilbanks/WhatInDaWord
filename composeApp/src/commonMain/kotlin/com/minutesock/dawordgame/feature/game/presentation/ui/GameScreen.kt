@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.minutesock.dawordgame.core.data.repository.GameRepository
 import com.minutesock.dawordgame.core.domain.GameMode
-import com.minutesock.dawordgame.feature.game.data.GameRepository
 import com.minutesock.dawordgame.feature.game.domain.GuessWordValidator
 import com.minutesock.dawordgame.feature.game.presentation.GameScreenState
 import com.minutesock.dawordgame.feature.game.presentation.GameViewModel

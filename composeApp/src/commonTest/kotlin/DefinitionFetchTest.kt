@@ -1,7 +1,9 @@
 import com.minutesock.dawordgame.core.data.DbClient
+import com.minutesock.dawordgame.core.data.repository.GameRepository
 import com.minutesock.dawordgame.core.data.source.WordEntryDataSource
 import com.minutesock.dawordgame.core.data.toWordEntry
 import com.minutesock.dawordgame.core.domain.GameLanguage
+import com.minutesock.dawordgame.core.remote.WordHttpClient
 import com.minutesock.dawordgame.core.remote.definition.DefinitionDto
 import com.minutesock.dawordgame.core.remote.definition.MeaningDto
 import com.minutesock.dawordgame.core.remote.definition.WordEntryDto
@@ -9,8 +11,6 @@ import com.minutesock.dawordgame.core.util.ContinuousOption
 import com.minutesock.dawordgame.core.util.onSuccess
 import com.minutesock.dawordgame.di.initKoinForTesting
 import com.minutesock.dawordgame.di.testDbModule
-import com.minutesock.dawordgame.feature.game.data.GameRepository
-import com.minutesock.dawordgame.feature.game.remote.WordHttpClient
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.http.HttpStatusCode
