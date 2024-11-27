@@ -1,5 +1,8 @@
 package com.minutesock.dawordgame.feature.dictionary.presentation.ui
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,8 +29,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.navigation.NavigationDestination
-import com.minutesock.dawordgame.core.uiutil.blendColors
-import com.minutesock.dawordgame.core.uiutil.shimmerEffect
 import com.minutesock.dawordgame.core.util.capitalize
 import com.minutesock.dawordgame.core.util.formatDecimalSeparator
 import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryScreenEvent
@@ -35,9 +36,12 @@ import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryState
 import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryViewModel
 import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryWordEntryListItem
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun DictionaryScreenHost(
     navController: NavController,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
     viewModel: DictionaryViewModel = viewModel {
         DictionaryViewModel()
@@ -49,14 +53,18 @@ fun DictionaryScreenHost(
         modifier = modifier,
         state = state,
         navController = navController,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onEvent,
+        sharedTransitionScope = sharedTransitionScope,
+        animatedContentScope = animatedContentScope
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun DictionaryScreen(
     state: DictionaryState,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     navController: NavController,
     onEvent: (DictionaryScreenEvent) -> Unit,
     modifier: Modifier = Modifier
@@ -107,7 +115,9 @@ fun DictionaryScreen(
                         item = dictionaryHeaderItem.listItems[index],
                         language = state.language,
                         navController = navController,
-                        onEvent = onEvent
+                        onEvent = onEvent,
+                        sharedTransitionScope = sharedTransitionScope,
+                        animatedContentScope = animatedContentScope
                     )
                 }
             }
@@ -132,6 +142,7 @@ private fun CategoryHeader(
     )
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun CategoryItem(
     item: DictionaryWordEntryListItem,
@@ -139,34 +150,32 @@ private fun CategoryItem(
     modifier: Modifier = Modifier,
     navController: NavController,
     onEvent: (DictionaryScreenEvent) -> Unit,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope
 ) {
-    Text(
-        text = item.word.capitalize(),
-        fontSize = 16.sp,
-        modifier = modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background)
-            .clickable {
-                onEvent(
-                    DictionaryScreenEvent.WordEntryClick(
-                        navController = navController,
-                        args = NavigationDestination.DictionaryDetail(
-                            word = item.word.lowercase(),
-                            language = language
+    with(sharedTransitionScope) {
+        Text(
+            text = item.word.capitalize(),
+            fontSize = 16.sp,
+            modifier = modifier
+                .fillMaxWidth()
+                .clickable {
+                    onEvent(
+                        DictionaryScreenEvent.WordEntryClick(
+                            navController = navController,
+                            args = NavigationDestination.DictionaryDetail(
+                                word = item.word.lowercase(),
+                                language = language
+                            )
                         )
                     )
-                )
-            }
-            .padding(16.dp)
-            .shimmerEffect(
-                color1 = MaterialTheme.colorScheme.background,
-                color2 = blendColors(
-                    MaterialTheme.colorScheme.background,
-                    MaterialTheme.colorScheme.primary,
-                    0.15f
+                }
+                .padding(16.dp)
+                .sharedElement(
+                    state = sharedTransitionScope.rememberSharedContentState(key = item.word),
+                    animatedVisibilityScope = animatedContentScope
                 ),
-                duration = 3_000
-            ),
-        color = MaterialTheme.colorScheme.primary,
-    )
+            color = MaterialTheme.colorScheme.primary,
+        )
+    }
 }

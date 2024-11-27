@@ -1,6 +1,8 @@
 package com.minutesock.dawordgame
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -31,6 +33,7 @@ import com.minutesock.dawordgame.core.uiutil.WindowSizeBreakpoint
 import com.minutesock.dawordgame.core.uiutil.rememberWindowSizeBreakpoint
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 @Preview
 fun App() {
@@ -78,33 +81,36 @@ fun App() {
                     }
                 }
             ) { padding ->
-                NavHost(
-                    navController = navController,
-                    startDestination = NavigationGraph.DailyGraph
-                ) {
-                    dailyGraph(
-                        modifier = Modifier.padding(padding),
+                SharedTransitionLayout {
+                    NavHost(
                         navController = navController,
-                        isDarkMode = isDarkMode,
-                    )
+                        startDestination = NavigationGraph.DailyGraph
+                    ) {
+                        dailyGraph(
+                            modifier = Modifier.padding(padding),
+                            navController = navController,
+                            isDarkMode = isDarkMode,
+                        )
 
-                    infinityGraph(
-                        modifier = Modifier.padding(padding),
-                        navController = navController,
-                        isDarkMode = isDarkMode
-                    )
+                        infinityGraph(
+                            modifier = Modifier.padding(padding),
+                            navController = navController,
+                            isDarkMode = isDarkMode
+                        )
 
-                    dictionaryGraph(
-                        modifier = Modifier.padding(padding),
-                        navController = navController,
-                        isDarkMode = isDarkMode
-                    )
+                        dictionaryGraph(
+                            modifier = Modifier.padding(padding),
+                            navController = navController,
+                            sharedTransitionScope = this@SharedTransitionLayout,
+                            isDarkMode = isDarkMode
+                        )
 
-                    profileGraph(
-                        modifier = Modifier.padding(padding),
-                        navController = navController,
-                        isDarkMode = isDarkMode
-                    )
+                        profileGraph(
+                            modifier = Modifier.padding(padding),
+                            navController = navController,
+                            isDarkMode = isDarkMode
+                        )
+                    }
                 }
             }
         }

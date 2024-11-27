@@ -75,7 +75,7 @@ fun WordGameNotStartedScreen(
     ) {
         Text(
             text = stringResource(Res.string.what_in_da_word),
-            fontSize = 24.sp,
+            fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Normal,
             color = textColor
@@ -92,7 +92,7 @@ fun WordGameNotStartedScreen(
                     }
                 ) {
                     Text(
-                        text = "How To Play?",
+                        text = "How To Play?", // todo extract
                         color = MaterialTheme.colorScheme.background,
                         fontSize = 20.sp
                     )
@@ -114,7 +114,7 @@ fun WordGameNotStartedScreen(
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "Play",
+                    text = "Play", // todo extract
                     color = MaterialTheme.colorScheme.background,
                     fontSize = 20.sp
                 )

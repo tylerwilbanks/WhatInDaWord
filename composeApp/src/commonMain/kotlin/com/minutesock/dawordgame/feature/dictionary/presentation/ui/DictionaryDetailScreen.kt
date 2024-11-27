@@ -1,5 +1,8 @@
 package com.minutesock.dawordgame.feature.dictionary.presentation.ui
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,12 +38,14 @@ import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryDetai
 import com.minutesock.dawordgame.feature.dictionary.presentation.ui.component.DictionaryDetailSessionScreen
 import kotlin.enums.EnumEntries
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun DictionaryDetailScreen(
     word: String,
     language: GameLanguage,
     navController: NavController,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     viewModel: DictionaryDetailViewModel = viewModel { DictionaryDetailViewModel(word, language) },
     modifier: Modifier = Modifier,
     tabs: EnumEntries<DictionaryDetailTab> = DictionaryDetailTab.entries
@@ -93,12 +97,20 @@ fun DictionaryDetailScreen(
                 Modifier.weight(1f),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = displayWord,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontSize = 26.sp,
-                    textAlign = TextAlign.Center
-                )
+                with(sharedTransitionScope) {
+                    Text(
+                        modifier = Modifier
+                            .sharedElement(
+                                state = sharedTransitionScope.rememberSharedContentState(key = word),
+                                animatedVisibilityScope = animatedContentScope
+                            )
+                            .skipToLookaheadSize(),
+                        text = displayWord,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 26.sp,
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
 
 
