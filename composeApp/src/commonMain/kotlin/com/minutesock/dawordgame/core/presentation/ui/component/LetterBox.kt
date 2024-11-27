@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -43,10 +42,14 @@ fun LetterBox(
 ) {
 
     val animateColor by animateColorAsState(
-        targetValue = if (letter.answered) letter.displayColor(
-            isDarkMode,
+        targetValue = if (letter.answered) {
+            letter.displayColor(
+                isDarkMode,
+                MaterialTheme.colorScheme.background
+            )
+        } else {
             MaterialTheme.colorScheme.background
-        ) else MaterialTheme.colorScheme.background,
+        },
         animationSpec = tween(
             durationMillis = 1250 / 2 + flipAnimDelay,
             delayMillis = 750 + flipAnimDelay
@@ -55,9 +58,7 @@ fun LetterBox(
 
     var flipRotation by remember { mutableFloatStateOf(0f) }
     var letterAlpha by remember { mutableFloatStateOf(1f) }
-    var buttonScale by remember {
-        mutableStateOf(1.0f)
-    }
+    var buttonScale by remember { mutableFloatStateOf(1.0f) }
 
     LaunchedEffect(letter.character) {
         animate(
@@ -76,11 +77,11 @@ fun LetterBox(
         if (guessWordState == GuessWordState.Unused || guessWordState == GuessWordState.Editing) {
             return@LaunchedEffect
         }
+        letterAlpha = 0.0f
         animate(
             initialValue = 180f,
             targetValue = 0f,
-            animationSpec =
-            tween(
+            animationSpec = tween(
                 delayMillis = flipAnimDelay,
                 durationMillis = 750,
                 easing = LinearEasing
