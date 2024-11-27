@@ -66,7 +66,7 @@ fun DictionaryScreen(
     }
 
     Scaffold(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         topBar = {
             Text(
                 modifier = Modifier
