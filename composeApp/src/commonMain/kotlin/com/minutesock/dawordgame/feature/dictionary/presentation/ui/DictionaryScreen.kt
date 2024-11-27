@@ -68,6 +68,8 @@ fun DictionaryScreen(
         )
     }
 
+    // todo create empty state
+
     Scaffold(
         modifier = modifier,
         topBar = {

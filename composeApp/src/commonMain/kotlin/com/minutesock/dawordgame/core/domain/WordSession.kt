@@ -89,7 +89,7 @@ data class WordSession(
 
         if (startTime != null && currentTime != null) {
             return currentTime.minus(startTime)
-                .toComponents { minutes, seconds, nanoseconds ->
+                .toComponents { minutes, seconds, _ ->
                     "${minutes}m ${seconds}s"
                 }.toString()
         }
@@ -97,7 +97,7 @@ data class WordSession(
     }
 
     val formattedElapsedTime: String
-        get() = elapsedTime.toComponents { minutes, seconds, nanoseconds ->
+        get() = elapsedTime.toComponents { minutes, seconds, _ ->
             "${minutes}m ${seconds}s"
         }.toString()
 }

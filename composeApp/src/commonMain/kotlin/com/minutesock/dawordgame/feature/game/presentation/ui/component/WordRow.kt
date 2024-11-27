@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.minutesock.dawordgame.core.domain.GuessLetter
 import com.minutesock.dawordgame.core.domain.GuessWord
 import com.minutesock.dawordgame.core.domain.GuessWordState
+import com.minutesock.dawordgame.core.presentation.ui.component.LetterBox
 import com.minutesock.dawordgame.core.uiutil.ShakeConfig
 import com.minutesock.dawordgame.core.uiutil.rememberShakeController
 import com.minutesock.dawordgame.core.uiutil.shake

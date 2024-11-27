@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.minutesock.dawordgame.core.theme.md_theme_dark_onSecondary
 import com.minutesock.dawordgame.core.theme.md_theme_light_onSecondary
-import com.minutesock.dawordgame.core.uiutil.bounceClick
 import com.minutesock.dawordgame.feature.game.presentation.GuessKeyboardLetter
 import com.minutesock.dawordgame.feature.game.presentation.WordGameEvent
 
@@ -64,8 +63,7 @@ fun FalseKeyboardLetter(
     TextButton(
         modifier = Modifier
             .size(sizeX, 55.dp)
-            .padding(2.dp)
-            .bounceClick(),
+            .padding(2.dp),
 
         colors = ButtonDefaults.buttonColors(containerColor = backgroundColor),
         shape = RoundedCornerShape(10),

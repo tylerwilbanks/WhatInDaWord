@@ -28,9 +28,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.minutesock.dawordgame.core.domain.GameLanguage
+import com.minutesock.dawordgame.core.domain.definition.WordEntry
 import com.minutesock.dawordgame.core.presentation.ui.component.WordDefinitionContent
+import com.minutesock.dawordgame.core.util.ContinuousOption
 import com.minutesock.dawordgame.core.util.capitalize
 import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryDetailViewModel
+import com.minutesock.dawordgame.feature.dictionary.presentation.ui.component.DictionaryDetailSessionScreen
 import kotlin.enums.EnumEntries
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,6 +55,16 @@ fun DictionaryDetailScreen(
 
     var selectedTab by remember {
         mutableStateOf(DictionaryDetailTab.Definition)
+    }
+
+    val wordEntry: WordEntry? by remember(state.fetchState) {
+        mutableStateOf(
+            when (val fetchState = state.fetchState) {
+                is ContinuousOption.Issue -> fetchState.data
+                is ContinuousOption.Loading -> fetchState.data
+                is ContinuousOption.Success -> fetchState.data
+            }
+        )
     }
 
     Column(
@@ -110,7 +123,6 @@ fun DictionaryDetailScreen(
 
         when (selectedTab) {
             DictionaryDetailTab.Definition -> {
-                val wordEntry = state.wordEntry
                 if (wordEntry == null) {
                     Box(
                         modifier = modifier.fillMaxSize(),
@@ -120,13 +132,15 @@ fun DictionaryDetailScreen(
                     }
                 } else {
                     WordDefinitionContent(
-                        wordEntry = wordEntry
+                        wordEntry = wordEntry!!
                     )
                 }
             }
 
             DictionaryDetailTab.Sessions -> {
-                // DictionaryDetailSession(sessionInfoViews = sessions)
+                DictionaryDetailSessionScreen(
+                    sessions = state.sessions
+                )
             }
         }
     }

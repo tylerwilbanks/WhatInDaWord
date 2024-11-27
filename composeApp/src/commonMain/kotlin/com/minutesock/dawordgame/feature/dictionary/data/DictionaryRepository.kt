@@ -3,6 +3,7 @@ package com.minutesock.dawordgame.feature.dictionary.data
 import com.minutesock.dawordgame.core.data.WordSelectionDataSource
 import com.minutesock.dawordgame.core.data.source.WordSessionDataSource
 import com.minutesock.dawordgame.core.domain.GameLanguage
+import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.uiutil.TextRes
 import com.minutesock.dawordgame.core.util.ContinuousOption
 import com.minutesock.dawordgame.core.util.ContinuousStatus
@@ -18,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 
 data class UnlockedWordEntryData(
     val language: GameLanguage = GameLanguage.English,
@@ -70,4 +72,13 @@ class DictionaryRepository(
             )
         )
     }.flowOn(defaultDispatcher)
+
+    suspend fun getWordSessions(language: GameLanguage, word: String): List<WordSession> {
+        return withContext(defaultDispatcher) {
+            wordSessionDataSource.selectByMysteryWord(
+                language = language,
+                mysteryWord = word
+            )
+        }
+    }
 }

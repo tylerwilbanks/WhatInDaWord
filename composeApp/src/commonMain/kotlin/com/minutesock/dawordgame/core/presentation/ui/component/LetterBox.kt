@@ -1,4 +1,4 @@
-package com.minutesock.dawordgame.feature.game.presentation.ui.component
+package com.minutesock.dawordgame.core.presentation.ui.component
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.LinearEasing
