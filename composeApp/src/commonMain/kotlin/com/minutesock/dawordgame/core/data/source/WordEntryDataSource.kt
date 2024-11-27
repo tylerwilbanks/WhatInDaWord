@@ -14,6 +14,7 @@ interface WordEntryDataSource {
     suspend fun selectById(id: Long): WordEntry?
     suspend fun selectByWord(language: GameLanguage, word: String): WordEntry?
     suspend fun selectCountByWord(language: GameLanguage, word: String): Int
+    suspend fun selectCount(language: GameLanguage): Int
 }
 
 class SqlDelightWordEntryDataSource(
@@ -82,6 +83,12 @@ class SqlDelightWordEntryDataSource(
     override suspend fun selectCountByWord(language: GameLanguage, word: String): Int {
         return dbClient.suspendingTransaction {
             wordEntryQueries.selectCountByWord(word, language.dbName).executeAsOne().toInt()
+        }
+    }
+
+    override suspend fun selectCount(language: GameLanguage): Int {
+        return dbClient.suspendingTransaction {
+            wordEntryQueries.selectCount(language.dbName).executeAsOne().toInt()
         }
     }
 }

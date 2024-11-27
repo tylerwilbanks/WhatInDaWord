@@ -57,7 +57,7 @@ fun ProfileScreen(
             modifier = Modifier.fillMaxWidth(),
             text = "Settings", // todo extract
             textAlign = TextAlign.Center,
-            fontSize = 32.sp
+            fontSize = 26.sp
         )
         HorizontalDivider(modifier = Modifier.padding(10.dp), thickness = 2.dp)
         Row(
@@ -94,7 +94,7 @@ fun ProfileScreen(
             modifier = Modifier.fillMaxWidth(),
             text = "Miscellaneous", // todo extract
             textAlign = TextAlign.Center,
-            fontSize = 32.sp
+            fontSize = 26.sp
         )
         HorizontalDivider(modifier = Modifier.padding(10.dp), thickness = 2.dp)
 

@@ -20,6 +20,10 @@ selectByWord:
 SELECT * FROM WordEntryEntity
 WHERE word = ? AND language = ?;
 
+selectCount:
+SELECT COUNT(*) FROM WordEntryEntity
+WHERE language = ?;
+
 selectCountByWord:
 SELECT COUNT(*) FROM WordEntryEntity
 WHERE word = ? AND language = ?;

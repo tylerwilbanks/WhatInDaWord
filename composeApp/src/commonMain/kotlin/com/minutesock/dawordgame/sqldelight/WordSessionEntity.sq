@@ -34,5 +34,10 @@ deleteByDate:
 DELETE FROM WordSessionEntity
 WHERE date = ? AND language = ?;
 
+selectCompletedMysteryWordsSortedAlphabetically:
+SELECT mystery_word FROM WordSessionEntity
+WHERE language = ? AND state IN ?
+ORDER BY mystery_word ASC;
+
 clearWordSessionEntities:
 DELETE FROM WordSessionEntity;
