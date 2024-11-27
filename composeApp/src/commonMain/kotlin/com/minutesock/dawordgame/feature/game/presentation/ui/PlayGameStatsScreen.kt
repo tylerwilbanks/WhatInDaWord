@@ -52,6 +52,7 @@ import com.minutesock.dawordgame.core.domain.definition.WordEntry
 import com.minutesock.dawordgame.core.presentation.ui.component.WordDefinitionContent
 import com.minutesock.dawordgame.core.theme.AppTheme
 import com.minutesock.dawordgame.core.uiutil.TextRes
+import com.minutesock.dawordgame.core.util.capitalize
 import com.minutesock.dawordgame.feature.game.presentation.GameScreenState
 import com.minutesock.dawordgame.feature.game.presentation.GameStatsState
 import com.minutesock.dawordgame.feature.game.presentation.GameTitleMessage
@@ -165,7 +166,7 @@ fun PlayGameStatsScreen(
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.headlineMedium,
-                            text = gameState.mysteryWord.word.uppercase(),
+                            text = gameState.mysteryWord.word.capitalize(),
                             color = textResultColor
                         )
                     }

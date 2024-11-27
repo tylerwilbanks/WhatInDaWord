@@ -16,11 +16,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextAlign
@@ -51,7 +53,8 @@ fun LetterBox(
         ), label = "animateColor"
     )
 
-    var flipRotation by remember { mutableStateOf(0f) }
+    var flipRotation by remember { mutableFloatStateOf(0f) }
+    var letterAlpha by remember { mutableFloatStateOf(1f) }
     var buttonScale by remember {
         mutableStateOf(1.0f)
     }
@@ -60,8 +63,7 @@ fun LetterBox(
         animate(
             initialValue = 0.9f,
             targetValue = 1.0f,
-            animationSpec =
-            tween(
+            animationSpec = tween(
                 durationMillis = 100,
                 easing = LinearEasing
             )
@@ -75,16 +77,17 @@ fun LetterBox(
             return@LaunchedEffect
         }
         animate(
-            initialValue = 360f,
+            initialValue = 180f,
             targetValue = 0f,
             animationSpec =
             tween(
                 delayMillis = flipAnimDelay,
-                durationMillis = 1250,
+                durationMillis = 750,
                 easing = LinearEasing
             )
         ) { value: Float, _: Float ->
             flipRotation = value
+            letterAlpha = (180f - value) / 180f
         }
         if (isFinalLetterInRow) {
             onEvent(WordGameEvent.OnAnsweredWordRowAnimationFinished)
@@ -114,6 +117,7 @@ fun LetterBox(
             colors = CardDefaults.cardColors(containerColor = animateColor),
         ) {}
         Text(
+            modifier = Modifier.alpha(letterAlpha),
             textAlign = TextAlign.Center,
             text = letter.displayCharacter,
             color = MaterialTheme.colorScheme.onBackground,
