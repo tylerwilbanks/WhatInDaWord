@@ -6,10 +6,14 @@ import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -40,6 +44,9 @@ import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryScree
 import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryState
 import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryViewModel
 import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryWordEntryListItem
+import org.jetbrains.compose.resources.painterResource
+import whatindaword.composeapp.generated.resources.Res
+import whatindaword.composeapp.generated.resources.question_mark
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -119,25 +126,52 @@ fun DictionaryScreen(
             )
         }
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = it.calculateTopPadding()),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            state.headerItems.forEach { dictionaryHeaderItem ->
-                stickyHeader {
-                    CategoryHeader(text = dictionaryHeaderItem.char.toString())
-                }
-                items(dictionaryHeaderItem.listItems.size) { index: Int ->
-                    CategoryItem(
-                        item = dictionaryHeaderItem.listItems[index],
-                        language = state.language,
-                        navController = navController,
-                        onEvent = onEvent,
-                        sharedTransitionScope = sharedTransitionScope,
-                        animatedContentScope = animatedContentScope
-                    )
+        if (state.unlockedWordCount == 0 && !state.loading) {
+            Row(
+                modifier = Modifier.fillMaxSize().padding(20.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.padding(8.dp).size(64.dp).weight(1f),
+                    painter = painterResource(resource = Res.drawable.question_mark),
+                    tint = MaterialTheme.colorScheme.primary,
+                    contentDescription = "question mark"
+                )
+                Text(
+                    modifier = Modifier.weight(4f),
+                    text = "You haven't completed any games yet. Get outta here and play!", // todo extract
+                    textAlign = TextAlign.Center
+                )
+                Icon(
+                    modifier = Modifier.padding(8.dp).size(64.dp).weight(1f),
+                    painter = painterResource(resource = Res.drawable.question_mark),
+                    tint = MaterialTheme.colorScheme.primary,
+                    contentDescription = "question mark"
+                )
+            }
+
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = it.calculateTopPadding()),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                state.headerItems.forEach { dictionaryHeaderItem ->
+                    stickyHeader {
+                        CategoryHeader(text = dictionaryHeaderItem.char.toString())
+                    }
+                    items(dictionaryHeaderItem.listItems.size) { index: Int ->
+                        CategoryItem(
+                            item = dictionaryHeaderItem.listItems[index],
+                            language = state.language,
+                            navController = navController,
+                            onEvent = onEvent,
+                            sharedTransitionScope = sharedTransitionScope,
+                            animatedContentScope = animatedContentScope
+                        )
+                    }
                 }
             }
         }
