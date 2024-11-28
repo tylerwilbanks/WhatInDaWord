@@ -1,9 +1,11 @@
 package com.minutesock.dawordgame.feature.profile.presentation.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -12,7 +14,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,17 +54,19 @@ fun ProfileScreen(
     modifier: Modifier = Modifier
 ) {
 
-    Scaffold(
-        bottomBar = {
-            Text(
-                modifier = Modifier.fillMaxWidth().padding(8.dp),
-                text = Version.name,
-                textAlign = TextAlign.Right,
-                fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.outline
-            )
-        }
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomEnd
     ) {
+        Text(
+            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            text = Version.name,
+            textAlign = TextAlign.Right,
+            fontSize = 16.sp,
+            color = MaterialTheme.colorScheme.outline
+        )
+    }
+
         val scrollState = rememberScrollState()
         Column(
             modifier = modifier
@@ -133,7 +136,6 @@ fun ProfileScreen(
                 }
             }
         }
-    }
 }
 
 @Preview
