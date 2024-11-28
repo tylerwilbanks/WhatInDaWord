@@ -63,21 +63,6 @@ class GameViewModel(
                 GameMode.Infinity -> gameRepository.selectMysteryWord(gameLanguage)
             }
 
-            if (fetchWordEntry) {
-                viewModelScope.launch {
-                    gameRepository.getOrFetchWordEntry(
-                        language = gameLanguage,
-                        word = proposedMysteryWord.word
-                    ).collect { continuousOption ->
-                        _statsState.update {
-                            it.copy(
-                                fetchState = continuousOption
-                            )
-                        }
-                    }
-                }
-            }
-
             val wordSession = when (gameMode) {
                 GameMode.Daily -> gameRepository.getOrCreateWordSessionByDate(
                     language = gameLanguage,
@@ -93,6 +78,21 @@ class GameViewModel(
                     wordLength = wordLength,
                     maxAttempts = attempts
                 )
+            }
+
+            if (fetchWordEntry) {
+                viewModelScope.launch {
+                    gameRepository.getOrFetchWordEntry(
+                        language = gameLanguage,
+                        word = wordSession.mysteryWord
+                    ).collect { continuousOption ->
+                        _statsState.update {
+                            it.copy(
+                                fetchState = continuousOption
+                            )
+                        }
+                    }
+                }
             }
 
             if (wordSession.state.isGameOver) {
