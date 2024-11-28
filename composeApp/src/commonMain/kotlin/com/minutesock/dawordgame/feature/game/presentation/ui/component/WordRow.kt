@@ -69,7 +69,7 @@ fun WordRow(
                 letter = guessLetter,
                 guessWordState = guessWord.state,
                 onEvent = onEvent,
-                flipAnimDelay = index * 200,
+                flipAnimDelay = index * 100,
                 isFinalLetterInRow = index + 1 == guessLetters.size
             )
         }

@@ -51,8 +51,8 @@ fun LetterBox(
             MaterialTheme.colorScheme.background
         },
         animationSpec = tween(
-            durationMillis = 1250 / 2 + flipAnimDelay,
-            delayMillis = 750 + flipAnimDelay
+            durationMillis = 750,
+            delayMillis = flipAnimDelay
         ), label = "animateColor"
     )
 
