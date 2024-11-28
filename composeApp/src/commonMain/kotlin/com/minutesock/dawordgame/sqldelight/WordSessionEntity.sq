@@ -39,6 +39,10 @@ SELECT mystery_word FROM WordSessionEntity
 WHERE language = ? AND state IN ?
 ORDER BY mystery_word ASC;
 
+selectCompletedSessionsCount:
+SELECT COUNT(*) FROM WordSessionEntity
+WHERE language = ? AND state IN ?;
+
 selectByMysteryWord:
 SELECT * FROM WordSessionEntity
 WHERE language = ? AND mystery_word = ?;

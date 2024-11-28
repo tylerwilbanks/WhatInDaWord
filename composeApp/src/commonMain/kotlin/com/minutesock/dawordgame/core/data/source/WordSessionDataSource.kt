@@ -29,6 +29,7 @@ interface WordSessionDataSource {
     suspend fun selectHighestId(): Long
     suspend fun deleteByDate(date: LocalDate, language: GameLanguage)
     suspend fun selectCompletedMysteryWordsSortedAlphabetically(language: GameLanguage): List<String>
+    suspend fun selectCompleteWordSessionsCount(language: GameLanguage): Long
     suspend fun selectByMysteryWord(language: GameLanguage, mysteryWord: String): List<WordSession>
     suspend fun clearTable()
 }
@@ -142,6 +143,15 @@ class SqlDelightWordSessionDataSource(
                 language = language.dbName,
                 state = listOf(WordSessionState.Success, WordSessionState.Failure).map { it.ordinal.toLong() }
             ).executeAsList()
+        }
+    }
+
+    override suspend fun selectCompleteWordSessionsCount(language: GameLanguage): Long {
+        return dbClient.suspendingTransaction {
+            wordSessionQueries.selectCompletedSessionsCount(
+                language = language.dbName,
+                state = listOf(WordSessionState.Success, WordSessionState.Failure).map { it.ordinal.toLong() }
+            ).executeAsOne()
         }
     }
 

@@ -23,6 +23,7 @@ import kotlinx.coroutines.withContext
 
 data class UnlockedWordEntryData(
     val language: GameLanguage = GameLanguage.English,
+    val completedWordSessionsCount: Int = 0,
     val unlockedWordCount: Int = 0,
     val totalWordCount: Int = 0,
     val headerItems: ImmutableList<DictionaryHeaderItem> = persistentListOf()
@@ -65,6 +66,7 @@ class DictionaryRepository(
             ContinuousOption.Success(
                 data = UnlockedWordEntryData(
                     language = language,
+                    completedWordSessionsCount = getCompletedWordSessionsCount(language),
                     unlockedWordCount = headerItems.sumOf { it.listItems.size },
                     totalWordCount = wordSelectionDataSource.getCount(gameLanguage = language).toInt(),
                     headerItems = headerItems.toImmutableList()
@@ -72,6 +74,12 @@ class DictionaryRepository(
             )
         )
     }.flowOn(defaultDispatcher)
+
+    suspend fun getCompletedWordSessionsCount(language: GameLanguage): Int {
+        return withContext(defaultDispatcher) {
+            wordSessionDataSource.selectCompleteWordSessionsCount(language).toInt()
+        }
+    }
 
     suspend fun getWordSessions(language: GameLanguage, word: String): List<WordSession> {
         return withContext(defaultDispatcher) {

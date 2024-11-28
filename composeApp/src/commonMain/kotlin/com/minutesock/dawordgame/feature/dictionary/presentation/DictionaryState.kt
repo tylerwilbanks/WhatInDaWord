@@ -7,6 +7,7 @@ import kotlinx.collections.immutable.persistentListOf
 data class DictionaryState(
     val loading: Boolean = false,
     val language: GameLanguage = GameLanguage.English,
+    val completedWordSessionsCount: Int = 0,
     val unlockedWordCount: Int = 0,
     val totalWordCount: Int = 0,
     val headerItems: ImmutableList<DictionaryHeaderItem> = persistentListOf()

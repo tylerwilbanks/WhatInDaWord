@@ -16,35 +16,43 @@ class DictionaryViewModel(
     private val _state = MutableStateFlow(DictionaryState())
     val state = _state.asStateFlow()
 
-    init {
+    fun updateListIfNeeded() {
         viewModelScope.launch {
-            dictionaryRepository.getAlphabeticalUnlockedWordEntries(getSystemLanguage()).collect { continuousOption ->
-                when (continuousOption) {
-                    is ContinuousOption.Issue -> Unit
-                    is ContinuousOption.Loading -> {
-                        val data = continuousOption.data
-                        _state.update {
-                            it.copy(
-                                loading = true,
-                                language = data.language,
-                                unlockedWordCount = data.unlockedWordCount,
-                                totalWordCount = data.totalWordCount,
-                                headerItems = data.headerItems
-                            )
-                        }
-                    }
+            val oldCount = state.value.completedWordSessionsCount
+            val existingCount = dictionaryRepository.getCompletedWordSessionsCount(state.value.language)
+            if (oldCount != existingCount) {
+                getUnlockedWordEntries()
+            }
+        }
+    }
 
-                    is ContinuousOption.Success -> {
-                        val data = continuousOption.data
-                        _state.update {
-                            it.copy(
-                                loading = false,
-                                language = data.language,
-                                unlockedWordCount = data.unlockedWordCount,
-                                totalWordCount = data.totalWordCount,
-                                headerItems = data.headerItems
-                            )
-                        }
+    private suspend fun getUnlockedWordEntries() {
+        dictionaryRepository.getAlphabeticalUnlockedWordEntries(getSystemLanguage()).collect { continuousOption ->
+            when (continuousOption) {
+                is ContinuousOption.Issue -> Unit
+                is ContinuousOption.Loading -> {
+                    val data = continuousOption.data
+                    _state.update {
+                        it.copy(
+                            loading = true,
+                            language = data.language,
+                            unlockedWordCount = data.unlockedWordCount,
+                            totalWordCount = data.totalWordCount,
+                            headerItems = data.headerItems
+                        )
+                    }
+                }
+
+                is ContinuousOption.Success -> {
+                    val data = continuousOption.data
+                    _state.update {
+                        it.copy(
+                            loading = false,
+                            language = data.language,
+                            unlockedWordCount = data.unlockedWordCount,
+                            totalWordCount = data.totalWordCount,
+                            headerItems = data.headerItems
+                        )
                     }
                 }
             }
