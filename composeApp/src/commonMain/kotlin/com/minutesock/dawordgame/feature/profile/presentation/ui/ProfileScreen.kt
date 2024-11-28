@@ -67,75 +67,75 @@ fun ProfileScreen(
         )
     }
 
-        val scrollState = rememberScrollState()
-        Column(
-            modifier = modifier
-                .padding(top = 16.dp)
-                .verticalScroll(scrollState)
+    val scrollState = rememberScrollState()
+    Column(
+        modifier = modifier
+            .padding(top = 16.dp)
+            .verticalScroll(scrollState)
+    ) {
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = "Settings", // todo extract
+            textAlign = TextAlign.Center,
+            fontSize = 26.sp
+        )
+        HorizontalDivider(modifier = Modifier.padding(10.dp), thickness = 2.dp)
+
+        Spacer(Modifier.size(10.dp))
+
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Settings", // todo extract
-                textAlign = TextAlign.Center,
-                fontSize = 26.sp
+            Switch(
+                checked = state.darkModeToggle,
+                enabled = state.darkModeToggleEnabled,
+                onCheckedChange = { onEvent(ProfileEvent.DarkModeToggle) }
             )
-            HorizontalDivider(modifier = Modifier.padding(10.dp), thickness = 2.dp)
-
-            Spacer(Modifier.size(10.dp))
-
-            Row(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Switch(
-                    checked = state.darkModeToggle,
-                    enabled = state.darkModeToggleEnabled,
-                    onCheckedChange = { onEvent(ProfileEvent.DarkModeToggle) }
-                )
-                Spacer(modifier = Modifier.size(10.dp))
-                Text(
-                    text = "Dark Mode" // todo extract
-                )
-            }
-
-            Row(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Switch(
-                    checked = state.useSystemThemeToggle,
-                    onCheckedChange = { onEvent(ProfileEvent.UseSystemThemeToggle) }
-                )
-                Spacer(modifier = Modifier.size(10.dp))
-                Text(
-                    text = "Use System Theme", // todo extract
-                    textAlign = TextAlign.Center,
-                )
-            }
-
-            Spacer(Modifier.size(10.dp))
-
+            Spacer(modifier = Modifier.size(10.dp))
             Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Miscellaneous", // todo extract
-                textAlign = TextAlign.Center,
-                fontSize = 26.sp
+                text = "Dark Mode" // todo extract
             )
-            HorizontalDivider(modifier = Modifier.padding(10.dp), thickness = 2.dp)
+        }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Switch(
+                checked = state.useSystemThemeToggle,
+                onCheckedChange = { onEvent(ProfileEvent.UseSystemThemeToggle) }
+            )
+            Spacer(modifier = Modifier.size(10.dp))
+            Text(
+                text = "Use System Theme", // todo extract
+                textAlign = TextAlign.Center,
+            )
+        }
+
+        Spacer(Modifier.size(10.dp))
+
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = "Miscellaneous", // todo extract
+            textAlign = TextAlign.Center,
+            fontSize = 26.sp
+        )
+        HorizontalDivider(modifier = Modifier.padding(10.dp), thickness = 2.dp)
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Button(
+                onClick = { onEvent(ProfileEvent.ClickWebsite) }
             ) {
-                Button(
-                    onClick = { onEvent(ProfileEvent.ClickWebsite) }
-                ) {
-                    Text(
-                        text = "More games" // todo extract
-                    )
-                }
+                Text(
+                    text = "More games" // todo extract
+                )
             }
         }
+    }
 }
 
 @Preview
