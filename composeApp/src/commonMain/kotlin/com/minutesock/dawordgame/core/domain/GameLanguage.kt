@@ -1,5 +1,8 @@
 package com.minutesock.dawordgame.core.domain
 
+import androidx.core.bundle.Bundle
+import androidx.navigation.NavType
+
 enum class GameLanguage {
     English,
     German,
@@ -63,6 +66,15 @@ enum class GameLanguage {
         fun fromSystem(languageName: String): GameLanguage {
             return GameLanguage.entries.firstOrNull { it.dbName.lowercase() == languageName.lowercase() }
                 ?: English
+        }
+
+        val NavType = object : NavType<GameLanguage>(isNullableAllowed = false) {
+            override fun serializeAsValue(value: GameLanguage) = value.dbName
+            override fun parseValue(value: String) = GameLanguage.fromDb(value)
+            override fun get(bundle: Bundle, key: String) = bundle.getString(key)?.let { GameLanguage.fromDb(it) }
+            override fun put(bundle: Bundle, key: String, value: GameLanguage) {
+                bundle.putString(key, value.dbName)
+            }
         }
     }
 }

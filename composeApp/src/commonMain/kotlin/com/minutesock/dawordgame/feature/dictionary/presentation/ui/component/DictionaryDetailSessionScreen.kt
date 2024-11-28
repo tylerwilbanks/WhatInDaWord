@@ -2,6 +2,7 @@ package com.minutesock.dawordgame.feature.dictionary.presentation.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -89,33 +91,44 @@ private fun DictionaryDetailSessionListItem(
         )
     }
 
-    Column {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Column(
+            modifier = Modifier.width(IntrinsicSize.Max),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = session.displayDate,
-                textAlign = TextAlign.Center
-            )
-
-            Icon(
-                modifier = Modifier.size(24.dp),
-                painter = painterResource(resource = iconId),
-                contentDescription = null
-            )
-        }
-
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        session.wordRows.forEach {
-            Row {
-                DictionaryDetailSessionGuessWordRow(
-                    wordRow = it,
-                    isDarkMode = isDarkMode
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = session.displayDate,
+                    textAlign = TextAlign.Center
                 )
+
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    painter = painterResource(resource = iconId),
+                    contentDescription = null
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Column(
+                modifier = Modifier.width(IntrinsicSize.Max)
+            ) {
+                session.wordRows.forEach {
+                    Row {
+                        DictionaryDetailSessionGuessWordRow(
+                            wordRow = it,
+                            isDarkMode = isDarkMode
+                        )
+                    }
+                }
             }
         }
     }
@@ -137,9 +150,8 @@ fun DictionaryDetailSessionGuessWordRow(
     val dummyEvent: (WordGameEvent) -> Unit = {}
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start
     ) {
         wordRow.guessWord.letters.forEachIndexed { index: Int, letter: GuessLetter ->
             Row {
@@ -154,14 +166,14 @@ fun DictionaryDetailSessionGuessWordRow(
             }
         }
 
+        Spacer(Modifier.width(16.dp))
+
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.Bottom
         ) {
             Text(
                 text = wordRow.displayTimestamp,
-                textAlign = TextAlign.Right,
+                textAlign = TextAlign.Start,
                 color = textColor
             )
         }
