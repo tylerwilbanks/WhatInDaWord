@@ -79,12 +79,10 @@ kotlin {
             implementation(libs.sqldelight.driver)
             implementation(libs.ktor.client.okhttp)
         }
-        nativeMain.dependencies {
+        iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+            implementation(libs.sqldelight.native.driver)
         }
-//        iosMain.dependencies {
-//            implementation(libs.sqlite.native.driver)
-//        }
     }
 }
 
@@ -120,9 +118,10 @@ android {
     buildFeatures {
         compose = true
     }
-    dependencies {
-        debugImplementation(compose.uiTooling)
-    }
+}
+
+dependencies {
+    debugImplementation(compose.uiTooling)
 }
 
 compose.desktop {
@@ -143,5 +142,6 @@ sqldelight {
             packageName.set("com.minutesock.dawordgame.sqldelight")
             srcDirs("src/commonMain/kotlin")
         }
+        linkSqlite = true
     }
 }
