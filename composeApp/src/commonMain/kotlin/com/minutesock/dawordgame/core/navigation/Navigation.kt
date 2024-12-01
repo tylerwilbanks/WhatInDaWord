@@ -12,7 +12,6 @@ import whatindaword.composeapp.generated.resources.calendar_today
 import whatindaword.composeapp.generated.resources.infinity
 import whatindaword.composeapp.generated.resources.person
 
-@Serializable
 sealed class NavigationDestination {
 
     val route get() = this::class.simpleName
@@ -78,7 +77,6 @@ sealed class NavigationDestination {
 fun NavDestination.specifiedRoute() = toString().substringAfterLast(".")
 fun NavDestination.navGraphRoute() = parent?.route?.substringAfterLast(".")
 
-@Serializable
 sealed class NavigationGraph {
 
     val route get() = this::class.simpleName

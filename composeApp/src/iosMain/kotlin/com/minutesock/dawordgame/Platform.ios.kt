@@ -60,7 +60,7 @@ actual fun getScreenOrientation(): ScreenOrientation {
     return ScreenOrientation.Portrait
 }
 
-class NativeSystemUiController : SystemUiController {
+class IosSystemUiController : SystemUiController {
     override fun setStatusBarStyles(statusBarColor: Color, navigationBarColor: Color, darkMode: Boolean) {
 //        val style =
 //            if (darkMode) UIStatusBarStyle.UIStatusBarStyleDarkContent else UIStatusBarStyle.UIStatusBarStyleLightContent

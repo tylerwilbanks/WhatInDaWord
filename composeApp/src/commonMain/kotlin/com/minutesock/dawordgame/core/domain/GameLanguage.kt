@@ -2,7 +2,9 @@ package com.minutesock.dawordgame.core.domain
 
 import androidx.core.bundle.Bundle
 import androidx.navigation.NavType
+import kotlinx.serialization.Serializable
 
+@Serializable
 enum class GameLanguage {
     English,
     German,
