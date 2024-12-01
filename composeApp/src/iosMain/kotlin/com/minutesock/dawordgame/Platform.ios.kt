@@ -16,8 +16,10 @@ import okio.IOException
 import platform.CoreGraphics.CGRect
 import platform.Foundation.NSBundle
 import platform.Foundation.NSString
+import platform.Foundation.NSURL
 import platform.Foundation.NSUTF8StringEncoding
 import platform.Foundation.stringWithContentsOfFile
+import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
 import platform.UIKit.UIDevice
 import platform.UIKit.UIScreen
@@ -79,5 +81,26 @@ class IosSystemUiController : SystemUiController {
     }
 }
 
-actual fun shareText(text: String) = Unit
-actual fun openWebsite(url: String) = Unit
+actual fun shareText(text: String) {
+    // Get the current top-most view controller
+    val rootViewController = UIApplication.sharedApplication.keyWindow?.rootViewController
+
+    // Create an activity view controller with the text to share
+    val activityViewController = UIActivityViewController(
+        activityItems = listOf(text as NSString),
+        applicationActivities = null
+    )
+
+    // Present the share sheet
+    rootViewController?.presentViewController(
+        activityViewController,
+        animated = true,
+        completion = null
+    )
+}
+
+actual fun openWebsite(url: String) {
+    NSURL.URLWithString(url)?.let { nsUrl ->
+        UIApplication.sharedApplication.openURL(nsUrl)
+    }
+}
