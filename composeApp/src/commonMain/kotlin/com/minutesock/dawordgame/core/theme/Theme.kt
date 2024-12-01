@@ -92,7 +92,9 @@ fun rememberDarkTheme(statefulSystemUiController: StatefulSystemUiController = k
                 darkTheme
             }
         }.also {
-            statefulSystemUiController.setStatusBarStyles(darkMode = it.value)
+            statefulSystemUiController.setStatusBarStyles(
+                darkMode = it.value,
+            )
         }
     }
 }

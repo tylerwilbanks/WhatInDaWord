@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.Dp
@@ -22,7 +21,9 @@ import platform.Foundation.stringWithContentsOfFile
 import platform.UIKit.UIApplication
 import platform.UIKit.UIDevice
 import platform.UIKit.UIScreen
-import platform.UIKit.UIStatusBarStyle
+import platform.UIKit.UIStatusBarStyleDarkContent
+import platform.UIKit.UIStatusBarStyleLightContent
+import platform.UIKit.setStatusBarStyle
 
 class IOSPlatform : Platform {
     override val name: String = UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
@@ -72,9 +73,9 @@ actual fun getScreenOrientation(): ScreenOrientation {
 
 class IosSystemUiController : SystemUiController {
     override fun setStatusBarStyles(statusBarColor: Color, navigationBarColor: Color, darkMode: Boolean) {
-//        val style =
-//            if (darkMode) UIStatusBarStyle.UIStatusBarStyleDarkContent else UIStatusBarStyle.UIStatusBarStyleLightContent
-//        UIApplication.sharedApplication.setStatusBarStyle(style, animated = true)
+        val style =
+            if (darkMode) UIStatusBarStyleDarkContent else UIStatusBarStyleLightContent
+        UIApplication.sharedApplication.setStatusBarStyle(style, animated = true)
     }
 }
 
