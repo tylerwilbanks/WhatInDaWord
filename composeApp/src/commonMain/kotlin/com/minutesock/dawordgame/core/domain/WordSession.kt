@@ -55,7 +55,8 @@ data class WordSession(
             val resultLetter =
                 if (finalIndex + 1 >= guesses.size && state == WordSessionState.Failure) "X" else "${finalIndex + 1}"
 
-            return "Date: $date ${"\uD83D\uDCC5"}\n" +
+            return "What in da word!?\n" +
+                    "Date: $date ${"\uD83D\uDCC5"}\n" +
                     "Mode: ${gameMode.name} ${gameMode.emoji}\n" +
                     "$resultLetter/${guesses.size}\n" +
                     "$formattedElapsedTime\n" +

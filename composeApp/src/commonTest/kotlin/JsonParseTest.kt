@@ -1,35 +1,41 @@
 import com.minutesock.dawordgame.core.domain.ValidWordsDto
 import com.minutesock.dawordgame.core.domain.WordSelectionDto
-import com.minutesock.dawordgame.readFile
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import whatindaword.composeapp.generated.resources.Res
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
+
+@OptIn(ExperimentalResourceApi::class)
 class JsonParseTest {
+    private val defaultDispatcher = StandardTestDispatcher()
 
     @Test
-    fun readValidWordsFile() {
-        val text = readFile("valid_words.json")
+    fun readValidWordsFile() = runTest(defaultDispatcher) {
+        val text = Res.readBytes("files/valid_words.json").decodeToString()
         assertTrue(text.isNotEmpty())
     }
 
     @Test
-    fun readWordSelectionFile() {
-        val text = readFile("word_selection.json")
+    fun readWordSelectionFile() = runTest(defaultDispatcher) {
+        val text = Res.readBytes("files/word_selection.json").decodeToString()
         assertTrue(text.isNotEmpty())
     }
 
     @Test
-    fun parseValidWords() {
-        val text = readFile("valid_words.json")
+    fun parseValidWords() = runTest(defaultDispatcher) {
+        val text = Res.readBytes("files/valid_words.json").decodeToString()
         val validWordsDto = Json.decodeFromString<ValidWordsDto>(text)
         assertEquals(12_484, validWordsDto.words.size)
     }
 
     @Test
-    fun parseWordSelection() {
-        val text = readFile("word_selection.json")
+    fun parseWordSelection() = runTest(defaultDispatcher) {
+        val text = Res.readBytes("files/word_selection.json").decodeToString()
         val wordSelectionDto = Json.decodeFromString<WordSelectionDto>(text)
         assertEquals(2_315, wordSelectionDto.words.size)
     }

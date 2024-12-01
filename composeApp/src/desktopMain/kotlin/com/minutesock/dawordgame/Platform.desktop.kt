@@ -20,10 +20,6 @@ class JVMPlatform: Platform {
 
 actual fun getPlatform(): Platform = JVMPlatform()
 
-actual fun readFile(filename: String): String {
-    return File("src/commonMain/composeResources/files/$filename").readText()
-}
-
 actual fun getSystemLanguage(): GameLanguage {
     return GameLanguage.fromSystem(Locale.getDefault().language)
 }

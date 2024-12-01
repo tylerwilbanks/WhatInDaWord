@@ -18,7 +18,8 @@ import platform.Foundation.NSBundle
 import platform.Foundation.NSString
 import platform.Foundation.NSURL
 import platform.Foundation.NSUTF8StringEncoding
-import platform.Foundation.stringWithContentsOfFile
+import platform.Foundation.stringWithContentsOfURL
+import platform.Foundation.stringWithString
 import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
 import platform.UIKit.UIDevice
@@ -33,18 +34,6 @@ class IOSPlatform : Platform {
 }
 
 actual fun getPlatform(): Platform = IOSPlatform()
-
-@OptIn(ExperimentalForeignApi::class)
-actual fun readFile(filename: String): String {
-    val bundle = NSBundle.mainBundle
-    val path = bundle.pathForResource(name = filename, ofType = null) ?: throw FileNotFoundException("file not found: $filename")
-    val content = NSString.stringWithContentsOfFile(
-        path = path,
-        encoding = NSUTF8StringEncoding,
-        error = null
-    )
-    return content ?: throw IOException("failed to read file: $filename")
-}
 
 actual fun getSystemLanguage(): GameLanguage {
     return GameLanguage.fromSystem(Locale.current.language)
@@ -82,16 +71,11 @@ class IosSystemUiController : SystemUiController {
 }
 
 actual fun shareText(text: String) {
-    // Get the current top-most view controller
     val rootViewController = UIApplication.sharedApplication.keyWindow?.rootViewController
-
-    // Create an activity view controller with the text to share
     val activityViewController = UIActivityViewController(
-        activityItems = listOf(text as NSString),
+        activityItems = listOf(NSString.stringWithString(text)),
         applicationActivities = null
     )
-
-    // Present the share sheet
     rootViewController?.presentViewController(
         activityViewController,
         animated = true,

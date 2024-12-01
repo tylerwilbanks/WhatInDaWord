@@ -27,12 +27,6 @@ class AndroidPlatform : Platform {
 
 actual fun getPlatform(): Platform = AndroidPlatform()
 
-actual fun readFile(filename: String): String {
-    val context = AndroidContextProvider.applicationContext
-    return context.assets.open("composeResources/whatindaword.composeapp.generated.resources/files/$filename")
-        .bufferedReader().use { it.readText() }
-}
-
 actual fun getSystemLanguage(): GameLanguage {
     return GameLanguage.fromSystem(Locale.getDefault().language)
 }

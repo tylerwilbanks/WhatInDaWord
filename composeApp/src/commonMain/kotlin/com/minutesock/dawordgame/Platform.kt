@@ -20,8 +20,6 @@ interface Platform {
 
 expect fun getPlatform(): Platform
 
-expect fun readFile(filename: String): String
-
 expect fun getSystemLanguage(): GameLanguage
 
 @Composable
