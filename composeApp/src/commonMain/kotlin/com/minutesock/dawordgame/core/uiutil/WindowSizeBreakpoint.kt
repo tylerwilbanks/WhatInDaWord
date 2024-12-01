@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.unit.Dp
 import com.minutesock.dawordgame.getScreenWidth
 
 enum class WindowSizeBreakpoint {
@@ -14,13 +15,13 @@ enum class WindowSizeBreakpoint {
     ExtraLarge;
 
     companion object {
-        fun fromPx(widthPx: Int): WindowSizeBreakpoint {
+        fun fromDp(width: Dp): WindowSizeBreakpoint {
             return when {
-                widthPx < 600 -> ExtraSmall
-                widthPx in 600..904 -> Small
-                widthPx in 905..1239 -> Medium
-                widthPx in 1240..1439 -> Large
-                widthPx >= 1440 -> ExtraLarge
+                width.value < 600f -> ExtraSmall
+                width.value in 600f..904f -> Small
+                width.value in 905f..1239f -> Medium
+                width.value in 1240f..1439f -> Large
+                width.value >= 1440f -> ExtraLarge
                 else -> ExtraLarge
             }
         }
@@ -33,7 +34,7 @@ fun rememberWindowSizeBreakpoint(): State<WindowSizeBreakpoint> {
 
     return remember(windowWidth) {
         derivedStateOf {
-            WindowSizeBreakpoint.fromPx(windowWidth)
+            WindowSizeBreakpoint.fromDp(windowWidth)
         }
     }
 }

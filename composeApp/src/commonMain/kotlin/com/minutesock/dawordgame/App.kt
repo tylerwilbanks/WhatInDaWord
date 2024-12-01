@@ -46,7 +46,6 @@ fun App() {
             val windowIsWideEnough = when (windowSizeBreakpoint) {
                 WindowSizeBreakpoint.ExtraSmall,
                 WindowSizeBreakpoint.Small -> false
-
                 WindowSizeBreakpoint.Medium,
                 WindowSizeBreakpoint.Large,
                 WindowSizeBreakpoint.ExtraLarge -> true

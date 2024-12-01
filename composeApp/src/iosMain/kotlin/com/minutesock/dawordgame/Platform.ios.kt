@@ -3,12 +3,18 @@ package com.minutesock.dawordgame
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.unit.Dp
 import com.minutesock.dawordgame.core.domain.GameLanguage
+import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.useContents
 import okio.FileNotFoundException
 import okio.IOException
+import platform.CoreGraphics.CGRect
 import platform.Foundation.NSBundle
 import platform.Foundation.NSString
 import platform.Foundation.NSUTF8StringEncoding
@@ -43,7 +49,9 @@ actual fun getSystemLanguage(): GameLanguage {
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-actual fun getScreenWidth() = LocalWindowInfo.current.containerSize.width
+actual fun getScreenWidth(): Dp {
+    return with (LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+}
 
 @Composable
 actual fun ToggleSystemStatusBar(hide: Boolean) = Unit
@@ -51,13 +59,15 @@ actual fun ToggleSystemStatusBar(hide: Boolean) = Unit
 @OptIn(ExperimentalForeignApi::class)
 @Composable
 actual fun getScreenOrientation(): ScreenOrientation {
-//    val screenSize = UIScreen.mainScreen.bounds
-//    return if (screenSize.width > screenSize.height) {
-//        ScreenOrientation.Landscape
-//    } else {
-//        ScreenOrientation.Portrait
-//    }
-    return ScreenOrientation.Portrait
+    val bounds: CValue<CGRect> = UIScreen.mainScreen.bounds
+    val width = bounds.useContents { size.width }
+    val height = bounds.useContents { size.height }
+
+    return if (width > height) {
+        ScreenOrientation.Landscape
+    } else {
+        ScreenOrientation.Portrait
+    }
 }
 
 class IosSystemUiController : SystemUiController {

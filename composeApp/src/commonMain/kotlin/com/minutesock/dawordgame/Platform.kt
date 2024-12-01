@@ -2,6 +2,7 @@ package com.minutesock.dawordgame
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -24,7 +25,7 @@ expect fun readFile(filename: String): String
 expect fun getSystemLanguage(): GameLanguage
 
 @Composable
-expect fun getScreenWidth(): Int
+expect fun getScreenWidth(): Dp
 
 @Composable
 expect fun getScreenOrientation(): ScreenOrientation

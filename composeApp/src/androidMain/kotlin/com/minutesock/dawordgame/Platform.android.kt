@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import java.util.Locale
 
@@ -37,7 +38,7 @@ actual fun getSystemLanguage(): GameLanguage {
 }
 
 @Composable
-actual fun getScreenWidth() = LocalConfiguration.current.screenWidthDp
+actual fun getScreenWidth() = LocalConfiguration.current.screenWidthDp.dp
 
 @Composable
 actual fun getScreenOrientation(): ScreenOrientation {
