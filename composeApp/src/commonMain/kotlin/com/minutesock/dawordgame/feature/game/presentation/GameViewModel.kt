@@ -20,6 +20,7 @@ import com.minutesock.dawordgame.shareText
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -172,6 +173,9 @@ class GameViewModel(
     }
 
     private suspend fun WordGameEvent.OnAnsweredWordRowAnimationFinished.onEvent() {
+        _state.update {
+            it.copy(wordRowAnimating = false)
+        }
         if (state.value.gameState.isGameOver &&
             !requireWordSession.guesses.any { it.state == GuessWordState.Correct || it.state == GuessWordState.Failure }
         ) {
@@ -198,6 +202,9 @@ class GameViewModel(
             }
         }
 
+        if (!state.value.gameState.isGameOver) {
+            delay(3_000L)
+        }
         _state.update {
             it.copy(
                 wordRowAnimating = false,

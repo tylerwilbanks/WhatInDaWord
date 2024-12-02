@@ -32,7 +32,6 @@ fun Modifier.shake(
                 delay(it)
             }
             shakeController.shakeConfig?.onAnimationFinished?.invoke()
-
         }
 
         this
