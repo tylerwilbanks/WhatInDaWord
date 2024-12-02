@@ -74,7 +74,6 @@ fun LetterBox(
     }
 
     LaunchedEffect(guessWordState) {
-        println("${guessWordState.name}")
         if (guessWordState == GuessWordState.Unused || guessWordState == GuessWordState.Editing) {
             return@LaunchedEffect
         }
