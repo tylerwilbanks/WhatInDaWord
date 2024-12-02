@@ -483,14 +483,7 @@ class GameViewModel(
                         date = requireWordSession.date,
                         language = requireWordSession.language
                     )
-                    _state.update {
-                        GameViewModelState(
-                            wordSession = requireWordSession.copy(
-                                state = WordSessionState.NotStarted,
-                                gameMode = GameMode.Daily,
-                            ),
-                        )
-                    }
+                    _state.update { GameViewModelState() }
                     setupGame(GameMode.Daily, wordLength, maxAttempts)
                 }
 
@@ -504,14 +497,7 @@ class GameViewModel(
                     gameHasAlreadyBeenPlayed = false
                     val wordLength = requireWordSession.mysteryWord.length
                     val maxAttempts = requireWordSession.maxAttempts
-                    _state.update {
-                        GameViewModelState(
-                            wordSession = requireWordSession.copy(
-                                state = WordSessionState.NotStarted,
-                                gameMode = GameMode.Infinity
-                            ),
-                        )
-                    }
+                    _state.update { GameViewModelState() }
                     setupGame(GameMode.Infinity, wordLength, maxAttempts)
                 }
             }

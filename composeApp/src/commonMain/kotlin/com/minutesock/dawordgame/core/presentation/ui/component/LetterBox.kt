@@ -74,6 +74,7 @@ fun LetterBox(
     }
 
     LaunchedEffect(guessWordState) {
+        println("${guessWordState.name}")
         if (guessWordState == GuessWordState.Unused || guessWordState == GuessWordState.Editing) {
             return@LaunchedEffect
         }
@@ -90,6 +91,8 @@ fun LetterBox(
             flipRotation = value
             letterAlpha = (180f - value) / 180f
         }
+        letterAlpha = 1f
+        flipRotation = 0f
         if (isFinalLetterInRow) {
             onEvent(WordGameEvent.OnAnsweredWordRowAnimationFinished)
         }
