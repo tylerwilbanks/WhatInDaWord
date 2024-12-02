@@ -63,6 +63,9 @@ class DictionaryViewModel(
         viewModelScope.launch {
             when (event) {
                 is DictionaryScreenEvent.WordEntryClick -> event.navController.navigate(event.args)
+                is DictionaryScreenEvent.ScrollPosition -> {
+                    _state.update { it.copy(scrollPosition = event.scrollPosition) }
+                }
             }
         }
     }

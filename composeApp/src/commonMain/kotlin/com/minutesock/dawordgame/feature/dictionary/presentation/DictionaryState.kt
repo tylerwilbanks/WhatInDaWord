@@ -10,7 +10,8 @@ data class DictionaryState(
     val completedWordSessionsCount: Int = 0,
     val unlockedWordCount: Int = 0,
     val totalWordCount: Int = 0,
-    val headerItems: ImmutableList<DictionaryHeaderItem> = persistentListOf()
+    val headerItems: ImmutableList<DictionaryHeaderItem> = persistentListOf(),
+    val scrollPosition: Int = 0
 )
 
 data class DictionaryHeaderItem(

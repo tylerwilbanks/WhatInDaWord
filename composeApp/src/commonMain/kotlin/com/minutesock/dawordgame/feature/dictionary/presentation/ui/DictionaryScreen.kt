@@ -13,15 +13,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -102,7 +105,14 @@ fun DictionaryScreen(
         )
     }
 
-    // todo create empty state
+    val lazyScrollState = rememberLazyListState(initialFirstVisibleItemIndex = state.scrollPosition)
+
+    LaunchedEffect(lazyScrollState) {
+        snapshotFlow { lazyScrollState.firstVisibleItemIndex }
+            .collect { index: Int ->
+                onEvent(DictionaryScreenEvent.ScrollPosition(scrollPosition = index))
+            }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -150,13 +160,13 @@ fun DictionaryScreen(
                     contentDescription = "question mark"
                 )
             }
-
         } else {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = it.calculateTopPadding()),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                state = lazyScrollState
             ) {
                 state.headerItems.forEach { dictionaryHeaderItem ->
                     stickyHeader {

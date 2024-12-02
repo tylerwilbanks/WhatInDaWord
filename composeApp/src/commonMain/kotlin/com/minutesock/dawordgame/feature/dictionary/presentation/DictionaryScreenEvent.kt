@@ -8,4 +8,6 @@ sealed class DictionaryScreenEvent {
         val navController: NavController,
         val args: NavigationDestination.DictionaryDetail
     ) : DictionaryScreenEvent()
+
+    data class ScrollPosition(val scrollPosition: Int) : DictionaryScreenEvent()
 }
