@@ -1,4 +1,4 @@
-package com.minutesock.dawordgame.app.presentation
+package com.minutesock.dawordgame.app.presentation.ui.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.minutesock.dawordgame.app.presentation.NavigationItem
 import com.minutesock.dawordgame.core.navigation.NavigationDestination
 import com.minutesock.dawordgame.core.navigation.navGraphRoute
 
