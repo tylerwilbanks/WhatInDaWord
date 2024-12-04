@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.minutesock.dawordgame.app.presentation.ui.LogoScreen
 import com.minutesock.dawordgame.app.presentation.ui.component.BottomNavBar
 import com.minutesock.dawordgame.app.presentation.ui.component.SideNavBar
+import com.minutesock.dawordgame.core.data.DataStoreManager
 import com.minutesock.dawordgame.core.navigation.NavigationGraph
 import com.minutesock.dawordgame.core.navigation.dailyGraph
 import com.minutesock.dawordgame.core.navigation.dictionaryGraph
@@ -40,7 +41,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App() {
     AppTheme { isDarkMode: Boolean ->
-        var showLogoScreen by remember { mutableStateOf(true) }
+        var showLogoScreen by remember { mutableStateOf(DataStoreManager.showLogo) }
         AnimatedVisibility(
             visible = showLogoScreen,
             enter = fadeIn(),

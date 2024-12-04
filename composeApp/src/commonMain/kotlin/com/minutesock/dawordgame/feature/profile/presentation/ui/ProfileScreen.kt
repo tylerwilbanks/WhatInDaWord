@@ -14,7 +14,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +29,7 @@ import com.minutesock.dawordgame.core.theme.AppTheme
 import com.minutesock.dawordgame.feature.profile.presentation.ProfileEvent
 import com.minutesock.dawordgame.feature.profile.presentation.ProfileState
 import com.minutesock.dawordgame.feature.profile.presentation.ProfileViewModel
+import com.minutesock.dawordgame.feature.profile.presentation.ui.component.ProfilePreferenceListItem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -83,33 +83,10 @@ fun ProfileScreen(
 
         Spacer(Modifier.size(10.dp))
 
-        Row(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Switch(
-                checked = state.darkModeToggle,
-                enabled = state.darkModeToggleEnabled,
-                onCheckedChange = { onEvent(ProfileEvent.DarkModeToggle) }
-            )
-            Spacer(modifier = Modifier.size(10.dp))
-            Text(
-                text = "Dark Mode" // todo extract
-            )
-        }
-
-        Row(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Switch(
-                checked = state.useSystemThemeToggle,
-                onCheckedChange = { onEvent(ProfileEvent.UseSystemThemeToggle) }
-            )
-            Spacer(modifier = Modifier.size(10.dp))
-            Text(
-                text = "Use System Theme", // todo extract
-                textAlign = TextAlign.Center,
+        state.preferences.forEach {
+            ProfilePreferenceListItem(
+                preferenceState = it,
+                onEvent = onEvent
             )
         }
 
@@ -143,10 +120,7 @@ fun ProfileScreen(
 private fun ProfileScreenPreview() {
     AppTheme {
         ProfileScreen(
-            state = ProfileState(
-                darkModeToggle = true,
-                useSystemThemeToggle = true
-            ),
+            state = ProfileState(),
             onEvent = {}
         )
     }

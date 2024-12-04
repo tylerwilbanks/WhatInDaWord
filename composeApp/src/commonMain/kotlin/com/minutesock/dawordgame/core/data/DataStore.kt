@@ -68,6 +68,7 @@ object DataStoreManager : KoinComponent {
     val dataStore: DataStore<Preferences> = inject<DataStoreProvider>().value.dataStore
     val darkModeKey = booleanPreferencesKey("dark_mode_enabled")
     val useSystemThemeKey = booleanPreferencesKey("use_system_theme")
+    val showLogoKey = booleanPreferencesKey("show_logo")
 
     val darkModeDelegate = DataStoreDelegate(
         key = darkModeKey,
@@ -80,6 +81,12 @@ object DataStoreManager : KoinComponent {
         defaultValue = false
     )
     var useSystemTheme by useSystemThemeDelegate
+
+    val showLogoDelegate = DataStoreDelegate(
+        key = showLogoKey,
+        defaultValue = true
+    )
+    var showLogo by showLogoDelegate
 }
 
 
