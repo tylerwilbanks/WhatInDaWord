@@ -2,22 +2,27 @@ package com.minutesock.dawordgame.feature.game.presentation.ui.component
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -60,16 +65,24 @@ fun FalseKeyboardLetter(
         mutableStateOf(!(guessKeyboardLetter.keyName == "enter" && isWordRowAnimating))
     }
 
-    TextButton(
+    IconButton(
         modifier = Modifier
+            .padding(2.dp)
+            .background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(10)
+            )
             .size(sizeX, 55.dp)
-            .padding(2.dp),
+            .clip(RoundedCornerShape(10))
+            .indication(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = ripple(bounded = true)
+            ),
 
-        colors = ButtonDefaults.buttonColors(containerColor = backgroundColor),
-        shape = RoundedCornerShape(10),
+        colors = IconButtonDefaults.iconButtonColors(containerColor = backgroundColor),
         onClick = {
             if (!buttonEnabled || !enabled) {
-                return@TextButton
+                return@IconButton
             }
 
             when (guessKeyboardLetter.keyName) {
@@ -105,10 +118,10 @@ fun FalseKeyboardLetter(
             )
 
             else -> Text(
+                textAlign = TextAlign.Center,
                 text = guessKeyboardLetter.character.toString(),
                 color = if (isDarkMode) Color.White else Color.Black,
                 fontSize = 16.sp,
-                textAlign = TextAlign.Center,
             )
         }
     }
