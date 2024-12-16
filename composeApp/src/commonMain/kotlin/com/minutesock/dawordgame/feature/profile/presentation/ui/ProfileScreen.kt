@@ -60,7 +60,7 @@ fun ProfileScreen(
     ) {
         Text(
             modifier = Modifier.fillMaxWidth().padding(8.dp),
-            text = Version.name,
+            text = Version.NAME,
             textAlign = TextAlign.Right,
             fontSize = 16.sp,
             color = MaterialTheme.colorScheme.outline

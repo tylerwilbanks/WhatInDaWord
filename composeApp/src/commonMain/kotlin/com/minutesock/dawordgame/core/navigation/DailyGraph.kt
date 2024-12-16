@@ -33,6 +33,7 @@ fun NavGraphBuilder.dailyGraph(
                 modifier = modifier,
                 navController = navController,
                 isDarkMode = isDarkMode,
+                gameMode = GameMode.Daily
             )
         }
 

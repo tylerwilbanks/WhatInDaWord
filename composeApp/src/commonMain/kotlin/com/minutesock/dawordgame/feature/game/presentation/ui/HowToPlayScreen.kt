@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -23,11 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.minutesock.dawordgame.core.domain.GameMode
 import com.minutesock.dawordgame.core.domain.GuessLetter
 import com.minutesock.dawordgame.core.domain.GuessLetterState
 import com.minutesock.dawordgame.core.domain.GuessWord
@@ -37,11 +40,13 @@ import com.minutesock.dawordgame.feature.game.presentation.ui.component.WordRow
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun HowToPlayScreen(
     navController: NavController,
     isDarkMode: Boolean,
+    gameMode: GameMode,
     modifier: Modifier = Modifier,
 ) {
     val word1 = GuessWord(
@@ -92,7 +97,8 @@ fun HowToPlayScreen(
         isDarkMode = isDarkMode,
         modifier = modifier,
         navController = navController,
-        exampleWords = persistentListOf(word1, word2, word3, word4)
+        exampleWords = persistentListOf(word1, word2, word3, word4),
+        mode = gameMode
     )
 }
 
@@ -101,9 +107,10 @@ internal fun HowToPlayScreenContent(
     isDarkMode: Boolean,
     modifier: Modifier = Modifier,
     navController: NavController,
+    exampleWords: ImmutableList<GuessWord>,
+    mode: GameMode,
     wordLength: Int = 5,
     maxAttempts: Int = 6,
-    exampleWords: ImmutableList<GuessWord>
 ) {
     val lazyListState = rememberLazyListState()
 
@@ -124,7 +131,7 @@ internal fun HowToPlayScreenContent(
                     )
                 )
             )
-            .padding(10.dp),
+            .padding(horizontal = 10.dp),
     ) {
         item {
             Row(
@@ -149,7 +156,7 @@ internal fun HowToPlayScreenContent(
                 fontSize = 24.sp
             )
             Text(
-                text = "Guess the word in $maxAttempts tries.",
+                text = "Guess the mystery word in $maxAttempts tries.",
                 color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Normal,
                 fontSize = 20.sp
@@ -163,7 +170,7 @@ internal fun HowToPlayScreenContent(
             )
             Spacer(modifier = Modifier.height(5.dp))
             Text(
-                text = "\u2022 The color of the tiles will change to show how close your guess was to the word.",
+                text = "\u2022 The color of the tiles will change to show how close your guess was to the mystery word.",
                 color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp
@@ -195,7 +202,7 @@ internal fun HowToPlayScreenContent(
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                             append("None ")
                         }
-                        append("of these letters are found in the word.")
+                        append("of these letters are found in the mystery word.")
                     },
                     color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 16.sp
@@ -221,7 +228,7 @@ internal fun HowToPlayScreenContent(
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                             append("H ")
                         }
-                        append("are found in the word, but not in the right spot.")
+                        append("are found in the mystery word, but not in the right spot.")
                     },
                     color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 16.sp
@@ -247,7 +254,7 @@ internal fun HowToPlayScreenContent(
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                             append("R ")
                         }
-                        append("are found in the word, and are in the correct spot.")
+                        append("are found in the mystery word, and are in the correct spot.")
                     },
                     color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 16.sp
@@ -267,12 +274,49 @@ internal fun HowToPlayScreenContent(
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                             append("All ")
                         }
-                        append("letters are found in the word, and are in the correct spot. Well done!")
+                        append("letters are found in the mystery word, and are in the correct spot. Well done!")
                     },
                     color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 16.sp
                 )
             }
+            Spacer(modifier = Modifier.height(32.dp))
+            GameModeExplanation(mode = mode)
         }
     }
+}
+
+@Composable
+private fun GameModeExplanation(mode: GameMode) {
+    Column {
+        Row {
+            Text(
+                text = "Mode: ${mode.name}",
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Icon(
+                painter = painterResource(mode.icon),
+                contentDescription = "game mode icon"
+            )
+        }
+
+        Text(
+            text = mode.explanationText,
+            fontSize = 16.sp
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "*Note: all mystery words are chosen at random. This means the mystery word can be the same word 7,777 times in a row and a particular word from the dictionary isn't chosen 999,999 times in a row.*",
+            fontSize = 16.sp,
+            fontStyle = FontStyle.Italic,
+            color = MaterialTheme.colorScheme.outline
+        )
+    }
+
 }

@@ -91,54 +91,51 @@ fun AppScreen(isDarkMode: Boolean) {
 
     val navController = rememberNavController()
 
-    Row(
-        modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
-    ) {
-        AnimatedVisibility(
-            visible = showNavigationRail,
-            enter = fadeIn() + expandHorizontally(),
-            exit = fadeOut() + shrinkHorizontally()
-        ) {
-            SideNavBar(navController, isDarkMode)
-        }
-        Scaffold(
-            bottomBar = {
-                AnimatedVisibility(
-                    visible = !showNavigationRail,
-                    enter = fadeIn() + expandVertically(),
-                    exit = fadeOut() + shrinkVertically()
-                ) {
-                    BottomNavBar(navController)
-                }
+    Scaffold(
+        bottomBar = {
+            AnimatedVisibility(
+                visible = !showNavigationRail,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically()
+            ) {
+                BottomNavBar(navController)
             }
-        ) { padding ->
+        }
+    ) { padding ->
+        Row(
+            modifier = Modifier
+                .padding(padding)
+                .background(color = MaterialTheme.colorScheme.background)
+        ) {
+            AnimatedVisibility(
+                visible = showNavigationRail,
+                enter = fadeIn() + expandHorizontally(),
+                exit = fadeOut() + shrinkHorizontally()
+            ) {
+                SideNavBar(navController, isDarkMode)
+            }
             SharedTransitionLayout {
                 NavHost(
                     navController = navController,
                     startDestination = NavigationGraph.DailyGraph
                 ) {
                     dailyGraph(
-                        modifier = Modifier.padding(padding),
                         navController = navController,
                         isDarkMode = isDarkMode,
                     )
 
                     infinityGraph(
-                        modifier = Modifier.padding(padding),
                         navController = navController,
                         isDarkMode = isDarkMode
                     )
 
                     dictionaryGraph(
-                        modifier = Modifier.padding(padding),
                         navController = navController,
                         sharedTransitionScope = this@SharedTransitionLayout,
                         isDarkMode = isDarkMode
                     )
 
                     profileGraph(
-                        modifier = Modifier.padding(padding),
                         navController = navController,
                         isDarkMode = isDarkMode
                     )

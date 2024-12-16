@@ -33,6 +33,7 @@ fun NavGraphBuilder.infinityGraph(
                 modifier = modifier,
                 navController = navController,
                 isDarkMode = isDarkMode,
+                gameMode = GameMode.Infinity
             )
         }
 
