@@ -6,12 +6,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import java.awt.Desktop
-import java.io.File
 import java.net.URI
-import java.util.Locale
 
 class JVMPlatform: Platform {
     override val name: String = "Java ${System.getProperty("java.version")}"
@@ -21,7 +18,8 @@ class JVMPlatform: Platform {
 actual fun getPlatform(): Platform = JVMPlatform()
 
 actual fun getSystemLanguage(): GameLanguage {
-    return GameLanguage.fromSystem(Locale.getDefault().language)
+    return GameLanguage.English
+//    return GameLanguage.fromSystem(Locale.getDefault().language)
 }
 
 @OptIn(ExperimentalComposeUiApi::class)

@@ -18,7 +18,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.minutesock.dawordgame.core.domain.GameLanguage
-import java.util.Locale
 
 class AndroidPlatform : Platform {
     override val name: String = "Android ${Build.VERSION.SDK_INT}"
@@ -28,7 +27,8 @@ class AndroidPlatform : Platform {
 actual fun getPlatform(): Platform = AndroidPlatform()
 
 actual fun getSystemLanguage(): GameLanguage {
-    return GameLanguage.fromSystem(Locale.getDefault().language)
+    return GameLanguage.English
+//    return GameLanguage.fromSystem(Locale.getDefault().language)
 }
 
 @Composable
