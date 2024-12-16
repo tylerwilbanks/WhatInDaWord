@@ -14,6 +14,6 @@ enum class ProfilePreference(val displayName: TextRes, val description: TextRes)
     ),
     ShowLogo(
         displayName = TextRes.Raw("Show Logo"),
-        description = TextRes.Raw("Show the minutesock logo animation on app startup."),
+        description = TextRes.Raw("Show the MinuteSock logo animation on app startup."),
     );
 }
