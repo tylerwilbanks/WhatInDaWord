@@ -1,6 +1,8 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.compose.internal.utils.localPropertiesFile
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -99,16 +101,34 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.1"
     }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    signingConfigs {
+        create("release_signing") {
+            val properties = Properties().apply {
+                load(localPropertiesFile.inputStream())
+            }
+            storeFile = File(properties.getProperty("signing.keystore.path"))
+            storePassword = properties.getProperty("signing.keystore.password")
+            keyAlias = properties.getProperty("signing.key.alias")
+            keyPassword = properties.getProperty("signing.key.password")
+        }
+    }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+//            isDebuggable = false
+            signingConfig = signingConfigs.getByName("release_signing")
+        }
+        getByName("debug") {
+            resValue("string", "app_name", "DaDebugWord")
+            isDebuggable = true
+            applicationIdSuffix = ".debug"
         }
     }
     compileOptions {
@@ -131,7 +151,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.minutesock.dawordgame"
-            packageVersion = "1.0.0"
+            packageVersion = "1.1"
         }
     }
 }
