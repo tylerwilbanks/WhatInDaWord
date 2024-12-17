@@ -184,8 +184,8 @@ private fun AnimatedQuestionMark() {
                 .scale(scale)
                 .graphicsLayer {
                     alpha = scale.coerceIn(0.0f, 0.3f)
-                    translationY = 5f
-                    translationX = 5f
+                    translationY = 3f
+                    translationX = 3f
                 }
         )
 
