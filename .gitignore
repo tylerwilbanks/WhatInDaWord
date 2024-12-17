@@ -38,3 +38,4 @@ build/
 .fleet/
 .kotlin/
 local.properties
+composeApp/release/
