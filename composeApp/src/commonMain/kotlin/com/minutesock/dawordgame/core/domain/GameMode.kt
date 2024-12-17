@@ -40,7 +40,7 @@ enum class GameMode {
     val explanationText: String
         get() {
             return when (this) {
-                Daily -> "In daily mode, a mystery word is chosen each day (12 am on your device). The mystery word is the same for everyone on the same date."
+                Daily -> "In daily mode, a mystery word is chosen each day (12 a.m. on your device). The mystery word is the same for everyone on the same date."
                 Infinity -> "In infinity mode, you are no longer constrained to one new word per day. You may play as many times as you wish. After completing an infinity mode game, on the definition screen, tap the next button to play again."
             }
         }
