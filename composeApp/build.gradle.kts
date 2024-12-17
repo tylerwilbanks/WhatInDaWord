@@ -122,8 +122,12 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
-//            isDebuggable = false
+            isDebuggable = false
             signingConfig = signingConfigs.getByName("release_signing")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "src/androidMain/kotlin/proguard-rules.pro"
+            )
         }
         getByName("debug") {
             resValue("string", "app_name", "DaDebugWord")
@@ -151,7 +155,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.minutesock.dawordgame"
-            packageVersion = "1.1"
+            packageVersion = "1.0.0"
         }
     }
 }
