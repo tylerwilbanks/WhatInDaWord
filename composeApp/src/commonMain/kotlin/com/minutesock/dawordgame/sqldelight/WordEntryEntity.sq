@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS WordEntryEntity (
 
 upsert:
 INSERT OR REPLACE INTO WordEntryEntity(
-    language, word, fetch_date, phonetic, origin
-) VALUES (:language, :word, :fetch_date, :phonetic, :origin);
+    id, language, word, fetch_date, phonetic, origin
+) VALUES (:id, :language, :word, :fetch_date, :phonetic, :origin);
 
 selectById:
 SELECT * FROM WordEntryEntity
@@ -26,4 +26,8 @@ WHERE language = ?;
 
 selectCountByWord:
 SELECT COUNT(*) FROM WordEntryEntity
+WHERE word = ? AND language = ?;
+
+deleteAll:
+DELETE FROM WordEntryEntity
 WHERE word = ? AND language = ?;

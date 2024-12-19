@@ -15,6 +15,7 @@ interface WordEntryDataSource {
     suspend fun selectByWord(language: GameLanguage, word: String): WordEntry?
     suspend fun selectCountByWord(language: GameLanguage, word: String): Int
     suspend fun selectCount(language: GameLanguage): Int
+    suspend fun deleteAll(language: GameLanguage, word: String)
 }
 
 class SqlDelightWordEntryDataSource(
@@ -25,7 +26,13 @@ class SqlDelightWordEntryDataSource(
 
     override suspend fun upsertEntriesAndDefinitions(wordEntry: WordEntry) {
         dbClient.suspendingTransaction {
+            wordEntryQueries
+            val upsertId = wordEntryQueries.selectByWord(
+                        word = wordEntry.word,
+                        language = wordEntry.language.dbName
+                    ).executeAsOneOrNull()?.toWordEntry(emptyList())?.idForDbInsertion
             wordEntryQueries.upsert(
+                id = upsertId,
                 language = wordEntry.language.dbName,
                 word = wordEntry.word,
                 fetch_date = wordEntry.fetchDate.toString(),
@@ -89,6 +96,16 @@ class SqlDelightWordEntryDataSource(
     override suspend fun selectCount(language: GameLanguage): Int {
         return dbClient.suspendingTransaction {
             wordEntryQueries.selectCount(language.dbName).executeAsOne().toInt()
+        }
+    }
+
+    override suspend fun deleteAll(language: GameLanguage, word: String) {
+        dbClient.suspendingTransaction {
+            wordDefinitionQueries.deleteAll(word = word, language = language.dbName)
+            wordEntryQueries.deleteAll(
+                word = word,
+                language = language.dbName
+            )
         }
     }
 }
