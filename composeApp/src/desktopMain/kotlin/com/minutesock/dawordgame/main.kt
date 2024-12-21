@@ -21,7 +21,7 @@ fun main() {
                 KoinProvider.instance.get<HttpClient>().close()
                 exitApplication()
             },
-            title = "What In Da Word!?",
+            title = "What In da word!?",
             state = WindowState(
                 size = DpSize(1080.dp, 720.dp)
             )

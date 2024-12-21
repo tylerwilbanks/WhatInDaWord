@@ -1,19 +1,24 @@
 package com.minutesock.dawordgame.core.data.source
 
 import com.minutesock.dawordgame.core.data.SqlDelightDbClient
+import com.minutesock.dawordgame.core.data.toGuessDistributionItem
 import com.minutesock.dawordgame.core.data.toGuessLetter
 import com.minutesock.dawordgame.core.data.toGuessWord
 import com.minutesock.dawordgame.core.data.toWordSession
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
+import com.minutesock.dawordgame.core.domain.GuessDistributionItem
 import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.core.domain.WordSessionState
 import com.minutesock.dawordgame.sqldelight.GuessLetterEntity
 import com.minutesock.dawordgame.sqldelight.GuessWordEntity
+import com.minutesock.dawordgame.sqldelight.SelectGuessDistribution
 import com.minutesock.dawordgame.sqldelight.WordSessionEntity
 import kotlinx.datetime.LocalDate
 
 interface WordSessionDataSource {
+    suspend fun selectGuessDistribution(language: GameLanguage): List<GuessDistributionItem>
+    suspend fun selectFailedSessionsCount(language: GameLanguage): Long
     suspend fun upsert(wordSession: WordSession)
     suspend fun selectByDate(
         date: LocalDate,
@@ -40,6 +45,23 @@ class SqlDelightWordSessionDataSource(
     private val wordSessionQueries = dbClient.wordSessionEntityQueries
     private val guessWordQueries = dbClient.guessWordEntityQueries
     private val guessLetterQueries = dbClient.guessLetterEntityQueries
+
+    override suspend fun selectGuessDistribution(language: GameLanguage): List<GuessDistributionItem> {
+        return dbClient.suspendingTransaction {
+            wordSessionQueries.selectGuessDistribution(
+                language = language.dbName,
+            ).executeAsList()
+                .map(SelectGuessDistribution::toGuessDistributionItem)
+        }
+    }
+
+    override suspend fun selectFailedSessionsCount(language: GameLanguage): Long {
+        return dbClient.suspendingTransaction {
+            wordSessionQueries.selectFailedSessionsCount(
+                language = language.dbName
+            ).executeAsOneOrNull() ?: 0
+        }
+    }
 
     override suspend fun upsert(wordSession: WordSession) {
         dbClient.suspendingTransaction {
@@ -116,9 +138,7 @@ class SqlDelightWordSessionDataSource(
                     guessWordEntity.toGuessWord(
                         letters = guessLetterQueries.selectGuessLetterEntitiesByGuessWordId(
                             guessWordEntity.id
-                        ).executeAsList().map { guessLetterEntity: GuessLetterEntity ->
-                            guessLetterEntity.toGuessLetter()
-                        }
+                        ).executeAsList().map(GuessLetterEntity::toGuessLetter)
                     )
                 }
             )

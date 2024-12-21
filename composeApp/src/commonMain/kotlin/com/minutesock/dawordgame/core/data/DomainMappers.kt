@@ -3,6 +3,7 @@ package com.minutesock.dawordgame.core.data
 import com.minutesock.dawordgame.core.data.source.GuessLetterDataSource
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
+import com.minutesock.dawordgame.core.domain.GuessDistributionItem
 import com.minutesock.dawordgame.core.domain.GuessLetter
 import com.minutesock.dawordgame.core.domain.GuessLetterState
 import com.minutesock.dawordgame.core.domain.GuessWord
@@ -17,6 +18,7 @@ import com.minutesock.dawordgame.core.remote.definition.DefinitionDto
 import com.minutesock.dawordgame.core.remote.definition.WordEntryDto
 import com.minutesock.dawordgame.sqldelight.GuessLetterEntity
 import com.minutesock.dawordgame.sqldelight.GuessWordEntity
+import com.minutesock.dawordgame.sqldelight.SelectGuessDistribution
 import com.minutesock.dawordgame.sqldelight.ValidWordEntity
 import com.minutesock.dawordgame.sqldelight.WordDefinitionEntity
 import com.minutesock.dawordgame.sqldelight.WordEntryEntity
@@ -155,5 +157,12 @@ fun WordEntryDto.toWordEntry(
         }
             .flatten()
             .toImmutableList()
+    )
+}
+
+fun SelectGuessDistribution.toGuessDistributionItem(): GuessDistributionItem {
+    return GuessDistributionItem(
+        attemptCount = guess_count,
+        wordSessionCount = session_count
     )
 }

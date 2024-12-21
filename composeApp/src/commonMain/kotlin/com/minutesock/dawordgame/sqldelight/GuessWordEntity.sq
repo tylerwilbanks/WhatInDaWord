@@ -15,6 +15,10 @@ selectGuessWordEntitiesBySessionId:
 SELECT * FROM GuessWordEntity
 WHERE session_id = ?;
 
+selectCountBySessionId:
+SELECT COUNT(*) FROM GuessWordEntity
+WHERE session_id = ?;
+
 selectHighestId:
 SELECT MAX(id) AS max_id
 FROM GuessWordEntity;

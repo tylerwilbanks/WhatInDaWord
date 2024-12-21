@@ -8,6 +8,7 @@ import com.minutesock.dawordgame.sqldelight.GuessWordEntityQueries
 interface GuessWordDataSource {
     suspend fun upsert(vararg guessWords: GuessWord)
     suspend fun selectByWordSessionId(wordSessionId: Long): List<GuessWord>
+    suspend fun selectCountBySessionId(wordSessionId: Long): Long
     suspend fun selectHighestId(): Long
     suspend fun getCount(): Long
     suspend fun clearTable()
@@ -36,6 +37,12 @@ class SqlDelightGuessWordDataSource(
             queries.selectGuessWordEntitiesBySessionId(wordSessionId)
                 .executeAsList()
                 .map { it.toGuessWord() }
+        }
+    }
+
+    override suspend fun selectCountBySessionId(wordSessionId: Long): Long {
+        return dbClient.suspendingTransaction {
+            queries.selectCountBySessionId(wordSessionId).executeAsOne()
         }
     }
 

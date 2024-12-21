@@ -13,6 +13,25 @@ INSERT OR REPLACE INTO WordSessionEntity(
     id, date, mystery_word, language, max_attempts, game_mode, state
 ) VALUES (:id, :date, :mystery_word, :language, :max_attempts, :game_mode, :state);
 
+selectGuessDistribution:
+SELECT
+    guess_count,
+    COUNT(*) AS session_count
+FROM (
+    SELECT
+        ws.id,
+        COUNT(*) AS guess_count
+    FROM WordSessionEntity ws
+        JOIN GuessWordEntity gw ON gw.session_id = ws.id
+        WHERE ws.language = ? AND ws.state = 2 AND gw.state IN (2,3)
+        GROUP BY 1
+) GROUP BY 1;
+
+selectFailedSessionsCount:
+SELECT COUNT(*)
+FROM WordSessionEntity
+WHERE language = ? AND state = 3;
+
 selectWordSessionEntitiesByDate:
 SELECT * FROM WordSessionEntity
 WHERE date = ? AND language = ? AND game_mode = ?;
