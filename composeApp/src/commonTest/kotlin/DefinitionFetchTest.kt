@@ -240,4 +240,56 @@ class DefinitionFetchTest {
             assertNotEquals(firstDefinition, data.definitions.first().definition)
         }
     }
+
+    @Test
+    fun en_noDuplicateWordEntries() = runTest(testDispatcher) {
+        val firstDefinition = "sneeze"
+        val language = GameLanguage.English
+        val mockWordEntry = mockWordEntryDto.copy(
+            meanings = mockWordEntryDto.meanings.toMutableList().apply {
+                this[0] = this[0].copy(
+                    definitions = this[0].definitions.toMutableList().apply {
+                        this[0] = this[0].copy(definition = firstDefinition)
+                    }
+                )
+            }
+        ).toWordEntry(
+            language = language,
+            fetchDate = Clock.System.todayIn(TimeZone.currentSystemDefault()).minus(DatePeriod(days = 15))
+        )
+        val testWord = mockWordEntry.word
+
+        // ensure db is empty for this word
+        assertNull(wordEntryDataSource.selectByWord(language, testWord))
+        // ensure first db entry worked
+        wordEntryDataSource.upsertEntriesAndDefinitions(mockWordEntry)
+        assertEquals(1, wordEntryDataSource.selectCountByWord(language, testWord))
+        // ensure word entry was upserted and not duplicated
+        wordEntryDataSource.upsertEntriesAndDefinitions(mockWordEntry)
+        assertEquals(1, wordEntryDataSource.selectCountByWord(language, testWord))
+
+        // now we ensure word entry is still not duplicated and data has been updated from the source
+        val secondDefinition = "it doesn't mean sneeze anymore."
+        val mockWordEntry2 = mockWordEntryDto.copy(
+            meanings = mockWordEntryDto.meanings.toMutableList().apply {
+                this[0] = this[0].copy(
+                    definitions = this[0].definitions.toMutableList().apply {
+                        this[0] = this[0].copy(definition = secondDefinition)
+                    }
+                )
+            }
+        ).toWordEntry(
+            language = language,
+            fetchDate = Clock.System.todayIn(TimeZone.currentSystemDefault()).minus(DatePeriod(days = 15))
+        )
+
+        wordEntryDataSource.upsertEntriesAndDefinitions(mockWordEntry2)
+        assertEquals(1, wordEntryDataSource.selectCountByWord(language, testWord))
+        val updatedWord = wordEntryDataSource.selectByWord(
+            language = language,
+            word = testWord
+        )
+        assertNotNull(updatedWord)
+        assertEquals(secondDefinition, updatedWord.definitions.first().definition)
+    }
 }
