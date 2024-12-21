@@ -16,6 +16,7 @@ import com.minutesock.dawordgame.core.util.Option
 import com.minutesock.dawordgame.feature.game.domain.GuessWordValidator
 import com.minutesock.dawordgame.feature.game.domain.WordGameValidationResultType
 import com.minutesock.dawordgame.getSystemLanguage
+import com.minutesock.dawordgame.openWebsite
 import com.minutesock.dawordgame.shareText
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -507,6 +508,7 @@ class GameViewModel(
                     _state.update { GameViewModelState() }
                     setupGame(GameMode.Infinity, wordLength, maxAttempts)
                 }
+                WordGameStatsEvent.PressDictionaryDotCom -> openWebsite("https://www.dictionary.com/browse/${state.value.mysteryWord.word}")
             }
         }
     }

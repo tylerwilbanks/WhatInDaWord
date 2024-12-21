@@ -209,7 +209,7 @@ class GameRepository(
             emit(
                 ContinuousOption.Loading(
                     data = wordEntryFromDatabase,
-                    continuousStatus = ContinuousStatus.Indefinite(textRes = TextRes.Raw("Loaded word entry"))
+                    continuousStatus = ContinuousStatus.Indefinite(textRes = TextRes.Raw("Loaded word entry")) // todo extract
                 )
             )
 
@@ -225,7 +225,7 @@ class GameRepository(
                     ContinuousOption.Loading(
                         data = wordEntryFromDatabase,
                         continuousStatus = ContinuousStatus.Indefinite(
-                            textRes = TextRes.Raw("Fetching word entry...")
+                            textRes = TextRes.Raw("Fetching word entry...") // todo extract
                         )
                     )
                 )

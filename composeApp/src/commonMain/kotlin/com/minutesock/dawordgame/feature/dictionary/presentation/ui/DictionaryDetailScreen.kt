@@ -7,9 +7,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,7 +30,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -34,6 +42,7 @@ import com.minutesock.dawordgame.core.navigation.NavigationDestination
 import com.minutesock.dawordgame.core.presentation.ui.component.WordDefinitionContent
 import com.minutesock.dawordgame.core.util.ContinuousOption
 import com.minutesock.dawordgame.core.util.capitalize
+import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryDetailEvent
 import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryDetailState
 import com.minutesock.dawordgame.feature.dictionary.presentation.DictionaryDetailViewModel
 import com.minutesock.dawordgame.feature.dictionary.presentation.ui.component.DictionaryDetailSessionScreen
@@ -58,7 +67,8 @@ fun DictionaryDetailHost(
         state = state,
         navController = navController,
         sharedTransitionScope = sharedTransitionScope,
-        animatedContentScope = animatedContentScope
+        animatedContentScope = animatedContentScope,
+        onEvent = viewModel::onEvent
     )
 }
 
@@ -71,7 +81,8 @@ fun DictionaryDetailScreen(
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
-    tabs: EnumEntries<DictionaryDetailTab> = DictionaryDetailTab.entries
+    tabs: EnumEntries<DictionaryDetailTab> = DictionaryDetailTab.entries,
+    onEvent: (DictionaryDetailEvent) -> Unit
 ) {
 
     val displayWord by remember(word) {
@@ -156,17 +167,72 @@ fun DictionaryDetailScreen(
 
         when (selectedTab) {
             DictionaryDetailTab.Definition -> {
-                if (wordEntry == null) {
-                    Box(
-                        modifier = modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
+                when (val result = state.fetchState) {
+                    is ContinuousOption.Issue -> {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(
+                                text = result.issue.textRes.asString(),
+                                textAlign = TextAlign.Center,
+                                fontSize = 16.sp
+                            )
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(
+                                text = "Tap below to view the definition on Dictionary.com", // todo extract
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp
+                            )
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Button(
+                                onClick = {
+                                    onEvent(DictionaryDetailEvent.PressDictionaryDotCom)
+                                },
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                    contentDescription = "Next"
+                                )
+                                Spacer(modifier = Modifier.size(2.dp))
+                                Text(
+                                    text = "Definition" // todo extract
+                                )
+                            }
+                        }
                     }
-                } else {
-                    WordDefinitionContent(
-                        wordEntry = wordEntry!!
-                    )
+
+                    is ContinuousOption.Loading -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
+                            result.data?.let { wordEntry: WordEntry ->
+                                println("I am loading and I got data! $wordEntry")
+                                WordDefinitionContent(
+                                    modifier = Modifier.padding(
+                                        horizontal = 20.dp
+                                    ),
+                                    wordEntry = wordEntry,
+                                )
+                            }
+                        }
+
+                    }
+
+                    is ContinuousOption.Success -> {
+                        result.data?.let { wordEntry: WordEntry ->
+                            WordDefinitionContent(
+                                modifier = Modifier.padding(
+                                    horizontal = 20.dp
+                                ),
+                                wordEntry = wordEntry,
+                            )
+                        }
+                    }
                 }
             }
 

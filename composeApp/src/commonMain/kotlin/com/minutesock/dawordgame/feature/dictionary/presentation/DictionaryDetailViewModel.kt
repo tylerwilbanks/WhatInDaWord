@@ -6,6 +6,7 @@ import com.minutesock.dawordgame.core.data.repository.GameRepository
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.WordSession
 import com.minutesock.dawordgame.feature.dictionary.data.DictionaryRepository
+import com.minutesock.dawordgame.openWebsite
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,6 +46,14 @@ class DictionaryDetailViewModel(
                 it.copy(
                     sessions = sessions
                 )
+            }
+        }
+    }
+
+    fun onEvent(event: DictionaryDetailEvent) {
+        viewModelScope.launch {
+            when (event) {
+                DictionaryDetailEvent.PressDictionaryDotCom -> openWebsite("https://www.dictionary.com/browse/$word")
             }
         }
     }

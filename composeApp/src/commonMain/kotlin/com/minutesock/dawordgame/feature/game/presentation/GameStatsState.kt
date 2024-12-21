@@ -10,13 +10,4 @@ data class GameStatsState(
         data = null,
         continuousStatus = ContinuousStatus.Indefinite.empty()
     ),
-) {
-    val wordEntry: WordEntry?
-        get() {
-            return when (fetchState) {
-                is ContinuousOption.Issue -> fetchState.data
-                is ContinuousOption.Loading -> fetchState.data
-                is ContinuousOption.Success -> fetchState.data
-            }
-        }
-}
+)

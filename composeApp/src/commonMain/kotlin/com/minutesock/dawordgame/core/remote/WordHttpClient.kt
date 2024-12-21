@@ -44,11 +44,11 @@ class WordHttpClient(
                         Option.Success(wordDefinitions)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        Option.Issue(GeneralIssue(TextRes.Raw(e.message ?: "who knows")))
+                        Option.Issue(GeneralIssue(TextRes.Raw(e.message ?: "who knows"))) // todo extract
                     }
                 }
                 else -> {
-                    Option.Issue(GeneralIssue(TextRes.Raw(response.status.description)))
+                    Option.Issue(GeneralIssue(TextRes.Raw("Could not find word entry. (${response.status.value})"))) // todo extract
                 }
             }
         }

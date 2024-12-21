@@ -5,4 +5,5 @@ sealed class WordGameStatsEvent {
     data object PressShare : WordGameStatsEvent()
     data object DeleteAndRestartDailyGame : WordGameStatsEvent()
     data object NextInfinitySession : WordGameStatsEvent()
+    data object PressDictionaryDotCom : WordGameStatsEvent()
 }

@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -42,6 +43,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.minutesock.dawordgame.PlatformType
 import com.minutesock.dawordgame.core.domain.GameLanguage
 import com.minutesock.dawordgame.core.domain.GameMode
@@ -52,6 +54,7 @@ import com.minutesock.dawordgame.core.domain.definition.WordEntry
 import com.minutesock.dawordgame.core.presentation.ui.component.WordDefinitionContent
 import com.minutesock.dawordgame.core.theme.AppTheme
 import com.minutesock.dawordgame.core.uiutil.TextRes
+import com.minutesock.dawordgame.core.util.ContinuousOption
 import com.minutesock.dawordgame.core.util.capitalize
 import com.minutesock.dawordgame.feature.game.presentation.GameScreenState
 import com.minutesock.dawordgame.feature.game.presentation.GameStatsState
@@ -146,10 +149,11 @@ fun PlayGameStatsScreen(
                     SnackbarHost(snackbarHostState)
                 },
                 topBar = {
-                    Box(
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        contentAlignment = Alignment.Center
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text(
                             modifier = Modifier
@@ -262,18 +266,81 @@ fun PlayGameStatsScreen(
                     }
                 },
                 content = { padding ->
-                    statsState.wordEntry?.let { wordEntry: WordEntry ->
-                        WordDefinitionContent(
-                            modifier = Modifier.padding(
-                                top = padding.calculateTopPadding(),
-                                bottom = padding.calculateBottomPadding(),
-                                start = 20.dp,
-                                end = 20.dp
-                            ),
-                            wordEntry = wordEntry,
-                            wordSessionState = gameState.gameState,
-                            spoilerBlur = spoilerBlur
-                        )
+                    when (val result = statsState.fetchState) {
+                        is ContinuousOption.Issue -> {
+                            Column(
+                                modifier = Modifier.fillMaxSize().padding(padding).blur(spoilerBlur),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Spacer(modifier = Modifier.height(10.dp))
+                                Text(
+                                    text = result.issue.textRes.asString(),
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 16.sp
+                                )
+                                Spacer(modifier = Modifier.height(10.dp))
+                                Text(
+                                    text = "Tap below to view the definition on Dictionary.com", // todo extract
+                                    textAlign = TextAlign.Center,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 16.sp
+                                )
+                                Spacer(modifier = Modifier.height(10.dp))
+                                Button(
+                                    onClick = {
+                                        onEvent(WordGameStatsEvent.PressDictionaryDotCom)
+                                    },
+                                    enabled = spoilerButtonEnabled
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                        contentDescription = "Next"
+                                    )
+                                    Spacer(modifier = Modifier.size(2.dp))
+                                    Text(
+                                        text = "Definition" // todo extract
+                                    )
+                                }
+                            }
+                        }
+
+                        is ContinuousOption.Loading -> {
+                            Box(
+                                modifier = Modifier.fillMaxSize().padding(padding),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator()
+                            }
+                            result.data?.let { wordEntry: WordEntry ->
+                                WordDefinitionContent(
+                                    modifier = Modifier.padding(
+                                        top = padding.calculateTopPadding(),
+                                        bottom = padding.calculateBottomPadding(),
+                                        start = 20.dp,
+                                        end = 20.dp
+                                    ),
+                                    wordEntry = wordEntry,
+                                    wordSessionState = gameState.gameState,
+                                    spoilerBlur = spoilerBlur
+                                )
+                            }
+                        }
+
+                        is ContinuousOption.Success -> {
+                            result.data?.let { wordEntry: WordEntry ->
+                                WordDefinitionContent(
+                                    modifier = Modifier.padding(
+                                        top = padding.calculateTopPadding(),
+                                        bottom = padding.calculateBottomPadding(),
+                                        start = 20.dp,
+                                        end = 20.dp
+                                    ),
+                                    wordEntry = wordEntry,
+                                    wordSessionState = gameState.gameState,
+                                    spoilerBlur = spoilerBlur
+                                )
+                            }
+                        }
                     }
                 }
             )
