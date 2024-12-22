@@ -98,5 +98,4 @@ fun <T> rememberPreference(
       actually kinda pleasant to work with. 🌟
 * 💫 Shared Element Transition: I managed to get in a shared element transition when on the dictionary screen, navigating
   to dictionary detail, the word travels to the next location.
-* 🍫 App Bar Navigation: I managed to have dynamic bottom app bar/side navigation rail based on screen size and device
-  rotation!
+* 🍫 App Bar Navigation: Dynamic bottom app bar/side navigation rail based on screen size and device rotation!
