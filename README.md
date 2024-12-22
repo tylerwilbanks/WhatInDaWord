@@ -77,6 +77,11 @@ ComposeView().ignoresSafeArea(edges: .all)
       system theme for light/dark mode instead of dark mode override.
     * It was very easy to observe these preferences, create delegates out of them, and even make my own reactive
       composable for reactive app theme changes:
+* 👨‍🔬 Unit Testing: I used [kotlin.test](https://kotlinlang.org/api/core/kotlin-test/)
+    * This was straight forward common code testing (source sets in gradle still kind of confuse me, but that not
+      directly related to this library).
+    * runTest() is super neat as it skips delays. I like that.
+    * Wonderful for testing database operations.
 
 ```
 @Composable
