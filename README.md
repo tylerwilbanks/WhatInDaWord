@@ -93,7 +93,7 @@ fun <T> rememberPreference(
 ```
 
 * 👨‍🔬 Unit Testing: I used [kotlin.test](https://kotlinlang.org/api/core/kotlin-test/)
-    * This was straight forward common code testing (source sets in gradle still kind of confuse me, but that not
+    * This was straight forward common code testing (source sets in gradle still kind of confuse me, but that is not
       directly related to this library).
     * runTest() is super neat as it skips delays. I like that.
     * Wonderful for testing database operations.
